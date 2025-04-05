@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_questionnaire">
+    <x_509925_fc_questionnaire action="INSERT_OR_UPDATE">
+        <attributes><![CDATA[(function(current, table, target_id, task_id, params) {
+    var attributes = new FCQuestionnaireRepository().getDefaultAttributes(current, table, target_id, task_id, params);
+    attributes.data.user_id = gs.getUserID();
+    attributes.data.is_caller = false;
+    if (params) {
+        var recordGr = new FCCaseExtensionRepository(true).addQuery('request.active=true^dataLIKE' + params._error_code).getSingle();
+        if (recordGr) {
+            var incidentGr = recordGr.request.getRefRecord();
+            attributes.data.existing_incident = incidentGr.getUniqueValue();
+            attributes.data.is_caller = incidentGr.getValue('caller_id') == gs.getUserID();
+            attributes.target_id = incidentGr.getUniqueValue();
+
+            var watchList = incidentGr.getValue('watch_list');
+            if (!gs.nil(watchList) && watchList.indexOf(gs.getUserID()) > -1) {
+                attributes.data.on_watch_list = true;
+                attributes.options.show_submit = false;
+            } else {
+                attributes.data.on_watch_list = false;
+                attributes.options.submit_label = 'Add to watch list'
+            }
+        }
+    }
+
+    if (attributes.data.is_caller) {
+        attributes.options.show_submit = false;
+    }
+
+    return attributes;
+
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base>false</base>
+        <cancel_callback><![CDATA[(function(form) {
+    //First we want to check if there's a task_id
+	if(!gs.nil(form._task_id)){
+		var calceledTaskResult = new HRTaskRepository().cancelTask(form._task_id);
+	}
+})(form);]]></cancel_callback>
+        <cancel_label>Cancel</cancel_label>
+        <close_task_on_submit>true</close_task_on_submit>
+        <css_classes/>
+        <delete_callback><![CDATA[(function(form){
+	throw new Error('Non Implementation Error.');
+})(form);]]></delete_callback>
+        <delete_draft_on_load>false</delete_draft_on_load>
+        <delete_label>Delete</delete_label>
+        <deleteable>false</deleteable>
+        <draftable>false</draftable>
+        <name>Report Issue</name>
+        <number>QN0001076</number>
+        <on_submit><![CDATA[(function(form) {
+
+    var incidentGr = new FCTaskRepository('incident', true).getById(form._target_id);
+    if(incidentGr){
+        var watchList = incidentGr.getValue('watch_list');
+        var watchListArray =  gs.nil(watchList) ? []: watchList.split(',');
+        if(watchListArray.indexOf(gs.getUserID()) == -1){
+            watchListArray.push(gs.getUserID());
+        }
+        incidentGr.setValue('watch_list', watchListArray.join(','));
+        incidentGr.update();
+    }
+
+    form._abort_submission = true;
+    return form;
+    
+})(form);]]></on_submit>
+        <pdf/>
+        <readonly>false</readonly>
+        <reassignable>false</reassignable>
+        <related_knowledge/>
+        <require_esignature>false</require_esignature>
+        <route/>
+        <save_label>Save Draft</save_label>
+        <show_cancel>false</show_cancel>
+        <show_save>false</show_save>
+        <show_signature>false</show_signature>
+        <show_submit>true</show_submit>
+        <show_title>true</show_title>
+        <signature_list>[]</signature_list>
+        <submit_callback><![CDATA[(function(form) {
+
+})(form);]]></submit_callback>
+        <submit_confirmation_message>I'm confirming that all information provided is true and correct to the best of my knowledge.</submit_confirmation_message>
+        <submit_label>Submit</submit_label>
+        <subtype>record</subtype>
+        <sys_class_name>x_509925_fc_questionnaire</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 14:22:59</sys_created_on>
+        <sys_id>e3beb92a83821210926492b6feaad3a7</sys_id>
+        <sys_mod_count>43</sys_mod_count>
+        <sys_name>Report Issue</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_questionnaire_e3beb92a83821210926492b6feaad3a7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-28 01:51:47</sys_updated_on>
+        <table>incident</table>
+        <type>record_producer</type>
+        <validation><![CDATA[(function(form) {
+    var result = {
+        validation: true,
+        message: ''
+    };
+
+    return result;
+})(form);]]></validation>
+        <whats_next/>
+    </x_509925_fc_questionnaire>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>e3beb92a83821210926492b6feaad3a7</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 19:07:14</sys_created_on>
+        <sys_id>6fcf76aa83c61210926492b6feaad316</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-26 19:07:14</sys_updated_on>
+        <table>x_509925_fc_questionnaire</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

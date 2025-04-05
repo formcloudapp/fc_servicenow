@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCChoiceRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCChoiceRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Repository class for interacting with the sys_choice table and retrieving choice-related data.
+ * Extends the Repository class.
+ * @class
+ * @extends FCRepository
+ */
+var FCChoiceRepository = Class.create();
+
+FCChoiceRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initializes a new instance of FCChoiceRepository.
+     * @param {boolean} overrideACL - Whether to override ACL checks.
+     * @throws Will throw an error if initialization fails.
+     */
+    initialize: function (overrideACL) {
+		this.moduleName = 'FCChoiceRepository';
+        FCRepository.prototype.initialize.call(this, 'sys_choice', overrideACL);
+    },
+
+    /**
+     * Retrieves choices for a specified table and field, including inherited tables in the hierarchy.
+     * @param {string} tableName - The name of the table to retrieve choices for.
+     * @param {string} fieldName - The field name for which choices are being retrieved.
+     * @returns {Array<Object>} An array of choice objects, each containing a label and a value.
+     * @throws Will throw an error if retrieval fails.
+     */
+    getByTableField: function (tableName, fieldName) {
+        var fields = [];
+
+        /**
+         * Retrieves the inheritance chain of a table and collects choice fields from each table in the chain.
+         * @param {string} tableName - The name of the base table.
+         * @returns {Array<string>} An array of table names in the inheritance chain.
+         */
+        function getInheritanceTableNames(tableName) {
+            var tableNames = [];
+
+            /**
+             * Recursive function to fetch choices for the specified field from the current table and its parent tables.
+             * @param {string} currentTable - The current table being checked.
+             */
+            function fetchTableNames(currentTable) {
+                if (tableNames.indexOf(currentTable) === -1) {
+                    try {
+                        var choiceGr = new FCChoiceRepository(true)
+                            .addQuery('name=' + currentTable + '^element=' + fieldName)
+                            .getMultiple();
+
+                        while (choiceGr.next()) {
+                            if (!fields.some(field => field.value == choiceGr.getValue('value'))) {
+                                fields.push({
+                                    label: choiceGr.getValue('label'),
+                                    value: choiceGr.getValue('value')
+                                });
+                            }
+                        }
+
+                        tableNames.push(currentTable);
+                    } catch (error) {
+                        throw new Error('Error retrieving choices for field "' + fieldName + '" in table "' + currentTable + '": ' + error.message);
+                    }
+                }
+
+                var tableGR = new GlideRecord('sys_db_object');
+                if (tableGR.get('name', currentTable) && !tableGR.super_class.nil()) {
+                    fetchTableNames(tableGR.super_class.name);
+                }
+            }
+
+            fetchTableNames(tableName);
+            return tableNames;
+        }
+
+        try {
+            getInheritanceTableNames(tableName);
+            return fields.sort((a, b) => {
+                if (a.label > b.label) return 1;
+                if (a.label < b.label) return -1;
+                return 0;
+            });
+        } catch (error) {
+            throw new Error('Failed to retrieve choices for table "' + tableName + '", field "' + fieldName + '": ' + error.message);
+        }
+    },
+
+    /**
+     * The type name of the class.
+     * @type {string}
+     */
+    type: 'FCChoiceRepository'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-26 20:40:39</sys_created_on>
+        <sys_id>b60997d1978b4690e12c3eb0f053af3e</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>FCChoiceRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_b60997d1978b4690e12c3eb0f053af3e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:43</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>b60997d1978b4690e12c3eb0f053af3e</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-19 14:26:18</sys_created_on>
+        <sys_id>b9135ada83995210926492b6feaad374</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-19 14:26:18</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

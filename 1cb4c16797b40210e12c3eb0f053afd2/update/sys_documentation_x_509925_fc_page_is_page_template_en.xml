@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="is_page_template" label="Is Page Template" language="en" table="x_509925_fc_page">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>is_page_template</element>
+            <help/>
+            <hint/>
+            <label>Is Page Template</label>
+            <language>en</language>
+            <name>x_509925_fc_page</name>
+            <plural>Is Page Templates</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-29 02:53:16</sys_created_on>
+            <sys_id>99a0e55ec31a12105214f90ed4013152</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Is Page Template</sys_name>
+            <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+            <sys_update_name>sys_documentation_x_509925_fc_page_is_page_template_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-29 02:53:16</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

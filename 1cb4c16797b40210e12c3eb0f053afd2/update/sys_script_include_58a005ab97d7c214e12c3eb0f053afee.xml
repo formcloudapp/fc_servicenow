@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCTaxonomyRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCTaxonomyRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for chocies table.
+ * @class
+ * @extends FCRepository
+ */
+var FCTaxonomyRepository = Class.create();
+FCTaxonomyRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initialize a new instance of the FCTaxonomyRepository.
+     * @constructor
+     * @param {boolean} overrideACL - Flag to override Access Control List.
+     */
+    initialize: function(overrideACL) {
+		this.moduleName = 'FCTaxonomyRepository';
+        FCRepository.prototype.initialize.call(this, new FCConstantUtility().getTableName('taxonomy'), overrideACL);
+    },
+
+    getAttributes: function(current, params) {
+        return {
+            name: current.getValue('name'),
+            url: current.getValue('url'),
+            url_type: current.getValue('url_type'),
+            order: gs.nil(current.getValue('order')) ? 0 : parseInt(current.getValue('order')),
+			icon: current.getValue('icon'),
+			parent: current.getValue('parent'),
+			base: current.getDisplayValue('base') == 'true',
+			count: 0
+        };
+    },
+
+    getMenuTree: function(params, type) {
+        var topLevelItems = this._fetchHierarchy(null, type);
+        return topLevelItems;
+    },
+
+    _fetchHierarchy(parentId, type) {
+        var result = [];
+        var gr = new GlideRecord('x_509925_fc_taxonomy');
+        if (parentId) {
+            gr.addQuery('parent', parentId);
+            gr.addQuery('type', type);
+			gr.orderBy('order');
+        } else {
+            gr.addQuery('type', type);
+            gr.addQuery('parent', '');
+			gr.orderBy('order');
+        }
+        gr.query();
+
+        while (gr.next()) {
+            try {
+                var evaluator = new GlideScopedEvaluator();
+                evaluator.putVariable('current', gr);
+                evaluator.putVariable('params', request.body.data);
+                var obj = evaluator.evaluateScript(gr, 'advance');
+                obj.condition = false;
+
+                var condEvaluator = new GlideScopedEvaluator();
+                condEvaluator.putVariable('current', gr);
+                condEvaluator.putVariable('params', request.body.data);
+                obj.condition = condEvaluator.evaluateScript(gr, 'condition');
+
+                var children = this._fetchHierarchy(gr.sys_id.toString(), type);
+                obj.children = children; // Ensure children are assigned to the object
+
+                if(obj.condition == true){
+					result.push(obj);
+				}
+            } catch (e) {
+				this.throwError(e, this.moduleName, arguments.callee.name);
+            }
+        }
+
+        return result;
+    },
+
+    /** @type {string} The type of the repository. */
+    type: 'FCTaxonomyRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-15 19:33:55</sys_created_on>
+        <sys_id>58a005ab97d7c214e12c3eb0f053afee</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>FCTaxonomyRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_58a005ab97d7c214e12c3eb0f053afee</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-29 13:53:16</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>58a005ab97d7c214e12c3eb0f053afee</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:02:21</sys_created_on>
+        <sys_id>ce8e185383b1d610926492b6feaad36d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:02:21</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

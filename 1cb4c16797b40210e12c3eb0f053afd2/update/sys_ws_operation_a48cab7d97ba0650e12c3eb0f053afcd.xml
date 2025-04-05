@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>create</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    var input = request.body.data;
+	var attachmentRepo = new FCAttachmentRepository(true);
+	var attachmentId = attachmentRepo.create(input.data, input.fileName, input.tableName, input.tableSysId);
+
+	return new FCAttachmentRepository(true).getBase64ById(attachmentId);
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_509925_fc/attachment/create</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/create</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-16 01:03:11</sys_created_on>
+        <sys_id>a48cab7d97ba0650e12c3eb0f053afcd</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>create</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_ws_operation_a48cab7d97ba0650e12c3eb0f053afcd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 04:55:21</sys_updated_on>
+        <web_service_definition display_value="Attachment">667ca77d97ba0650e12c3eb0f053af45</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>homepages</category>
+        <client_script/>
+        <description/>
+        <direct>true</direct>
+        <endpoint>x_509925_fc_core.do</endpoint>
+        <html>&lt;?xml version="1.0" encoding="utf-8" ?&gt;&#13;
+&lt;j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null"&gt;&#13;
+	&lt;g:evaluate object="true"&gt;&#13;
+		&lt;![CDATA[&#13;
+			var webApp = new FCWebAppRepository(true).getByPrefix('core');&#13;
+			var webAppObj = JSON.parse(webApp);&#13;
+			var config = webAppObj.shell_configs;&#13;
+			var theme = '';&#13;
+			if (webApp.user_preferences &amp;&amp; webApp.user_preferences.dark_mode) {&#13;
+				theme = 'dark-theme mdui-theme-dark';&#13;
+			}else{&#13;
+				theme = 'light-theme mdui-theme-light';&#13;
+			}&#13;
+		]]&gt;&#13;
+	&lt;/g:evaluate&gt;&#13;
+	&lt;html lang="en" data-critters-container="" class="${theme}"&gt;&#13;
+&#13;
+	&lt;head&gt;&#13;
+		&#13;
+		&lt;script&gt;&#13;
+			window.FC = JSON.parse('$[webApp]');&#13;
+		&lt;/script&gt;&#13;
+		&lt;meta charset="utf-8"&gt;&#13;
+		&lt;/meta&gt;&#13;
+		&lt;title&gt;Fc&lt;/title&gt;&#13;
+		&lt;base href="/"&gt;&#13;
+		&lt;/base&gt;&#13;
+		&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;&#13;
+		&lt;/meta&gt;&#13;
+		&lt;link rel="icon" type="image/x-icon" href="favicon.ico"&gt;&#13;
+		&lt;/link&gt;&#13;
+		&lt;!-- &lt;g:requires name="x_509925_fc.json_viewer.jsdbx" /&gt; --&gt;&#13;
+&#13;
+		&lt;link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"&gt;&#13;
+		&lt;/link&gt;&#13;
+		&lt;script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"&gt;&lt;/script&gt;&#13;
+		&lt;script src="/scripts/glide-amb-client-bundle.min.js" type="text/javascript"&gt;&lt;/script&gt;&#13;
+		&lt;script src="https://unpkg.com/@nuvolo/sn-socket@1.0.1/dist/sn-socket.min.js" type="text/javascript"&gt;&lt;/script&gt;&#13;
+		&lt;link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css"&gt;&#13;
+		&lt;/link&gt;&#13;
+		&lt;script src="https://unpkg.com/mdui@2/mdui.global.js"&gt;&lt;/script&gt;&#13;
+		&lt;script src="https://code.highcharts.com/highcharts.js"&gt;&lt;/script&gt;&#13;
+&#13;
+		&lt;link rel="stylesheet" href="/api/x_509925_fc/app/resource/styles.css%20"&gt;&#13;
+		&lt;/link&gt;&#13;
+		&lt;link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css"&gt;&#13;
+		&lt;/link&gt;&#13;
+&#13;
+		&lt;script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"&gt;&lt;/script&gt;&#13;
+		&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.bubble.css" /&gt;&#13;
+&#13;
+	&lt;/head&gt;&#13;
+&#13;
+	&lt;body class="mat-typography mat-body ${theme}"&gt;&#13;
+		&lt;style&gt;&#13;
+			${config}&#13;
+		&lt;/style&gt;&#13;
+		&lt;style&gt;&#13;
+			form{&#13;
+					margin: 0px !important;&#13;
+				}&#13;
+		&lt;/style&gt;&#13;
+		&lt;app-root&gt;&lt;/app-root&gt;&#13;
+		&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.js"&gt;&lt;/script&gt;&#13;
+		&lt;script&gt;&#13;
+			window.marked = marked;&#13;
+			console.log(window.marked);&#13;
+			require.config({&#13;
+                paths: {&#13;
+                    'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs'&#13;
+                }&#13;
+            });&#13;
+            require(['vs/editor/editor.main'], function() {&#13;
+                window.monaco = monaco;&#13;
+            });&#13;
+		&lt;/script&gt;&#13;
+		&lt;script src="/api/x_509925_fc/app/resource/runtime.js%20" type="module"&gt;&lt;/script&gt;&#13;
+		&lt;script src="/api/x_509925_fc/app/resource/polyfills.js%20" type="module"&gt;&lt;/script&gt;&#13;
+		&lt;script src="/api/x_509925_fc/app/resource/main.js%20" type="module"&gt;&lt;/script&gt;&#13;
+		&lt;script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"&gt;&lt;/script&gt;&#13;
+	&lt;/body&gt;&#13;
+&#13;
+	&lt;/html&gt;&#13;
+&#13;
+&#13;
+&lt;/j:jelly&gt;</html>
+        <name>core</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-02 18:10:20</sys_created_on>
+        <sys_id>b4e03557978f8e90e12c3eb0f053af2f</sys_id>
+        <sys_mod_count>162</sys_mod_count>
+        <sys_name>core</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_ui_page_b4e03557978f8e90e12c3eb0f053af2f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-18 04:19:53</sys_updated_on>
+    </sys_ui_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>b4e03557978f8e90e12c3eb0f053af2f</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-27 14:00:57</sys_created_on>
+        <sys_id>e40a1bbc83a19610926492b6feaad34f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-27 14:00:57</sys_updated_on>
+        <table>sys_ui_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

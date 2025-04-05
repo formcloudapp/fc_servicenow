@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_uib_screen_test_values">
+    <sys_uib_screen_test_values action="INSERT_OR_UPDATE">
+        <macroponent_config>{
+    "029f04e053610110ac9bddeeff7b1294": {
+        "inputSysId": "6bc1747a835c5e10926492b6feaad304",
+        "inputTable": "sc_req_item"
+    },
+    "365c0e890767111017b703767cd3008e": {},
+    "table": "task",
+    "sysId": "005a6a0783d8de10926492b6feaad353"
+}</macroponent_config>
+        <screen display_value="Default">073e73fe97fdc250e12c3eb0f053af1b</screen>
+        <sys_class_name>sys_uib_screen_test_values</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-30 11:51:38</sys_created_on>
+        <sys_id>033e73fe97fdc250e12c3eb0f053af1f</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_uib_screen_test_values_033e73fe97fdc250e12c3eb0f053af1f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-09 13:37:39</sys_updated_on>
+    </sys_uib_screen_test_values>
+</record_update>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCUserRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCUserRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for managing user data.
+ * @class
+ * @extends FCRepository
+ */
+var FCUserRepository = Class.create();
+FCUserRepository.prototype = Object.extendsObject(FCRepository, {
+    /**
+     * Initializes a new instance of the FCUserRepository.
+     * @constructor
+     * @param {boolean} overrideACL - Determines whether to use GlideRecord (true) or GlideRecordSecure (false) for database access.
+     */
+    initialize: function (overrideACL) {
+        FCRepository.prototype.initialize.call(this, 'sys_user', overrideACL);
+    },
+
+    /**
+     * Checks if a user exists in the database based on their email address.
+     * @param {string} email - The email address to check for the existence of a user.
+     * @returns {boolean} Returns true if a user with the given email address exists, false otherwise.
+     */
+    isExistsByEmail: function (email) {
+        this.addQuery('email=' + email);
+        this.setLimit(1);
+        var result = this.getMultiple();
+        return result.getRowCount() > 0;
+    },
+
+    /**
+     * Checks if a user is a supervisor by checking if any other users have the input user as their manager in the User record.
+     * @param {string} userId - The sys_id of the user record to check for.
+     * @returns {boolean} Returns true if a user is a supervisor, false otherwise.
+     */
+    isSupervisor: function (userId) {
+        this.addQuery('active=true^manager=' + userId);
+        this.setLimit(1);
+        var result = this.getMultiple();
+        return result.getRowCount() > 0;
+    },
+	
+	isHRSupervisor: function (userId) {
+		var hrIds = new GroupMemberRepository(true).addQuery('groupINfc1585e887a94610b9580d0acebb3548,723aa84f5ba02200502f6ede91f91aea,6a0fb82d8736b910b9580d0acebb3551,84ec882d87f48610b9580d0acebb3570,1d37106d87b2b910b9580d0acebb3502')
+        this.addQuery('active=true^manager=' + userId);
+        this.setLimit(1);
+        var result = this.getMultiple();
+        return result.getRowCount() > 0;
+    },
+
+
+    /**
+     * Retrieve user profile by sys_id.
+     * @param {string} sysId - The sys_id of the user.
+     * @returns {GlideRecord} Returns GlideRecord of user profile.
+     */
+    getById: function (sysId) {
+        this.addQuery('sys_id=' + sysId);
+        return this.getSingle();
+    },
+
+    /**
+     * Retrieve a user's record by their email address.
+     * @param {string} email - The email address of the user.
+     * @returns {GlideRecord} Returns GlideRecord of the user profile associated with the specified email.
+     */
+    getByEmail: function (email) {
+        this.addQuery('email=' + email.trim());
+        return this.getSingle();
+    },
+
+    /**
+     * Retrieves a user's identifier based on a hash of their SSN and date of birth.
+     * @param {string} ssn - The social security number of the user.
+     * @param {string} dob - The date of birth of the user.
+     * @returns {string|null} Returns the user identifier if a match is found, otherwise returns null.
+     */
+    getUserByHash: function (ssn, dob) {
+        try {
+            //nameSTARTSWITHAaron Choi^emailENDSWITH@usdoj^active=true
+            var keyGr = new NFCKeyRepository(true)
+                .addQuery('user.active=true^user.emailENDSWITH@usdoj.gov^static=' + dob)
+                .getMultiple();
+
+            while (keyGr.next()) {
+                var hash = new FCEncryptionUtility().generateHash(
+                    ssn,
+                    keyGr.getValue('value')
+                );
+                if (
+                    keyGr.getDisplayValue('user.x_g_dojo_hr_nfc_identifier') == hash
+                ) {
+                    return keyGr.getValue('user');
+                } else {
+                    return keyGr.getDisplayValue('user.x_g_dojo_hr_nfc_identifier')+ ':' + hash;
+                }
+            }
+            return null;
+        } catch (err) {
+            throw new Error(ssn + ':' + dob);
+        }
+    },
+
+    /** @type {string} The type of the repository. */
+    type: 'FCUserRepository',
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-16 01:07:14</sys_created_on>
+        <sys_id>2b6d6fbd97ba0650e12c3eb0f053af18</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>FCUserRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_2b6d6fbd97ba0650e12c3eb0f053af18</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:46</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>2b6d6fbd97ba0650e12c3eb0f053af18</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:03:03</sys_created_on>
+        <sys_id>c8be585383b1d610926492b6feaad3b3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:03:03</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

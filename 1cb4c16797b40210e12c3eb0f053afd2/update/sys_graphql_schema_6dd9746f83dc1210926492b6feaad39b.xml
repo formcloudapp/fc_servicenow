@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_schema">
+    <sys_graphql_schema action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <application_namespace>x509925Fc</application_namespace>
+        <contextual_acl_max_depth>3</contextual_acl_max_depth>
+        <enforce_acl/>
+        <name>Catalog</name>
+        <namespace>catalog</namespace>
+        <paths>DisplayableBool:display_value,DisplayableBool:value,DisplayableFloat:display_value,DisplayableFloat:value,DisplayableInt:display_value,DisplayableInt:value,DisplayableReference:display_value,DisplayableReference:reference_table,DisplayableReference:value,DisplayableString:display_value,DisplayableString:reference_table,DisplayableString:value,JSONString:value,LabelValue:label,LabelValue:value,Query:getCount,Query:getMultiple,Query:getSingle,sc_cat_item:access_type,sc_cat_item:active,sc_cat_item:availability,sc_cat_item:billable,sc_cat_item:category,sc_cat_item:checked_out,sc_cat_item:cost,sc_cat_item:custom_cart,sc_cat_item:delivery_plan,sc_cat_item:delivery_plan_script,sc_cat_item:delivery_time,sc_cat_item:description,sc_cat_item:display_price_property,sc_cat_item:entitlement_script,sc_cat_item:flow_designer_flow,sc_cat_item:fulfillment_automation_level,sc_cat_item:group,sc_cat_item:hide_sp,sc_cat_item:icon,sc_cat_item:ignore_price,sc_cat_item:image,sc_cat_item:list_price,sc_cat_item:location,sc_cat_item:make_item_non_conversational,sc_cat_item:mandatory_attachment,sc_cat_item:meta,sc_cat_item:mobile_hide_price,sc_cat_item:mobile_picture,sc_cat_item:mobile_picture_type,sc_cat_item:model,sc_cat_item:name,sc_cat_item:no_attachment_v2,sc_cat_item:no_cart,sc_cat_item:no_cart_v2,sc_cat_item:no_delivery_time_v2,sc_cat_item:no_order,sc_cat_item:no_order_now,sc_cat_item:no_proceed_checkout,sc_cat_item:no_quantity,sc_cat_item:no_quantity_v2,sc_cat_item:no_save_as_draft,sc_cat_item:no_search,sc_cat_item:no_wishlist_v2,sc_cat_item:omit_price,sc_cat_item:order,sc_cat_item:ordered_item_link,sc_cat_item:owner,sc_cat_item:picture,sc_cat_item:preview,sc_cat_item:price,sc_cat_item:published_ref,sc_cat_item:recurring_frequency,sc_cat_item:recurring_price,sc_cat_item:request_method,sc_cat_item:roles,sc_cat_item:sc_catalogs,sc_cat_item:sc_ic_item_staging,sc_cat_item:sc_ic_version,sc_cat_item:sc_template,sc_cat_item:short_description,sc_cat_item:show_variable_help_on_load,sc_cat_item:start_closed,sc_cat_item:state,sc_cat_item:sys_class_name,sc_cat_item:sys_created_by,sc_cat_item:sys_created_on,sc_cat_item:sys_id,sc_cat_item:sys_mod_count,sc_cat_item:sys_name,sc_cat_item:sys_package,sc_cat_item:sys_policy,sc_cat_item:sys_scope,sc_cat_item:sys_update_name,sc_cat_item:sys_updated_by,sc_cat_item:sys_updated_on,sc_cat_item:taxonomy_topic,sc_cat_item:template,sc_cat_item:template_manager_roles,sc_cat_item:type,sc_cat_item:use_sc_layout,sc_cat_item:variables,sc_cat_item:vendor,sc_cat_item:version,sc_cat_item:visible_bundle,sc_cat_item:visible_guide,sc_cat_item:visible_standalone,sc_cat_item:workflow,sc_req_item:active,sc_req_item:activity_due,sc_req_item:additional_assignee_list,sc_req_item:approval,sc_req_item:approval_history,sc_req_item:approval_set,sc_req_item:assigned_to,sc_req_item:assignment_group,sc_req_item:backordered,sc_req_item:billable,sc_req_item:business_duration,sc_req_item:business_service,sc_req_item:calendar_duration,sc_req_item:cat_item,sc_req_item:close_notes,sc_req_item:closed_at,sc_req_item:closed_by,sc_req_item:cmdb_ci,sc_req_item:comments,sc_req_item:comments_and_work_notes,sc_req_item:company,sc_req_item:configuration_item,sc_req_item:contact_type,sc_req_item:context,sc_req_item:contract,sc_req_item:correlation_display,sc_req_item:correlation_id,sc_req_item:delivery_plan,sc_req_item:delivery_task,sc_req_item:description,sc_req_item:due_date,sc_req_item:escalation,sc_req_item:estimated_delivery,sc_req_item:expected_start,sc_req_item:flow_context,sc_req_item:follow_up,sc_req_item:group_list,sc_req_item:impact,sc_req_item:knowledge,sc_req_item:location,sc_req_item:made_sla,sc_req_item:number,sc_req_item:opened_at,sc_req_item:opened_by,sc_req_item:order,sc_req_item:order_guide,sc_req_item:parent,sc_req_item:price,sc_req_item:priority,sc_req_item:quantity,sc_req_item:reassignment_count,sc_req_item:recurring_frequency,sc_req_item:recurring_price,sc_req_item:rejection_goto,sc_req_item:request,sc_req_item:requested_for,sc_req_item:route_reason,sc_req_item:sc_catalog,sc_req_item:service_offering,sc_req_item:short_description,sc_req_item:skills,sc_req_item:sla_due,sc_req_item:sn_esign_document,sc_req_item:sn_esign_esignature_configuration,sc_req_item:sn_hr_le_activity,sc_req_item:stage,sc_req_item:state,sc_req_item:sys_class_name,sc_req_item:sys_created_by,sc_req_item:sys_created_on,sc_req_item:sys_domain,sc_req_item:sys_domain_path,sc_req_item:sys_id,sc_req_item:sys_mod_count,sc_req_item:sys_updated_by,sc_req_item:sys_updated_on,sc_req_item:task_effective_number,sc_req_item:time_worked,sc_req_item:universal_request,sc_req_item:upon_approval,sc_req_item:upon_reject,sc_req_item:urgency,sc_req_item:user_input,sc_req_item:variables,sc_req_item:watch_list,sc_req_item:wf_activity,sc_req_item:work_end,sc_req_item:work_notes,sc_req_item:work_notes_list,sc_req_item:work_start,sys_db_object:columns,sys_db_object:label,sys_db_object:name,sys_db_object:sys_id,sys_dictionary:column_label,sys_dictionary:element,sys_dictionary:internal_type,sys_dictionary:reference,sys_dictionary:sys_id,sys_graphql_resolver:name,sys_graphql_resolver:schema,sys_graphql_resolver:script,sys_graphql_resolver:sys_id,sys_graphql_resolver_mapping:path,sys_graphql_resolver_mapping:sys_id,sys_graphql_schema:application_namespace,sys_graphql_schema:contextual_acl_max_depth,sys_graphql_schema:name,sys_graphql_schema:namespace,sys_graphql_schema:requires_acl_authorization,sys_graphql_schema:requires_authentication,sys_graphql_schema:schema,sys_graphql_schema:sys_id</paths>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <schema># START BASE TYPES HERE&#13;
+schema {&#13;
+	query: Query&#13;
+}&#13;
+&#13;
+type Query {&#13;
+	getSingle(tableName: String, queryConditions: String): base&#13;
+	getMultiple(tableName: String, queryConditions: String, pagination: Pagination): [base]&#13;
+	getCount(tableName: String, queryConditions: String): Int&#13;
+}&#13;
+&#13;
+type LabelValue{&#13;
+	value: String&#13;
+	label: String&#13;
+}&#13;
+&#13;
+type JSONString{&#13;
+	value: String&#13;
+}&#13;
+&#13;
+type DisplayableString{&#13;
+	value: String&#13;
+	display_value: String&#13;
+	reference_table: String&#13;
+}&#13;
+&#13;
+type DisplayableReference{&#13;
+	value: String&#13;
+	display_value: String&#13;
+	reference_table: String&#13;
+}&#13;
+&#13;
+type DisplayableBool{&#13;
+	value: Boolean&#13;
+	display_value: String&#13;
+}&#13;
+&#13;
+type DisplayableInt{&#13;
+	value: Int&#13;
+	display_value: String&#13;
+}&#13;
+&#13;
+type DisplayableFloat{&#13;
+	value: Float&#13;
+	display_value: String&#13;
+}&#13;
+&#13;
+input Pagination {&#13;
+	offset: Int&#13;
+	limit: Int&#13;
+}&#13;
+&#13;
+interface base{&#13;
+	sys_id: DisplayableString&#13;
+}&#13;
+&#13;
+type sys_graphql_schema implements base{&#13;
+	sys_id: DisplayableString&#13;
+	schema: DisplayableString&#13;
+	name: DisplayableString&#13;
+	application_namespace: DisplayableString&#13;
+	namespace: DisplayableString&#13;
+	requires_authentication: DisplayableBool&#13;
+	requires_acl_authorization: DisplayableBool&#13;
+	contextual_acl_max_depth: DisplayableInt&#13;
+}&#13;
+&#13;
+type sys_graphql_resolver_mapping implements base{&#13;
+	sys_id: DisplayableString&#13;
+	path: DisplayableString&#13;
+}&#13;
+&#13;
+type sys_graphql_resolver implements base {&#13;
+	sys_id: DisplayableString&#13;
+	name: DisplayableString&#13;
+	schema: DisplayableReference&#13;
+	script: DisplayableString&#13;
+}&#13;
+&#13;
+type sys_db_object implements base{&#13;
+	sys_id: DisplayableString&#13;
+	label: DisplayableString&#13;
+	name: DisplayableString&#13;
+	columns: [sys_dictionary]&#13;
+}&#13;
+&#13;
+type sys_dictionary{&#13;
+	sys_id: DisplayableString&#13;
+	element: DisplayableString&#13;
+	internal_type: DisplayableString&#13;
+	column_label: DisplayableString&#13;
+	reference: DisplayableString&#13;
+}&#13;
+# END BASE TYPES HERE&#13;
+&#13;
+# START CUSTOM TYPES HERE
+type sc_cat_item implements base {
+  variables: [JSONString]
+  access_type: DisplayableString
+  active: DisplayableBool
+  sys_scope: DisplayableReference
+  sc_template: DisplayableReference
+  availability: DisplayableString
+  billable: DisplayableBool
+  custom_cart: DisplayableReference
+  sc_catalogs: DisplayableString
+  category: DisplayableReference
+  checked_out: DisplayableString
+  sys_class_name: DisplayableString
+  mobile_picture: DisplayableString
+  mobile_picture_type: DisplayableString
+  cost: DisplayableFloat
+  sys_created_on: DisplayableString
+  sys_created_by: DisplayableString
+  sc_ic_item_staging: DisplayableReference
+  delivery_plan_script: DisplayableString
+  delivery_time: DisplayableString
+  description: DisplayableString
+  sys_name: DisplayableString
+  display_price_property: DisplayableString
+  entitlement_script: DisplayableString
+  delivery_plan: DisplayableReference
+  show_variable_help_on_load: DisplayableBool
+  flow_designer_flow: DisplayableReference
+  fulfillment_automation_level: DisplayableString
+  group: DisplayableReference
+  no_cart_v2: DisplayableBool
+  no_wishlist_v2: DisplayableBool
+  no_save_as_draft: DisplayableBool
+  no_attachment_v2: DisplayableBool
+  no_delivery_time_v2: DisplayableBool
+  hide_sp: DisplayableBool
+  mobile_hide_price: DisplayableBool
+  no_quantity_v2: DisplayableBool
+  icon: DisplayableString
+  ignore_price: DisplayableBool
+  image: DisplayableString
+  list_price: DisplayableString
+  location: DisplayableReference
+  make_item_non_conversational: DisplayableBool
+  mandatory_attachment: DisplayableBool
+  meta: DisplayableString
+  model: DisplayableReference
+  name: DisplayableString
+  no_cart: DisplayableBool
+  no_order: DisplayableBool
+  no_order_now: DisplayableBool
+  no_proceed_checkout: DisplayableBool
+  no_quantity: DisplayableBool
+  no_search: DisplayableBool
+  omit_price: DisplayableBool
+  order: DisplayableInt
+  ordered_item_link: DisplayableReference
+  owner: DisplayableReference
+  sys_package: DisplayableReference
+  picture: DisplayableString
+  preview: DisplayableString
+  price: DisplayableString
+  sys_policy: DisplayableString
+  published_ref: DisplayableReference
+  sc_ic_version: DisplayableInt
+  recurring_price: DisplayableString
+  recurring_frequency: DisplayableString
+  request_method: DisplayableString
+  roles: DisplayableString
+  short_description: DisplayableString
+  start_closed: DisplayableBool
+  state: DisplayableString
+  sys_id: DisplayableString
+  taxonomy_topic: DisplayableReference
+  template: DisplayableReference
+  template_manager_roles: DisplayableString
+  type: DisplayableString
+  sys_update_name: DisplayableString
+  sys_updated_on: DisplayableString
+  sys_updated_by: DisplayableString
+  sys_mod_count: DisplayableInt
+  use_sc_layout: DisplayableBool
+  vendor: DisplayableReference
+  version: DisplayableInt
+  visible_standalone: DisplayableBool
+  visible_bundle: DisplayableBool
+  visible_guide: DisplayableBool
+  workflow: DisplayableReference
+}
+
+type sc_req_item implements base {
+  active: DisplayableBool
+  activity_due: DisplayableString
+  additional_assignee_list: DisplayableString
+  approval: DisplayableString
+  approval_history: DisplayableString
+  approval_set: DisplayableString
+  assigned_to: DisplayableReference
+  assignment_group: DisplayableReference
+  backordered: DisplayableBool
+  billable: DisplayableBool
+  business_duration: DisplayableString
+  business_service: DisplayableReference
+  calendar_duration: DisplayableString
+  cat_item: DisplayableReference
+  closed_at: DisplayableString
+  closed_by: DisplayableReference
+  close_notes: DisplayableString
+  cmdb_ci: DisplayableReference
+  comments: DisplayableString
+  comments_and_work_notes: DisplayableString
+  company: DisplayableReference
+  configuration_item: DisplayableReference
+  contact_type: DisplayableString
+  context: DisplayableReference
+  contract: DisplayableReference
+  correlation_display: DisplayableString
+  correlation_id: DisplayableString
+  delivery_plan: DisplayableReference
+  delivery_task: DisplayableReference
+  description: DisplayableString
+  due_date: DisplayableString
+  escalation: DisplayableInt
+  estimated_delivery: DisplayableString
+  expected_start: DisplayableString
+  flow_context: DisplayableReference
+  follow_up: DisplayableString
+  group_list: DisplayableString
+  impact: DisplayableInt
+  knowledge: DisplayableBool
+  location: DisplayableReference
+  made_sla: DisplayableBool
+  number: DisplayableString
+  opened_at: DisplayableString
+  opened_by: DisplayableReference
+  order: DisplayableInt
+  order_guide: DisplayableReference
+  parent: DisplayableReference
+  price: DisplayableString
+  priority: DisplayableInt
+  quantity: DisplayableInt
+  reassignment_count: DisplayableInt
+  recurring_frequency: DisplayableString
+  recurring_price: DisplayableString
+  rejection_goto: DisplayableReference
+  request: DisplayableReference
+  requested_for: DisplayableReference
+  route_reason: DisplayableInt
+  sc_catalog: DisplayableReference
+  service_offering: DisplayableReference
+  short_description: DisplayableString
+  skills: DisplayableString
+  sla_due: DisplayableString
+  sn_esign_document: DisplayableReference
+  sn_esign_esignature_configuration: DisplayableReference
+  sn_hr_le_activity: DisplayableReference
+  stage: DisplayableString
+  state: DisplayableInt
+  sys_class_name: DisplayableString
+  sys_created_by: DisplayableString
+  sys_created_on: DisplayableString
+  sys_domain: DisplayableString
+  sys_domain_path: DisplayableString
+  sys_id: DisplayableString
+  sys_mod_count: DisplayableInt
+  sys_updated_by: DisplayableString
+  sys_updated_on: DisplayableString
+  task_effective_number: DisplayableString
+  time_worked: DisplayableString
+  universal_request: DisplayableReference
+  upon_approval: DisplayableString
+  upon_reject: DisplayableString
+  urgency: DisplayableInt
+  user_input: DisplayableString
+  variables: DisplayableString
+  watch_list: DisplayableString
+  wf_activity: DisplayableReference
+  work_end: DisplayableString
+  work_notes: DisplayableString
+  work_notes_list: DisplayableString
+  work_start: DisplayableString
+}
+# END CUSTOM TYPES HERE</schema>
+        <sys_class_name>sys_graphql_schema</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-03 12:06:56</sys_created_on>
+        <sys_id>6dd9746f83dc1210926492b6feaad39b</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>Catalog</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_schema_6dd9746f83dc1210926492b6feaad39b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-05 14:37:01</sys_updated_on>
+        <type_names>base</type_names>
+    </sys_graphql_schema>
+</record_update>

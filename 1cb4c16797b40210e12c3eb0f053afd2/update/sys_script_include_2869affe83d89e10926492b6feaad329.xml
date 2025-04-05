@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCBaseQuestionRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCBaseQuestionRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * @class
+ * Repository for interacting with the HR Case table in ServiceNow.
+ * @extends Repository
+ */
+var FCBaseQuestionRepository = Class.create();
+FCBaseQuestionRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initializes the QuestionRepository.
+	 * @param {boolean} [overrideACL=false] - Determines whether to use GlideRecord (true) or GlideRecordSecure (false).
+	 */
+	initialize: function (overrideACL) {
+		this.moduleName = 'FCBaseQuestionRepository';
+		FCRepository.prototype.initialize.call(this, 'question', overrideACL);
+	},
+
+
+	/** 
+	 * Type definition for easier identification of this script include.
+	 * @type {string}
+	 */
+	type: 'FCBaseQuestionRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-01 16:58:15</sys_created_on>
+        <sys_id>2869affe83d89e10926492b6feaad329</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>FCBaseQuestionRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_2869affe83d89e10926492b6feaad329</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-25 01:02:24</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>2869affe83d89e10926492b6feaad329</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-14 04:28:24</sys_created_on>
+        <sys_id>01938ee283bdd210926492b6feaad39d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-14 04:28:24</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

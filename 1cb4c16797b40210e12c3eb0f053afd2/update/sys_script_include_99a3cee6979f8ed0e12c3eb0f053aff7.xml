@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCPersonaUtility</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCPersonaUtility</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Utility class for handling persona-related operations.
+ */
+var FCPersonaUtility = Class.create();
+FCPersonaUtility.prototype = {
+    /**
+     * Initializes the FCPersonaUtility class.
+     */
+    initialize: function() {},
+
+    /**
+     * Retrieves all personas and evaluates their conditions based on provided parameters.
+     *
+     * @param {Object} params - An object containing parameters to be used for condition evaluation.
+     * @returns {Object} A mapping of persona names to their evaluated condition results.
+     *                  Persona names are formatted in lowercase with spaces replaced by underscores.
+     *                  If a condition is `nil`, the result for that persona is `false`.
+     */
+    getAllPersonas: function(params) {
+        var gr = new FCTaxonomyRepository(true).addQuery('type=persona').getMultiple();
+        var result = {};
+
+        while (gr.next()) {
+            var evaluator = new GlideScopedEvaluator();
+            evaluator.putVariable('current', gr);
+            evaluator.putVariable('params', params);
+
+            var condition = evaluator.evaluateScript(gr, 'condition');
+            var personaName = gr.getValue('name').replaceAll(' ', '_').toLowerCase();
+
+            // Directly assign the condition result, defaulting to `false` if it's nil
+            result[personaName] = gs.nil(condition) ? false : condition;
+        }
+
+        return result;
+    },
+
+    /**
+     * Checks if the specified name corresponds to a valid persona and evaluates its condition.
+     *
+     * @param {string} name - The name of the persona to check.
+     * @param {Object} [params={}] - Optional parameters to be passed for condition evaluation.
+     * @returns {boolean|string} Returns `false` if the persona is invalid or the condition is `nil`.
+     *                           Otherwise, returns the evaluated condition result.
+     */
+    isPersona: function(name, params) {
+        if (gs.nil(name)) return false;
+
+        var gr = new FCTaxonomyRepository(true)
+            .addQuery('type=persona^name=' + name)
+            .getSingle();
+
+        if (!gr) return false;
+
+        var evaluator = new GlideScopedEvaluator();
+        evaluator.putVariable('current', gr);
+        evaluator.putVariable('params', params || {});
+
+        var condition = evaluator.evaluateScript(gr, 'condition');
+        return gs.nil(condition) ? false : condition;
+    },
+
+    type: 'FCPersonaUtility'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-12 21:56:09</sys_created_on>
+        <sys_id>99a3cee6979f8ed0e12c3eb0f053aff7</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>FCPersonaUtility</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_99a3cee6979f8ed0e12c3eb0f053aff7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-06 01:20:26</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>99a3cee6979f8ed0e12c3eb0f053aff7</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 04:58:39</sys_created_on>
+        <sys_id>6fad94df8371d610926492b6feaad37b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 04:58:39</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

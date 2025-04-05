@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_catalog">
+    <sc_catalog action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>IT Service Catalog</description>
+        <desktop_continue_shopping/>
+        <desktop_home_page/>
+        <desktop_image/>
+        <editors/>
+        <enable_wish_list>false</enable_wish_list>
+        <manager/>
+        <sys_class_name>sc_catalog</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-31 18:38:04</sys_created_on>
+        <sys_id>7cc67aea83d05e10926492b6feaad3c5</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>IT Service</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sc_catalog_7cc67aea83d05e10926492b6feaad3c5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-29 14:25:38</sys_updated_on>
+        <title>IT Service</title>
+    </sc_catalog>
+    <sys_translated_text action="delete_multiple" query="documentkey=7cc67aea83d05e10926492b6feaad3c5"/>
+</record_update>

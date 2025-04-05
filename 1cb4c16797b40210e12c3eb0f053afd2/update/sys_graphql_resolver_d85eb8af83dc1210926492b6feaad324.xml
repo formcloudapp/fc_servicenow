@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver">
+    <sys_graphql_resolver action="INSERT_OR_UPDATE">
+        <name>getCount</name>
+        <schema display_value="Catalog">6dd9746f83dc1210926492b6feaad39b</schema>
+        <script><![CDATA[(function process( /*ResolverEnvironment*/ env) {
+
+    var tableName = env.getArguments().tableName;
+    if (tableName.indexOf(',') > -1) {
+        var total = 0;
+        var names = tableName.split(',');
+        names.forEach(function(name) {
+            var aggr = new GlideAggregate(name);
+            aggr.addEncodedQuery(env.getArguments().queryConditions);
+            aggr.addAggregate('COUNT');
+            aggr.query();
+            aggr.next();
+            total += parseInt(aggr.getAggregate('COUNT'));
+        });
+		return total;
+    } else {
+        var aggr = new GlideAggregate(tableName);
+        aggr.addEncodedQuery(env.getArguments().queryConditions);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+        return aggr.getAggregate('COUNT');
+    }
+
+})(env);]]></script>
+        <sys_class_name>sys_graphql_resolver</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-03 12:25:42</sys_created_on>
+        <sys_id>d85eb8af83dc1210926492b6feaad324</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>getCount</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_resolver_d85eb8af83dc1210926492b6feaad324</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-03 12:25:42</sys_updated_on>
+    </sys_graphql_resolver>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>d85eb8af83dc1210926492b6feaad324</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-03 12:25:42</sys_created_on>
+        <sys_id>625e30af83dc1210926492b6feaad382</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-03 12:25:42</sys_updated_on>
+        <table>sys_graphql_resolver</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

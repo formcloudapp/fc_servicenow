@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCServiceCatalogItemRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCServiceCatalogItemRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for chocies table.
+ * @class
+ * @extends FCRepository
+ */
+var FCServiceCatalogItemRepository = Class.create();
+FCServiceCatalogItemRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initialize a new instance of the ServiceCategoryRepository.
+	 * @constructor
+	 * @param {boolean} overrideACL - Flag to override Access Control List.
+	 */
+	initialize: function (overrideACL) {
+		FCRepository.prototype.initialize.call(this, 'x_509925_fc_catalog_item', overrideACL);
+	},
+
+	getItem: function (id) {
+		var result = {
+			questions: [],
+			item: {}
+		};
+		result.item = this.getById(id, true);
+		var variablesGr = new FCServiceCatalogItemVariableRepository(true)
+			.getVariablesForItem(id);
+
+		while (variablesGr.next()) {
+			result.questions.push(new FCServiceCatalogItemRepository(true)._convertVariableToQuestion(variablesGr));
+		}
+
+		var variableSetsGr = new FCServiceCatalogItemVariableSetRepository(true).getVariableSetsForItem(id);
+		var setIds = [];
+		while(variableSetsGr.next()){
+			setIds.push(variableSetsGr.getUniqueValue());
+		}
+
+		var variablesFromSetsGr = new FCServiceCatalogItemVariableRepository(true)
+			.getVariablesForItemSets(ids);
+		while(variablesFromSetsGr.next()){
+			result.questions.push(new FCServiceCatalogItemRepository(true)._convertVariableToQuestion(variablesFromSetsGr));
+		}
+		return result;
+	},
+
+	getFormById: function (sysId) {
+		this.addQuery('sys_id=' + sysId);
+		var itemObj = this.getSingle(true);
+
+		//Get all variables if any
+		itemObj._variables = new FCServiceCatalogItemVariableRepository(true)
+			.addQuery('cat_item=' + sysId)
+			.getMultiple(true);
+		return itemObj;
+	},
+
+	getActiveByCategory: function (catId, isSerialized) {
+		this.addQuery('active=true^category=' + catId);
+		return this.getMultiple(isSerialized);
+	},
+
+	getPrice: function (sysId, options) {
+		this.addQuery('sys_id=' + sysId);
+		var itemGr = this.getSingle();
+
+		//Get all variables
+		var variablesGr = new FCServiceCatalogItemVariableRepository(true)
+			.getVariablesForItem(itemGr.getUniqueValue());
+
+		var optionsTotal = 0.00;
+
+		while (variablesGr.next()) {
+			//Get all options
+			for (prop in options) {
+				if (!gs.nil(options[prop])) {
+					var choices = new FCQuestionChoiceRepository(true)
+						.getChoicesForVariableName(variablesGr.getUniqueValue());
+					choices.forEach(function (choice) {
+						if (choice.value == options[prop]) {
+							optionsTotal += choice.misc.value;
+						}
+
+					});
+				}
+			}
+		}
+		return optionsTotal;
+	},
+
+	/** @type {string} The type of the repository. */
+	type: 'FCServiceCatalogItemRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-30 01:38:45</sys_created_on>
+        <sys_id>bd33424683189a10926492b6feaad315</sys_id>
+        <sys_mod_count>26</sys_mod_count>
+        <sys_name>FCServiceCatalogItemRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_bd33424683189a10926492b6feaad315</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-21 06:10:37</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>bd33424683189a10926492b6feaad315</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 19:02:30</sys_created_on>
+        <sys_id>78c2efb38350d210926492b6feaad367</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-04 19:02:30</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

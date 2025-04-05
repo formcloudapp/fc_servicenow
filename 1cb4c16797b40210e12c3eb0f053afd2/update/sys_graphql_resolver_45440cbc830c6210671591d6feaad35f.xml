@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver">
+    <sys_graphql_resolver action="INSERT_OR_UPDATE">
+        <name>_getReference</name>
+        <schema display_value="Task">286bea0983e45210926492b6feaad396</schema>
+        <script><![CDATA[(function process(/*ResolverEnvironment*/ env) {
+
+	var source = env.getSource();
+	try {
+		var repo = new FCRepository(source.reference_table);
+		repo.addQuery('sys_id=' + source.value);
+		var gr = repo.getSingle();
+		var className = gr.getValue('sys_class_name');
+		if (gs.nil(className) || className == source.reference_table) {
+			return gr;
+		} else {
+			var repo2 = new Repository(gr.getValue('sys_class_name'));
+			repo2.addQuery('sys_id=' + source.value);
+			return repo2.getSingle();
+		}
+	}catch(err){
+		return {
+			value: 'ERROR',
+			display_value: err.message
+		}
+	}
+	
+
+})(env);]]></script>
+        <sys_class_name>sys_graphql_resolver</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 05:04:16</sys_created_on>
+        <sys_id>45440cbc830c6210671591d6feaad35f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>_getReference</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_resolver_45440cbc830c6210671591d6feaad35f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-28 05:04:16</sys_updated_on>
+    </sys_graphql_resolver>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>45440cbc830c6210671591d6feaad35f</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 05:04:16</sys_created_on>
+        <sys_id>f344c8bc830c6210671591d6feaad348</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-28 05:04:16</sys_updated_on>
+        <table>sys_graphql_resolver</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

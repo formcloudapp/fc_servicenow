@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_template">
+    <sc_template action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <available_for/>
+        <cat_item display_value="Catalog Item Builder">91edb87273221010c84e2bb43cf6a7ae</cat_item>
+        <name>Product</name>
+        <short_description/>
+        <sys_class_name>sc_template</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-02 13:02:50</sys_created_on>
+        <sys_id>a51dbbcb83501250926492b6feaad371</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Product</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sc_template_a51dbbcb83501250926492b6feaad371</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-02 13:02:50</sys_updated_on>
+        <use_template_scope>false</use_template_scope>
+    </sc_template>
+    <sys_translated_text action="delete_multiple" query="documentkey=a51dbbcb83501250926492b6feaad371"/>
+</record_update>

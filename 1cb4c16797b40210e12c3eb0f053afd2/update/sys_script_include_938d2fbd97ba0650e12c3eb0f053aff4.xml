@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCQuestionAnswerRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCQuestionAnswerRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for managing choice fields in the database.
+ * @class
+ * @extends FCRepository
+ */
+var FCQuestionAnswerRepository = Class.create();
+FCQuestionAnswerRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initializes a new instance of the FCQuestionAnswerRepository.
+     * @constructor
+     * @param {boolean} overrideACL - Determines whether to use GlideRecord (true) or GlideRecordSecure (false) for database access.
+     */
+    initialize: function(overrideACL) {
+        FCRepository.prototype.initialize.call(this, 'question_answer', overrideACL);
+    },
+
+	getAnswer: function(questionId, tableSysId){
+		this.addQuery('question=' + questionId + '^table_sys_id=' + tableSysId);
+		var qaGr = this.getSingle();
+		if(qaGr){
+			return qaGr.getValue('value');
+		}else{
+			return '';
+		}
+	},
+	
+	updateOrInsert: function(questionId, tableName, tableSysId, value){
+		this.addQuery('question=' + questionId + '^table_sys_id=' + tableSysId);
+		var gr = this.getSingle();
+		
+		var sysId = '';
+		if(gr){
+			sysId = gr.getUniqueValue();
+			gr.setValue('value', value);
+			gr.update();
+		}else{
+			sysId = new FCQuestionAnswerRepository(true).insert({
+				question: questionId,
+				table_sys_id: tableSysId,
+				table_name: tableName,
+				value: value
+			});
+		}
+		
+		return sysId;
+	},
+
+    /**
+     * Retrieves question-answer pairs by the target table sys_id.
+     * @param {string} tableSysId - The sys_id of the target table.
+     * @returns {Array<Object>} An array of objects containing question labels and their corresponding answers.
+     */
+    getByTargetId: function(tableSysId) {
+        this.addQuery('table_sys_id=' + tableSysId + '^ORDERBYquestion.order');
+        var gr = this.getMultiple();
+
+        var result = [];
+        while (gr.next()) {
+            if (!gs.nil(gr.getDisplayValue('value'))) {
+                var questionGr = gr.question.getRefRecord();
+                var obj = {
+					sys_id: gr.getValue('question'),
+                    label: gr.getDisplayValue('question'),
+                    value: gr.getDisplayValue('value')
+                };
+                if (questionGr.getValue('type') == '8') { // Reference type
+                    var refGr = new GlideRecord(questionGr.getValue('reference'));
+                    refGr.get(obj.value);
+                    obj.value = refGr.getDisplayValue();
+                } else if (questionGr.getValue('type') == '10') { // DateTime type
+                    var dt = new GlideDateTime(obj.value);
+                    obj.value = dt.getDisplayValue();
+                } else if (questionGr.getValue('type') == '9') { // Date type
+                    var dt = new GlideDateTime(obj.value);
+                    obj.value = dt.getDate().getByFormat('MM/dd/yyyy');
+                }
+
+                if(questionGr.getUniqueValue() == '42b4c6001baac65034916467624bcb2d'){
+                    try{
+                        obj.value = JSON.parse(obj.value);
+                    }catch(err){
+                        obj.value = [];
+                    }
+                    
+                }
+                result.push(obj);
+            }
+        }
+        return result;
+    },
+
+    /** @type {string} The type of the repository. */
+    type: 'FCQuestionAnswerRepository'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-16 01:07:43</sys_created_on>
+        <sys_id>938d2fbd97ba0650e12c3eb0f053aff4</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>FCQuestionAnswerRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_938d2fbd97ba0650e12c3eb0f053aff4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:44</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>938d2fbd97ba0650e12c3eb0f053aff4</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 04:58:51</sys_created_on>
+        <sys_id>66bdd01383b1d610926492b6feaad367</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 04:58:51</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

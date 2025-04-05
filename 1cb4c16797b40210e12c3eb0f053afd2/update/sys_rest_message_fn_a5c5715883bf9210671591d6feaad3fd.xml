@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_rest_message_fn">
+    <sys_rest_message_fn action="INSERT_OR_UPDATE">
+        <authentication_type>no_authentication</authentication_type>
+        <basic_auth_password/>
+        <basic_auth_profile/>
+        <basic_auth_user/>
+        <content>{"prompt": "Who are you?","top_k": 5}</content>
+        <function_name>Search Vector</function_name>
+        <http_method>post</http_method>
+        <lock>false</lock>
+        <oauth2_profile/>
+        <protocol_name/>
+        <qualified_name>FC AI [ Search Vector ]</qualified_name>
+        <rest_endpoint>http://localhost:8001/search_vector</rest_endpoint>
+        <rest_message display_value="FC AI">fc95715883bf9210671591d6feaad3eb</rest_message>
+        <sys_class_name>sys_rest_message_fn</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-14 13:47:20</sys_created_on>
+        <sys_id>a5c5715883bf9210671591d6feaad3fd</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Search Vector</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_rest_message_fn_a5c5715883bf9210671591d6feaad3fd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-14 14:34:29</sys_updated_on>
+        <use_basic_auth>false</use_basic_auth>
+        <use_mid_server display_value="FC_DEV">7d3fe9dc837f9210671591d6feaad306</use_mid_server>
+        <use_mutual_auth>false</use_mutual_auth>
+    </sys_rest_message_fn>
+</record_update>

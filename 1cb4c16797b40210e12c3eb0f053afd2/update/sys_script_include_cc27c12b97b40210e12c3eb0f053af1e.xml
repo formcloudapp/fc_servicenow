@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCTaskRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCTaskRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * @class
+ * Repository for interacting with the Task table in ServiceNow.
+ * @extends FCRepository
+ */
+var FCTaskRepository = Class.create();
+FCTaskRepository.prototype = Object.extendsObject(FCRepository, {
+
+	CLOSE: 3, // task closed complete state
+	CLOSE_INCOMPLETE: 4, // task closed incomplete state
+	WORK: 2, // task work in progress state
+	CANCEL: 7, // task cancelled state
+
+	/**
+	 * Initializes the FCTaskRepository for the Task table.
+	 * @param {boolean} [overrideACL=false] - Determines whether to use GlideRecord (true) or GlideRecordSecure (false).
+	 */
+	initialize: function (tableName, overrideACL) {
+		// Calling the parent's initialize method with the Task table.
+		var table = tableName || 'task';
+		FCRepository.prototype.initialize.call(this, table, overrideACL);
+	},
+
+	/**
+	 * Retrieves ALL tasks assigned to current user regardless of closed or open.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getAllByAssignedToMe: function (isSerialized) {
+		this.addQuery('assigned_to=' + gs.getUserID());
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieves active tasks assigned to current user.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getActiveByAssignedToMe: function (isSerialized) {
+		this.addQuery('active=true^assigned_to=' + gs.getUserID());
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieves active tasks assigned to current user.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getInactiveByAssignedToMe: function (isSerialized) {
+		this.addQuery('active=false^assigned_to=' + gs.getUserID());
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieves tasks assigned to a specific user.
+	 * @param {string} userId - The sys_id of the user.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getByAssignedTo: function (userId, isSerialized) {
+		this.addQuery('assigned_to=' + userId);
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieves open tasks assigned to a specific user.
+	 * @param {string} userId - The sys_id of the user.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getActiveByAssignedTo: function (userId, isSerialized) {
+		this.addQuery('active=true^assigned_to=' + userId);
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieves closed tasks assigned to a specific user.
+	 * @param {string} userId - The sys_id of the user.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getInactiveByAssignedTo: function (userId, isSerialized) {
+		this.addQuery('active=false^assigned_to=' + userId);
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieves tasks with a specific state.
+	 * @param {string} state - The state of the tasks to fetch.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getByState: function (state, isSerialized) {
+		this.addQuery('state=' + state);
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieve tasks that are nearing their SLA due date.
+	 * @param {int} - Number of days from today.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getSLAComingDue: function (numberOfDays, isSerialized) {
+		var daysFromNow = new GlideDateTime();
+		daysFromNow.addDays(numberOfDays);
+
+		this.addQuery('sla_due>=', new GlideDateTime().getDisplayValue());
+		this.addQuery('sla_due<=', daysFromNow.getDisplayValue());
+
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieve tasks that have already breached their SLA.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getSLABreached: function (isSerialized) {
+		this.addQuery('sla_due<', new GlideDateTime().getDisplayValue());
+
+		return this.getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieve a specific task by its sys_id.
+	 * @param {string} taskId - The sys_id of the task to be retrieved.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {GlideRecord} Returns the GlideRecord of the fetched task.
+	 */
+	getById: function (taskId, isSerialized) {
+		return this.addQuery('sys_id=' + taskId).getSingle(isSerialized);
+	},
+
+	/**
+	 * Close an Task by setting its state to "3".
+	 * @param {string} taskId - The sys_id of the task to be closed.
+	 * @returns {GlideRecord} Returns the GlideRecord of the updated Task.
+	 */
+	closeCompleteTask: function (taskId) {
+		var taskGr = this.addQuery('sys_id=' + taskId).getSingle();
+		taskGr.setValue('state', CLOSE);
+		return taskGr.update();
+	},
+
+	/**
+	 * Close Incomplete a task by setting its state to "4".
+	 * @param {string} taskId - The sys_id of the task to be closed.
+	 * @returns {GlideRecord} Returns the GlideRecord of the updated Task.
+	 */
+	closeIncompleteTask: function (taskId) {
+		var taskGr = this.addQuery('sys_id=' + taskId).getSingle();
+		taskGr.setValue('state', CLOSE_INCOMPLETE);
+		return taskGr.update();
+	},
+
+	/**
+	 * Cancel an task by setting its state to "7".
+	 * @param {string} taskId - The sys_id of the task to be canceled.
+	 * @returns {GlideRecord} Returns the GlideRecord of the updated Task.
+	 */
+	cancelTask: function (taskId) {
+		var taskGr = this.addQuery('sys_id=' + taskId).getSingle();
+		taskGr.setValue('state', CANCEL);
+		return taskGr.update();
+	},
+
+	/**
+	 * Work a task by setting its state to "2".
+	 * @param {string} taskId - The sys_id of the task to be worked on.
+	 * @returns {GlideRecord} Returns the GlideRecord of the updated Task.
+	 */
+	workTask: function (taskId) {
+		var taskGr = this.addQuery('sys_id=' + taskId).getSingle();
+		taskGr.setValue('state', WORK);
+		return taskGr.update();
+	},
+
+	/**
+	 * Assign a specific task to the current user.
+	 * @param {string} taskId - The sys_id of the task to be assigned.
+	 * @throws {Error} Throws an error if the current user doesn't have permission to reassign the task.
+	 */
+	assignToMe: function (taskId) {
+		if (this.isAssignableToMe(taskId)) {
+			var taskGr = this.addQuery('sys_id=' + taskId).getSingle();
+		}
+		throw new Error('You do not have permission to reassign this task.');
+	},
+
+	/**
+	 * Checks if a task can be assigned to the current user.
+	 * @param {string} assignmentGroupId - The assignment group ID of the task.
+	 * @returns {boolean} Returns true if the task can be assigned to the current user, otherwise false.
+	 */
+	isAssignableToMe: function (assignmentGroupId) {
+		if (gs.nil(assignmentGroupId)) return false; //If there are no assignment group, that means the task is designated to the initial assigned to person and cannot be re-assigned
+
+		//Get reassignable groups
+		var groupIds = new ReassignmentEligibleGroupDefinition().get();
+
+		if (groupIds.indexOf(assignmentGroupId) == -1) return false;
+
+		var aggr = new GlideAggregate('sys_user_grmember');
+		aggr.addEncodedQuery('group=' + assignmentGroupId + '^user=' + gs.getUserID());
+		aggr.addAggregate('COUNT');
+		aggr.query();
+		aggr.next();
+
+		return aggr.getAggregate('COUNT') > 0;
+	},
+
+	getCountByFilterNumber: function (filterNumber) {
+		var myTaskFilter = new x_509925_fc.FilterRepository(true).getByNumber(filterNumber);
+		var myTaskAggregate = new GlideAggregate('task');
+		myTaskAggregate.addEncodedQuery(myTaskFilter.getValue('filter'));
+		myTaskAggregate.addAggregate('COUNT');
+		myTaskAggregate.query();
+		myTaskAggregate.next();
+		return  myTaskAggregate.getAggregate('COUNT');
+	},
+
+
+	/** 
+	 * Type definition for easier identification of this script include.
+	 * @type {string}
+	 */
+	type: 'FCTaskRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-03-13 13:43:39</sys_created_on>
+        <sys_id>cc27c12b97b40210e12c3eb0f053af1e</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>FCTaskRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_cc27c12b97b40210e12c3eb0f053af1e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-23 02:54:13</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>cc27c12b97b40210e12c3eb0f053af1e</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:02:06</sys_created_on>
+        <sys_id>127ed45383b1d610926492b6feaad3e0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:02:06</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

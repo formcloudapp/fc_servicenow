@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCQuestionChoiceRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCQuestionChoiceRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for chocies table.
+ * @class
+ * @extends FCRepository
+ */
+var FCQuestionChoiceRepository = Class.create();
+FCQuestionChoiceRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initialize a new instance of the FCQuestionChoiceRepository.
+	 * @constructor
+	 * @param {boolean} overrideACL - Flag to override Access Control List.
+	 */
+	initialize: function (overrideACL) {
+		FCRepository.prototype.initialize.call(this, 'question_choice', overrideACL);
+	},
+
+	getChoicesForVariable: function(variableId){
+		this.addQuery('question=' + variableId);
+		var choicesGr = this.getMultiple();
+		var result = [];
+		while(choicesGr.next()){
+			result.push({
+				label: choicesGr.getValue('text'),
+				value: choicesGr.getValue('value'),
+				misc: {
+					label: choicesGr.getValue('misc'),
+					value: choicesGr.getDisplayValue('misc'),
+				},
+				rec_misc: {
+					label: choicesGr.getValue('rec_misc'),
+					value: choicesGr.getDisplayValue('rec_misc'),
+				}
+			});
+		}
+		return result;
+	},
+
+	getChoicesForVariableName: function(variableId){
+		this.addQuery('question=' + variableId);
+		var choicesGr = this.getMultiple();
+		var result = [];
+		while(choicesGr.next()){
+			result.push({
+				label: choicesGr.getValue('text'),
+				value: choicesGr.getValue('value'),
+				misc: {
+					label: choicesGr.getValue('misc'),
+					value: parseFloat(choicesGr.misc),
+				},
+				rec_misc: {
+					label: choicesGr.getValue('rec_misc'),
+					value: choicesGr.getDisplayValue('rec_misc'),
+				}
+			});
+		}
+		return result;
+	},
+
+	/** @type {string} The type of the repository. */
+	type: 'FCQuestionChoiceRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-02 00:35:41</sys_created_on>
+        <sys_id>d02295c38314de10926492b6feaad3bf</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>FCQuestionChoiceRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_d02295c38314de10926492b6feaad3bf</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:44</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>d02295c38314de10926492b6feaad3bf</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 18:45:41</sys_created_on>
+        <sys_id>66ee97378310d210926492b6feaad33f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-04 18:45:41</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

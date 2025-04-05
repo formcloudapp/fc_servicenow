@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCLoggerUtility</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCLoggerUtility</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Utility class for logging error and debug messages with unique identifiers.
+ * @class
+ */
+var FCLoggerUtility = Class.create();
+
+FCLoggerUtility.prototype = {
+    /**
+     * Initializes a new instance of FCLoggerUtility.
+     * @constructor
+     */
+    initialize: function() {},
+
+    /**
+     * Logs an error message with a unique identifier, including a stack trace.
+     * The unique identifier is generated based on the module name and method name.
+     * @param {string} message - The error message to log.
+     * @param {string} moduleName - The module name associated with the error.
+     * @param {string} stack - The stack trace for the error.
+     * @returns {string} The unique error code generated for this error.
+     */
+    error: function(message, moduleName, stack) {
+        var errorCode = this.generateUniqueId(moduleName);
+
+        gs.error(`[${errorCode}] ${moduleName}: ${message}\nStack Trace:\n${stack}`);
+        return errorCode;
+    },
+
+    /**
+     * Logs a debug message.
+     * @param {string} message - The debug message to log.
+     * @param {*} param - Additional parameter to log alongside the message.
+     */
+    debug: function(message, param) {
+        gs.debug(message, param);
+    },
+
+    /**
+     * Generates a unique numeric ID based on a combined module name and method name.
+     * This method hashes the concatenated string to produce a 6-digit unique identifier.
+     * @param {string} methodName - The module and method name concatenated.
+     * @returns {string} A unique identifier as a 6-digit string.
+     */
+    generateUniqueId: function(methodName) {
+        var hash = 0;
+        for (var i = 0; i < methodName.length; i++) {
+            hash = ((hash << 5) - hash) + methodName.charCodeAt(i);
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        var uniqueNumber = Math.abs(hash % 1000000).toString().padStart(6, '0');
+        return uniqueNumber;
+    },
+
+    /**
+     * The type name of the class.
+     * @type {string}
+     */
+    type: 'FCLoggerUtility'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-13 21:51:48</sys_created_on>
+        <sys_id>1a98ec6283f5d210926492b6feaad33b</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>FCLoggerUtility</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_1a98ec6283f5d210926492b6feaad33b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:44</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>1a98ec6283f5d210926492b6feaad33b</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-13 21:51:48</sys_created_on>
+        <sys_id>67c8a0a283f5d210926492b6feaad3ae</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-13 21:51:48</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

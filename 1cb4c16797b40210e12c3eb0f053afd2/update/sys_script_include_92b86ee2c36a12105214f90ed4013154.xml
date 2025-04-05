@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCKnowledgeRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCKnowledgeRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Repository class for interacting with the sys_choice table and retrieving choice-related data.
+ * Extends the Repository class.
+ * @class
+ * @extends FCRepository
+ */
+var FCKnowledgeRepository = Class.create();
+
+FCKnowledgeRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initializes a new instance of FCKnowledgeRepository.
+     * @param {boolean} overrideACL - Whether to override ACL checks.
+     * @throws Will throw an error if initialization fails.
+     */
+    initialize: function (overrideACL) {
+        this.moduleName = 'FCKnowledgeRepository';
+        FCRepository.prototype.initialize.call(this, 'kb_knowledge_base', overrideACL);
+    },
+
+    /**
+     * Retrieves all active knowledge bases.
+     * @param {boolean} isSerialize - Whether to serialize the result.
+     * @returns {Object[]} Array of active knowledge bases.
+     */
+    getActiveKnowledgeBases: function (isSerialize) {
+        this.addQuery('active=true^ORDERBYorder');
+        return this.getMultiple(isSerialize);
+    },
+
+    /**
+     * Constructs a knowledge tree for a given knowledge base.
+     * @param {string} knowledgeBaseSysId - The sys_id of the knowledge base.
+     * @returns {Object} The knowledge tree object.
+     */
+    getKnowledgeTree: function (knowledgeBaseSysId) {
+        var result = {
+            id: knowledgeBaseSysId,
+            name: this._getKnowledgeBaseName(knowledgeBaseSysId),
+            type: "knowledge_base",
+            item_count: 0,
+            children: []
+        };
+
+        var categories = this._getCategories(knowledgeBaseSysId);
+        for (var i = 0; i < categories.length; i++) {
+            result.children.push(this._buildCategoryTree(categories[i]));
+        }
+
+        return result;
+    },
+
+	getAllCategories: function (knowledgeBaseId) {
+        // Initialize an array to hold category names
+        var categories = [];
+
+        // Helper function for recursion
+        var fetchCategories = function (parentId) {
+            var gr = new GlideRecord('kb_category');
+            gr.addQuery('parent', parentId || ''); // Get root categories if parentId is empty
+            gr.addQuery('kb_knowledge_base', knowledgeBaseId); // Filter by Knowledge Base ID
+            gr.query();
+
+            while (gr.next()) {
+                categories.push(gr.name.toString()); // Add category name to the array
+                fetchCategories(gr.sys_id.toString()); // Recursively fetch child categories
+            }
+        };
+
+        // Start recursion with the root categories
+        fetchCategories();
+
+        // Return categories as a comma-separated string
+        return categories.join(', ');
+    },
+
+    /**
+     * Retrieves the name of a knowledge base by its sys_id.
+     * @private
+     * @param {string} knowledgeBaseSysId - The sys_id of the knowledge base.
+     * @returns {string} The name of the knowledge base.
+     */
+    _getKnowledgeBaseName: function (knowledgeBaseSysId) {
+        var kbGR = this.addQuery('sys_id=' + knowledgeBaseSysId).getSingle();
+        if (kbGR) {
+            return kbGR.getValue("title");
+        }
+        return "Unknown Knowledge Base";
+    },
+
+    /**
+     * Retrieves the categories of a knowledge base.
+     * @private
+     * @param {string} knowledgeBaseSysId - The sys_id of the knowledge base.
+     * @returns {Object[]} Array of category objects.
+     */
+    _getCategories: function (knowledgeBaseSysId) {
+        var categories = [];
+        var gr = new GlideRecord("kb_category");
+        gr.addQuery("parent_id", knowledgeBaseSysId);
+        gr.addQuery("parent_table", "kb_knowledge_base");
+        gr.orderBy('label');
+        gr.query();
+        while (gr.next()) {
+            categories.push({
+                id: gr.getUniqueValue(),
+                name: gr.getValue("label"),
+                item_count: 0
+            });
+        }
+        return categories;
+    },
+
+    /**
+     * Builds a category tree recursively.
+     * @private
+     * @param {Object} category - The category object.
+     * @returns {Object} The category tree object.
+     */
+    _buildCategoryTree: function (category) {
+        var result = {
+            id: category.id,
+            name: category.name,
+            type: "category",
+            item_count: 0,
+            children: []
+        };
+
+        var subcategories = this._getSubcategories(category.id);
+        for (var i = 0; i < subcategories.length; i++) {
+            result.children.push(this._buildCategoryTree(subcategories[i]));
+        }
+
+        result.item_count = this._getArticleCount(category.id);
+        return result;
+    },
+
+    /**
+     * Retrieves the count of articles in a category.
+     * @private
+     * @param {string} categoryId - The sys_id of the category.
+     * @returns {number} The count of articles.
+     */
+    _getArticleCount: function (categoryId) {
+        var aggr = new GlideAggregate('kb_knowledge');
+        aggr.addEncodedQuery('active=true^kb_category=' + categoryId);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+        return aggr.getAggregate('COUNT');
+    },
+
+    /**
+     * Retrieves subcategories for a given category.
+     * @private
+     * @param {string} parentCategorySysId - The sys_id of the parent category.
+     * @returns {Object[]} Array of subcategory objects.
+     */
+    _getSubcategories: function (parentCategorySysId) {
+        var subcategories = [];
+        var gr = new GlideRecord("kb_category");
+        gr.addQuery("parent_id", parentCategorySysId);
+        gr.addQuery("parent_table", "kb_category");
+        gr.orderBy('label');
+        gr.query();
+        while (gr.next()) {
+            subcategories.push({
+                id: gr.getUniqueValue(),
+                name: gr.getValue("label"),
+                item_count: this._getArticleCount(gr.getUniqueValue())
+            });
+        }
+        return subcategories;
+    },
+
+    /**
+     * Retrieves articles for a given category.
+     * @private
+     * @param {string} categorySysId - The sys_id of the category.
+     * @returns {Object[]} Array of article objects.
+     */
+    _getArticles: function (categorySysId) {
+        var articles = [];
+        var gr = new GlideRecord("kb_knowledge");
+        gr.addQuery("kb_category", categorySysId);
+        gr.query();
+        while (gr.next()) {
+            articles.push({
+                id: gr.getUniqueValue(),
+                name: gr.getValue("short_description")
+            });
+        }
+        return articles;
+    },
+
+    /**
+     * Retrieves all child category IDs recursively.
+     * @param {string} categorySysId - The sys_id of the category.
+     * @returns {string[]} Array of category sys_ids.
+     */
+    getChildCategoryIds: function (categorySysId) {
+        var categoryIds = [categorySysId];
+        this._fetchChildCategoryIds(categorySysId, categoryIds);
+        return categoryIds;
+    },
+
+    /**
+     * Recursively fetches child category IDs.
+     * @private
+     * @param {string} parentCategorySysId - The sys_id of the parent category.
+     * @param {string[]} categoryIds - The array to store category sys_ids.
+     */
+    _fetchChildCategoryIds: function (parentCategorySysId, categoryIds) {
+        var gr = new GlideRecord("kb_category");
+        gr.addQuery("parent_id", parentCategorySysId);
+        gr.addQuery("parent_table", "kb_category");
+        gr.query();
+
+        while (gr.next()) {
+            var childSysId = gr.getUniqueValue();
+            categoryIds.push(childSysId);
+            this._fetchChildCategoryIds(childSysId, categoryIds);
+        }
+    },
+
+    /**
+     * The type name of the class.
+     * @type {string}
+     */
+    type: 'FCKnowledgeRepository'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-21 14:04:17</sys_created_on>
+        <sys_id>92b86ee2c36a12105214f90ed4013154</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>FCKnowledgeRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_92b86ee2c36a12105214f90ed4013154</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-19 14:41:27</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>92b86ee2c36a12105214f90ed4013154</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-21 14:04:16</sys_created_on>
+        <sys_id>593a6ee2c36a12105214f90ed40131f5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-21 14:04:16</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

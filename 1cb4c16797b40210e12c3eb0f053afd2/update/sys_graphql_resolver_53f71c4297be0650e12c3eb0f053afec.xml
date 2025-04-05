@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver">
+    <sys_graphql_resolver action="INSERT_OR_UPDATE">
+        <name>getCount</name>
+        <schema display_value="Core">99574c8e973e0650e12c3eb0f053af40</schema>
+        <script><![CDATA[(function process( /*ResolverEnvironment*/ env) {
+
+    var tableName = env.getArguments().tableName;
+    if (tableName.indexOf(',') > -1) {
+        var total = 0;
+        var names = tableName.split(',');
+        names.forEach(function(name) {
+            var aggr = new GlideAggregate(name);
+            aggr.addEncodedQuery(env.getArguments().queryConditions);
+            aggr.addAggregate('COUNT');
+            aggr.query();
+            aggr.next();
+            total += parseInt(aggr.getAggregate('COUNT'));
+        });
+		return total;
+    } else {
+        var aggr = new GlideAggregate(tableName);
+        aggr.addEncodedQuery(env.getArguments().queryConditions);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+        return aggr.getAggregate('COUNT');
+    }
+
+})(env);]]></script>
+        <sys_class_name>sys_graphql_resolver</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-16 04:13:25</sys_created_on>
+        <sys_id>53f71c4297be0650e12c3eb0f053afec</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>getCount</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_resolver_53f71c4297be0650e12c3eb0f053afec</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-06-16 04:13:25</sys_updated_on>
+    </sys_graphql_resolver>
+</record_update>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>submit</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+	var questionnaire = request.body.data;
+	var questionnareRepo = new FCQuestionnaireRepository(true);
+	var result = questionnareRepo.submitForm(questionnaire);
+
+	//If required signature
+	if (questionnaire._require_esignature) {
+		result = questionnareRepo.mergeSignature(questionnaire._task_id, questionnaire._task_class, questionnaire._name, questionnaire._signature_list || []);
+	}
+
+	if (result) {
+		response.setStatus(200);
+		response.setBody({
+			success: true,
+			message: "Form submitted successfully",
+			data: result
+		});
+	} else {
+		response.setStatus(500);
+		response.setBody({
+			success: false,
+			message: "Failed to submit form"
+		});
+	}
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_509925_fc/questionnaire/submit</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/submit</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-16 01:01:20</sys_created_on>
+        <sys_id>391ceb3d97ba0650e12c3eb0f053af2b</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>submit</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_ws_operation_391ceb3d97ba0650e12c3eb0f053af2b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 04:55:35</sys_updated_on>
+        <web_service_definition display_value="Questionnaire">145b2bf997ba0650e12c3eb0f053af37</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

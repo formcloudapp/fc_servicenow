@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_question">
+    <x_509925_fc_question action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_signature_to/>
+        <allow_comment>true</allow_comment>
+        <allow_worknote>false</allow_worknote>
+        <attributes><![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+    attributes.worknote.additional_comments = new FCJournalRepository(true).getJournals(target_id, 'comments');
+    return attributes;
+    
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base_question/>
+        <css_classes/>
+        <css_styles/>
+        <default_value><![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]></default_value>
+        <display_name>QUE0001101 - comments</display_name>
+        <dynamic_list><![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]></dynamic_list>
+        <dynamic_value><![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]></dynamic_value>
+        <e_signature_type>pdf</e_signature_type>
+        <expression><![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+    if (!question.attribute_obj.params.fc_form.data.existing_incident) {
+        question.show = false;
+    }
+    return question;
+}]]></expression>
+        <flatten_document/>
+        <hidden>false</hidden>
+        <is_cascading_select>false</is_cascading_select>
+        <is_dynamic_value>false</is_dynamic_value>
+        <label>Comments</label>
+        <liquid>{% comment %} Liquid Template {% endcomment %}</liquid>
+        <number>QUE0001101</number>
+        <order>80</order>
+        <pdf/>
+        <pdf_attachment/>
+        <placeholder/>
+        <property>comments</property>
+        <readonly>false</readonly>
+        <required_signature>false</required_signature>
+        <section display_value="Incident Details">49fe7d2683821210926492b6feaad3e3</section>
+        <signature_field_name/>
+        <signature_list>[]</signature_list>
+        <signatures/>
+        <sys_class_name>x_509925_fc_question</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 19:46:37</sys_created_on>
+        <sys_id>ecd80fa6830a1210926492b6feaad382</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Comments</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_question_ecd80fa6830a1210926492b6feaad382</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-27 02:20:55</sys_updated_on>
+        <table>incident</table>
+        <triggered_questions/>
+        <type>worknote</type>
+        <validate>false</validate>
+        <width>col-md-12</width>
+    </x_509925_fc_question>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>ecd80fa6830a1210926492b6feaad382</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-27 02:20:54</sys_created_on>
+        <sys_id>8c13a07a83ce1210926492b6feaad352</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-27 02:20:54</sys_updated_on>
+        <table>x_509925_fc_question</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

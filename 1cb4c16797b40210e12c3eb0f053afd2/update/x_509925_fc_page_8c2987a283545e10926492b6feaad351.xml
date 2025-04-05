@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+    function initialize() {
+        return {
+            condition: true,
+            form_id: params.formId,
+            form_value: {},
+            params: params
+        };
+    }
+
+
+    return {
+        initialize: initialize
+    };
+
+})(params);]]></attributes>
+        <base>true</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+
+    function initialize() {
+        let questionnaire = document.getElementById('test');
+        questionnaire.addEventListener('valueChange', (event) => {
+            helpers.model.form_value = event.detail;
+        });
+
+        helpers.model.breadcrumbs = findBreadcrumbPath(helpers.model.catalogs, helpers.model.cat_item.category.value);
+
+        helpers.model.payload = {
+            sysparm_also_request_for: '',
+            sysparm_quantity: 1,
+            sysparm_requested_for: '6816f79cc0a8016401c5a33be04be441',
+            variables: helpers.model.form_value._variables
+        };
+    }
+
+    function getImageUrl(imageId) {
+        return `https://dev258535.service-now.com/${imageId}.iix?t=medium`;
+    }
+
+    function findBreadcrumbPath(data, categoryId, path = []) {
+        // Iterate through each item in the data
+        for (const item of data) {
+            // Create a new path entry with the current item's title and id
+            const newPath = [...path, { title: item.title, id: item.id, isLast: false }];
+
+            // Check if the current item is the one we're looking for
+            if (item.id === categoryId) {
+                // Mark the found item as isLast: true
+                newPath[newPath.length - 1].isLast = true;
+                return newPath;  // Return the path if the item is found
+            }
+
+            // If the item has children, recurse down
+            if (item.children && item.children.length) {
+                const result = findBreadcrumbPath(item.children, categoryId, newPath);
+                if (result) {
+                    return result;  // If the item is found in the subtree, return the result
+                }
+            }
+        }
+        // Return null if no item is found
+        return null;
+    }
+
+    function lookupCategory(categoryId) {
+        helpers.service.navigate(`?id=service_catalog&catalogId=${helpers.model.catalog_id}&sc_category=${categoryId}`);
+    }
+
+    async function getPriceAsync() {
+
+        helpers.service.showLoading();
+        var price = await helpers.service
+            .call('getOptionsPrice', [helpers.model.cat_item.sys_id.value, helpers.model.form_value?._variables]);
+        var total = parseFloat(price) + parseFloat(helpers.model.cat_item.price.value);
+
+        helpers.service.hideLoading();
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(total);
+
+
+    }
+
+    async function submitAsync(quantity) {
+        try {
+            helpers.service.showLoading();
+            let payload = {
+                sysparm_also_request_for: '',
+                sysparm_quantity: quantity,
+                sysparm_requested_for: '6816f79cc0a8016401c5a33be04be441',
+                variables: helpers.model.form_value._variables
+            };
+            const response = await helpers.service.postAsync(`sn_sc/servicecatalog/items/${helpers.model.cat_item.sys_id.value}/order_now`, payload);
+            helpers.service.navigate(`?id=request_summary&requestId=${response.result.request_id}&table=${response.result.table}`);
+        } catch (err) {
+            helpers.service.snackbar('An unexpected error occurred.');
+        }
+
+    }
+
+    return {
+        initialize: initialize,
+        getPriceAsync: getPriceAsync,
+        getImageUrl: getImageUrl,
+        submitAsync: submitAsync,
+        lookupCategory: lookupCategory
+    };
+
+}
+
+]]></client_scripts>
+        <css>.breadcrumbs {&#13;
+    padding: 10px;&#13;
+    list-style: none;&#13;
+    display: flex;&#13;
+    stroke: var(--sys-on-surface-container);&#13;
+}&#13;
+.breadcrumbs li {&#13;
+    margin-right: 10px;&#13;
+}&#13;
+.breadcrumbs li:not(:last-child)::after {&#13;
+    margin-left: 10px;&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>request</route>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-31 19:58:04</sys_created_on>
+        <sys_id>8c2987a283545e10926492b6feaad351</sys_id>
+        <sys_mod_count>214</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_8c2987a283545e10926492b6feaad351</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-21 02:18:20</sys_updated_on>
+        <template>[{"id":"96dnn3","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"container main-container mt-5\"&gt;\r\n    &lt;div class=\"row\"&gt;\r\n        &lt;div class=\"col p-3\"&gt;\r\n            &lt;mdui-questionnaire :form-id=\"$scope.model.form_id\"&gt;&lt;/mdui-questionnaire&gt;\r\n        &lt;/div&gt;\r\n    &lt;/div&gt;\r\n&lt;/div&gt;\r\n","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Request</title>
+        <type>page</type>
+    </x_509925_fc_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>8c2987a283545e10926492b6feaad351</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 12:22:19</sys_created_on>
+        <sys_id>b6270a7383989210926492b6feaad3cb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-04 12:22:19</sys_updated_on>
+        <table>x_509925_fc_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_taxonomy">
+    <x_509925_fc_taxonomy action="INSERT_OR_UPDATE">
+        <advance><![CDATA[((current, params) => {
+    let tax = new FCTaxonomyRepository(true).getAttributes(current, params);
+    tax.url = 'fc_form_list';
+    tax.icon = 'list_alt';
+    return tax;
+})(current, params);
+]]></advance>
+        <base>true</base>
+        <condition><![CDATA[((current, params) => {
+    return true;
+})(current, params);]]></condition>
+        <icon/>
+        <name>Forms</name>
+        <order>60</order>
+        <parent display_value="Administrator">4a94cd0483338610926492b6feaad38b</parent>
+        <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-31 12:07:57</sys_created_on>
+        <sys_id>5f34f9ac83bb0a10926492b6feaad3d7</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Forms</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_taxonomy_5f34f9ac83bb0a10926492b6feaad3d7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-28 16:37:30</sys_updated_on>
+        <type>menu_item</type>
+        <url/>
+        <url_type>advance</url_type>
+    </x_509925_fc_taxonomy>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>5f34f9ac83bb0a10926492b6feaad3d7</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:21:27</sys_created_on>
+        <sys_id>25e2a8d783b1d610926492b6feaad38f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:21:27</sys_updated_on>
+        <table>x_509925_fc_taxonomy</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

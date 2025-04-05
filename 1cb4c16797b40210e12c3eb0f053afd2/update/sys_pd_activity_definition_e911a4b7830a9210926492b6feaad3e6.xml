@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_pd_activity_definition">
+    <sys_pd_activity_definition action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>false</active>
+        <activity_type/>
+        <badge/>
+        <category display_value="Generic Activity">b51cee574320311089db5fb208b8f269</category>
+        <description/>
+        <experience_display_preferences/>
+        <input_display_preferences/>
+        <inputs/>
+        <label>Create FC Task</label>
+        <name>create_fc_task</name>
+        <outputs/>
+        <required_roles/>
+        <source>ccdc630f83c81210926492b6feaad311</source>
+        <source_type>sys_hub_action_type_definition</source_type>
+        <sys_class_name>sys_pd_activity_definition</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-30 04:46:11</sys_created_on>
+        <sys_id>e911a4b7830a9210926492b6feaad3e6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Create FC Task</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_pd_activity_definition_e911a4b7830a9210926492b6feaad3e6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-30 04:46:11</sys_updated_on>
+        <system_level>false</system_level>
+        <table>global</table>
+        <type_vals/>
+        <wait_for_completion>true</wait_for_completion>
+    </sys_pd_activity_definition>
+    <sys_translated_text action="delete_multiple" query="documentkey=e911a4b7830a9210926492b6feaad3e6"/>
+    <sys_variable_value action="delete_multiple" query="document_key=e911a4b7830a9210926492b6feaad3e6"/>
+    <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_action_input_ccdc630f83c81210926492b6feaad311^id=e911a4b7830a9210926492b6feaad3e6"/>
+    <sys_element_mapping action="delete_multiple" query="table=var__m_sys_hub_action_output_ccdc630f83c81210926492b6feaad311^id=e911a4b7830a9210926492b6feaad3e6"/>
+</record_update>

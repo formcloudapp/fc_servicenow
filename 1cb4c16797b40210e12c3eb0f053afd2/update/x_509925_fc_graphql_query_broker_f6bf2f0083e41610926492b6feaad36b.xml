@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_graphql_query_broker">
+    <x_509925_fc_graphql_query_broker action="INSERT_OR_UPDATE">
+        <ai_filter>false</ai_filter>
+        <allow_selection>false</allow_selection>
+        <base>false</base>
+        <columns_configs>[{"label":"ID","pin":false,"search":true,"search_name":"sys_id","search_default":false,"sorting":false,"sort_name":"sys_id","sort_default":false,"template":"&lt;span x-text=\"value.toString()\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","search_choices":[],"editable":false,"value":"sys_id","display_type":"value"},{"label":"Item","pin":true,"search":true,"search_name":"cat_item","search_default":false,"sorting":false,"sort_name":"cat_item","sort_default":false,"template":"&lt;span class=\"fw-bold\" x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"cat_item","search_choices":[],"editable":false,"display_type":"display"},{"label":"Delivery Date","pin":true,"search":true,"search_name":"due_date","search_default":false,"sorting":false,"sort_name":"due_date","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"due_date","search_choices":[],"editable":false,"display_type":"display"},{"label":"Stage","pin":true,"search":true,"search_name":"stage","search_default":false,"sorting":false,"sort_name":"stage","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"stage","search_choices":[],"editable":false,"display_type":"display"},{"label":"Price","pin":true,"search":true,"search_name":"price","search_default":false,"sorting":false,"sort_name":"price","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"price","search_choices":[],"editable":false,"display_type":"display"},{"label":"Recurring Price","pin":true,"search":true,"search_name":"recurring_price","search_default":false,"sorting":false,"sort_name":"recurring_price","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"recurring_price","search_choices":[],"editable":false,"display_type":"display"},{"label":"Quantity","pin":true,"search":true,"search_name":"quantity","search_default":false,"sorting":false,"sort_name":"quantity","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"quantity","search_choices":[],"editable":false,"display_type":"display"}]</columns_configs>
+        <filter_builder><![CDATA[((current, params) => {
+
+    return 'request=' + params.requestId;
+
+})(current, params);]]></filter_builder>
+        <filters table="sc_req_item">^EQ<item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filters>
+        <gql><![CDATA[function execute(params, configs) {
+    let gql = '';
+    if (configs.schema == 'ootb') {
+        gql = `
+		{
+			GlideRecord_Query{
+				${configs.table}(queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} }) {
+					_rowCount
+					_results ${configs.gql}
+				}
+			}
+		}
+	`;
+    }else{
+		gql = `
+		{
+			${configs.namespace}{
+				${configs.gql_schema}{
+					getMultiple(tableName: "${configs.table}", queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} })
+					{
+						sys_id{
+							value
+						}
+						...on ${configs.namespace}_${configs.gql_schema}_${configs.table}  ${configs.gql}
+					}
+					getCount(tableName: "${configs.table}", queryConditions: "${configs.filters}")
+				}
+			}
+		}
+		`;
+	}
+
+    return gql;
+}]]></gql>
+        <gql_path/>
+        <graphql_schema display_value="Catalog">6dd9746f83dc1210926492b6feaad39b</graphql_schema>
+        <metadata>{}</metadata>
+        <name>request_items_summary</name>
+        <number>GQL0001006</number>
+        <record_details/>
+        <record_script><![CDATA[function execute(record, service) {
+
+    return {
+        record: record
+    }
+}]]></record_script>
+        <row_count_path/>
+        <schema>custom</schema>
+        <script><![CDATA[((current, params) => {
+	const namespace = gs.getProperty(current.sys_scope.scope + '.graphql_namespace');
+	const gqlSchemaGr = current.graphql_schema.getRefRecord();
+    let datatableConfig = {
+        table: current.getValue('table'),
+        filters: current.getValue('filters'),
+        allow_selection: current.getValue('allow_selection'),
+        gql: current.getValue('gql'),
+        details_template: current.getValue('record_details'),
+		gql_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._results') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getMultiple'),
+        row_count_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._rowCount') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getCount'),
+        data_columns: JSON.parse(current.getValue('columns_configs')),
+		schema: current.getValue('schema'),
+		gql_schema: gqlSchemaGr.getValue('namespace')
+    };
+
+    return datatableConfig;
+
+})(current, params);]]></script>
+        <sys_class_name>x_509925_fc_graphql_query_broker</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-05 14:37:38</sys_created_on>
+        <sys_id>f6bf2f0083e41610926492b6feaad36b</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>request_items_summary</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_graphql_query_broker_f6bf2f0083e41610926492b6feaad36b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-17 05:48:55</sys_updated_on>
+        <table>sc_req_item</table>
+    </x_509925_fc_graphql_query_broker>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>f6bf2f0083e41610926492b6feaad36b</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-05 14:59:57</sys_created_on>
+        <sys_id>a5d4f7c483e41610926492b6feaad3b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-05 14:59:57</sys_updated_on>
+        <table>x_509925_fc_graphql_query_broker</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

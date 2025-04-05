@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_schema">
+    <sys_graphql_schema action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <application_namespace>x509925Fc</application_namespace>
+        <contextual_acl_max_depth>3</contextual_acl_max_depth>
+        <enforce_acl/>
+        <name>Task</name>
+        <namespace>task</namespace>
+        <paths>DisplayableBool:display_value,DisplayableBool:value,DisplayableFloat:display_value,DisplayableFloat:value,DisplayableInt:display_value,DisplayableInt:value,DisplayableReference:display_value,DisplayableReference:reference_table,DisplayableReference:value,DisplayableString:display_value,DisplayableString:reference_table,DisplayableString:value,JSONString:value,LabelValue:label,LabelValue:value,Query:getCount,Query:getMultiple,Query:getSingle,incident:active,incident:activity_due,incident:additional_assignee_list,incident:approval,incident:approval_history,incident:approval_set,incident:assigned_to,incident:assigned_to__reference,incident:assignment_group,incident:business_duration,incident:business_impact,incident:business_service,incident:business_stc,incident:calendar_duration,incident:calendar_stc,incident:caller_id,incident:category,incident:cause,incident:caused_by,incident:child_incidents,incident:close_code,incident:close_notes,incident:closed_at,incident:closed_by,incident:cmdb_ci,incident:comments,incident:comments_and_work_notes,incident:company,incident:contact_type,incident:contract,incident:correlation_display,incident:correlation_id,incident:delivery_plan,incident:delivery_task,incident:description,incident:due_date,incident:escalation,incident:expected_start,incident:follow_up,incident:group_list,incident:hold_reason,incident:impact,incident:incident_state,incident:knowledge,incident:location,incident:made_sla,incident:notify,incident:number,incident:opened_at,incident:opened_by,incident:order,incident:origin_id,incident:origin_table,incident:parent,incident:parent_incident,incident:priority,incident:problem_id,incident:reassignment_count,incident:rejection_goto,incident:reopen_count,incident:reopened_by,incident:reopened_time,incident:resolved_at,incident:resolved_by,incident:rfc,incident:route_reason,incident:service_offering,incident:severity,incident:short_description,incident:sla_due,incident:state,incident:subcategory,incident:sys_class_name,incident:sys_created_by,incident:sys_created_on,incident:sys_domain,incident:sys_domain_path,incident:sys_id,incident:sys_mod_count,incident:sys_updated_by,incident:sys_updated_on,incident:task_effective_number,incident:time_worked,incident:universal_request,incident:upon_approval,incident:upon_reject,incident:urgency,incident:user_input,incident:variables,incident:watch_list,incident:wf_activity,incident:work_end,incident:work_notes,incident:work_notes_list,incident:work_start,sys_db_object:columns,sys_db_object:label,sys_db_object:name,sys_db_object:sys_id,sys_dictionary:column_label,sys_dictionary:element,sys_dictionary:internal_type,sys_dictionary:reference,sys_dictionary:sys_id,sys_graphql_resolver:name,sys_graphql_resolver:schema,sys_graphql_resolver:script,sys_graphql_resolver:sys_class_name,sys_graphql_resolver:sys_created_by,sys_graphql_resolver:sys_created_on,sys_graphql_resolver:sys_id,sys_graphql_resolver:sys_mod_count,sys_graphql_resolver:sys_name,sys_graphql_resolver:sys_package,sys_graphql_resolver:sys_policy,sys_graphql_resolver:sys_scope,sys_graphql_resolver:sys_update_name,sys_graphql_resolver:sys_updated_by,sys_graphql_resolver:sys_updated_on,sys_graphql_resolver_mapping:path,sys_graphql_resolver_mapping:sys_id,sys_graphql_schema:application_namespace,sys_graphql_schema:contextual_acl_max_depth,sys_graphql_schema:name,sys_graphql_schema:namespace,sys_graphql_schema:requires_acl_authorization,sys_graphql_schema:requires_authentication,sys_graphql_schema:schema,sys_graphql_schema:sys_id,sys_user:accumulated_roles,sys_user:active,sys_user:avatar,sys_user:building,sys_user:calendar_integration,sys_user:city,sys_user:company,sys_user:cost_center,sys_user:country,sys_user:date_format,sys_user:default_perspective,sys_user:department,sys_user:edu_status,sys_user:email,sys_user:employee_number,sys_user:enable_multifactor_authn,sys_user:failed_attempts,sys_user:federated_id,sys_user:first_name,sys_user:gender,sys_user:hashed_user_id,sys_user:home_phone,sys_user:internal_integration_user,sys_user:introduction,sys_user:last_login,sys_user:last_login_device,sys_user:last_login_time,sys_user:last_name,sys_user:last_password,sys_user:ldap_server,sys_user:location,sys_user:locked_out,sys_user:manager,sys_user:middle_name,sys_user:mobile_phone,sys_user:name,sys_user:notification,sys_user:password_needs_reset,sys_user:phone,sys_user:photo,sys_user:preferred_language,sys_user:roles,sys_user:schedule,sys_user:source,sys_user:state,sys_user:street,sys_user:sys_class_name,sys_user:sys_created_by,sys_user:sys_created_on,sys_user:sys_domain,sys_user:sys_domain_path,sys_user:sys_id,sys_user:sys_mod_count,sys_user:sys_updated_by,sys_user:sys_updated_on,sys_user:time_format,sys_user:time_zone,sys_user:title,sys_user:user_name,sys_user:user_password,sys_user:vip,sys_user:web_service_access_only,sys_user:zip,task:active,task:activity_due,task:additional_assignee_list,task:approval,task:approval_history,task:approval_set,task:assigned_to,task:assignment_group,task:business_duration,task:business_service,task:calendar_duration,task:close_notes,task:closed_at,task:closed_by,task:cmdb_ci,task:comments,task:comments_and_work_notes,task:company,task:contact_type,task:contract,task:correlation_display,task:correlation_id,task:delivery_plan,task:delivery_task,task:description,task:due_date,task:escalation,task:expected_start,task:follow_up,task:group_list,task:impact,task:knowledge,task:location,task:made_sla,task:number,task:opened_at,task:opened_by,task:order,task:parent,task:parent__reference,task:priority,task:reassignment_count,task:rejection_goto,task:route_reason,task:service_offering,task:short_description,task:sla_due,task:state,task:sys_class_name,task:sys_created_by,task:sys_created_on,task:sys_domain,task:sys_domain_path,task:sys_id,task:sys_mod_count,task:sys_updated_by,task:sys_updated_on,task:task_effective_number,task:time_worked,task:universal_request,task:upon_approval,task:upon_reject,task:urgency,task:user_input,task:variables,task:watch_list,task:wf_activity,task:work_end,task:work_notes,task:work_notes_list,task:work_start</paths>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <schema># START BASE TYPES HERE&#13;
+schema {&#13;
+	query: Query&#13;
+}&#13;
+&#13;
+type Query {&#13;
+	getSingle(tableName: String, queryConditions: String): base&#13;
+	getMultiple(tableName: String, queryConditions: String, pagination: Pagination): [base]&#13;
+	getCount(tableName: String, queryConditions: String): Int&#13;
+}&#13;
+&#13;
+type LabelValue{&#13;
+	value: String&#13;
+	label: String&#13;
+}&#13;
+&#13;
+type JSONString{&#13;
+	value: String&#13;
+}&#13;
+&#13;
+type DisplayableString{&#13;
+	value: String&#13;
+	display_value: String&#13;
+	reference_table: String&#13;
+}&#13;
+&#13;
+type DisplayableReference{&#13;
+	value: String&#13;
+	display_value: String&#13;
+	reference_table: String&#13;
+}&#13;
+&#13;
+type DisplayableBool{&#13;
+	value: Boolean&#13;
+	display_value: String&#13;
+}&#13;
+&#13;
+type DisplayableInt{&#13;
+	value: Int&#13;
+	display_value: String&#13;
+}&#13;
+&#13;
+type DisplayableFloat{&#13;
+	value: Float&#13;
+	display_value: String&#13;
+}&#13;
+&#13;
+input Pagination {&#13;
+	offset: Int&#13;
+	limit: Int&#13;
+}&#13;
+&#13;
+interface base{&#13;
+	sys_id: DisplayableString&#13;
+}&#13;
+&#13;
+type sys_graphql_schema implements base {&#13;
+  sys_id: DisplayableString&#13;
+  schema: DisplayableString&#13;
+  name: DisplayableString&#13;
+  application_namespace: DisplayableString&#13;
+  namespace: DisplayableString&#13;
+  requires_authentication: DisplayableBool&#13;
+  requires_acl_authorization: DisplayableBool&#13;
+  contextual_acl_max_depth: DisplayableInt&#13;
+}&#13;
+&#13;
+type sys_graphql_resolver_mapping implements base{&#13;
+	sys_id: DisplayableString&#13;
+	path: DisplayableString&#13;
+}&#13;
+&#13;
+type sys_db_object implements base{&#13;
+	sys_id: DisplayableString&#13;
+	label: DisplayableString&#13;
+	name: DisplayableString&#13;
+	columns: [sys_dictionary]&#13;
+}&#13;
+&#13;
+type sys_dictionary{&#13;
+	sys_id: DisplayableString&#13;
+	element: DisplayableString&#13;
+	internal_type: DisplayableString&#13;
+	column_label: DisplayableString&#13;
+	reference: DisplayableString&#13;
+}&#13;
+type sys_graphql_resolver implements base {&#13;
+	name: DisplayableString&#13;
+	schema: DisplayableReference&#13;
+	script: DisplayableString&#13;
+	sys_class_name: DisplayableString&#13;
+	sys_created_by: DisplayableString&#13;
+	sys_created_on: DisplayableString&#13;
+	sys_id: DisplayableString&#13;
+	sys_mod_count: DisplayableInt&#13;
+	sys_name: DisplayableString&#13;
+	sys_package: DisplayableReference&#13;
+	sys_policy: DisplayableString&#13;
+	sys_scope: DisplayableReference&#13;
+	sys_updated_by: DisplayableString&#13;
+	sys_updated_on: DisplayableString&#13;
+	sys_update_name: DisplayableString&#13;
+}&#13;
+# END BASE TYPES HERE&#13;
+# START CUSTOM TYPES HERE
+type task implements base {
+  active: DisplayableBool
+  activity_due: DisplayableString
+  work_end: DisplayableString
+  work_start: DisplayableString
+  additional_assignee_list: DisplayableString
+  comments: DisplayableString
+  approval: DisplayableString
+  approval_history: DisplayableString
+  approval_set: DisplayableString
+  assigned_to: DisplayableReference
+  assignment_group: DisplayableReference
+  business_duration: DisplayableString
+  close_notes: DisplayableString
+  closed_at: DisplayableString
+  closed_by: DisplayableReference
+  comments_and_work_notes: DisplayableString
+  company: DisplayableReference
+  cmdb_ci: DisplayableReference
+  contact_type: DisplayableString
+  contract: DisplayableReference
+  correlation_display: DisplayableString
+  correlation_id: DisplayableString
+  sys_created_on: DisplayableString
+  sys_created_by: DisplayableString
+  delivery_plan: DisplayableReference
+  delivery_task: DisplayableReference
+  description: DisplayableString
+  sys_domain: DisplayableString
+  sys_domain_path: DisplayableString
+  due_date: DisplayableString
+  calendar_duration: DisplayableString
+  task_effective_number: DisplayableString
+  escalation: DisplayableInt
+  expected_start: DisplayableString
+  follow_up: DisplayableString
+  group_list: DisplayableString
+  impact: DisplayableInt
+  knowledge: DisplayableBool
+  location: DisplayableReference
+  made_sla: DisplayableBool
+  number: DisplayableString
+  opened_at: DisplayableString
+  opened_by: DisplayableReference
+  order: DisplayableInt
+  parent: DisplayableReference
+  parent__reference: task @source(value: "parent")
+  priority: DisplayableInt
+  reassignment_count: DisplayableInt
+  rejection_goto: DisplayableReference
+  business_service: DisplayableReference
+  service_offering: DisplayableReference
+  short_description: DisplayableString
+  sla_due: DisplayableString
+  state: DisplayableInt
+  sys_id: DisplayableString
+  sys_class_name: DisplayableString
+  time_worked: DisplayableString
+  route_reason: DisplayableInt
+  universal_request: DisplayableReference
+  sys_updated_on: DisplayableString
+  sys_updated_by: DisplayableString
+  sys_mod_count: DisplayableInt
+  upon_approval: DisplayableString
+  upon_reject: DisplayableString
+  urgency: DisplayableInt
+  user_input: DisplayableString
+  variables: DisplayableString
+  watch_list: DisplayableString
+  work_notes: DisplayableString
+  work_notes_list: DisplayableString
+  wf_activity: DisplayableReference
+}
+
+type incident implements base {
+  active: DisplayableBool
+  activity_due: DisplayableString
+  work_end: DisplayableString
+  work_start: DisplayableString
+  additional_assignee_list: DisplayableString
+  comments: DisplayableString
+  approval: DisplayableString
+  approval_history: DisplayableString
+  approval_set: DisplayableString
+  assigned_to: DisplayableReference
+  assigned_to__reference: sys_user @source(value: "assigned_to")
+  assignment_group: DisplayableReference
+  business_duration: DisplayableString
+  business_impact: DisplayableString
+  business_stc: DisplayableInt
+  caller_id: DisplayableReference
+  category: DisplayableString
+  caused_by: DisplayableReference
+  rfc: DisplayableReference
+  child_incidents: DisplayableInt
+  close_code: DisplayableString
+  close_notes: DisplayableString
+  closed_at: DisplayableString
+  closed_by: DisplayableReference
+  comments_and_work_notes: DisplayableString
+  company: DisplayableReference
+  cmdb_ci: DisplayableReference
+  contact_type: DisplayableString
+  contract: DisplayableReference
+  correlation_display: DisplayableString
+  correlation_id: DisplayableString
+  sys_created_on: DisplayableString
+  sys_created_by: DisplayableString
+  delivery_plan: DisplayableReference
+  delivery_task: DisplayableReference
+  description: DisplayableString
+  sys_domain: DisplayableString
+  sys_domain_path: DisplayableString
+  due_date: DisplayableString
+  calendar_duration: DisplayableString
+  task_effective_number: DisplayableString
+  escalation: DisplayableInt
+  expected_start: DisplayableString
+  follow_up: DisplayableString
+  group_list: DisplayableString
+  impact: DisplayableInt
+  incident_state: DisplayableInt
+  knowledge: DisplayableBool
+  reopened_time: DisplayableString
+  reopened_by: DisplayableReference
+  location: DisplayableReference
+  made_sla: DisplayableBool
+  notify: DisplayableInt
+  number: DisplayableString
+  hold_reason: DisplayableInt
+  opened_at: DisplayableString
+  opened_by: DisplayableReference
+  order: DisplayableInt
+  origin_id: DisplayableString
+  origin_table: DisplayableString
+  parent: DisplayableReference
+  parent_incident: DisplayableReference
+  priority: DisplayableInt
+  cause: DisplayableString
+  problem_id: DisplayableReference
+  reassignment_count: DisplayableInt
+  rejection_goto: DisplayableReference
+  reopen_count: DisplayableInt
+  calendar_stc: DisplayableInt
+  resolved_at: DisplayableString
+  resolved_by: DisplayableReference
+  business_service: DisplayableReference
+  service_offering: DisplayableReference
+  severity: DisplayableInt
+  short_description: DisplayableString
+  sla_due: DisplayableString
+  state: DisplayableInt
+  subcategory: DisplayableString
+  sys_id: DisplayableString
+  sys_class_name: DisplayableString
+  time_worked: DisplayableString
+  route_reason: DisplayableInt
+  universal_request: DisplayableReference
+  sys_updated_on: DisplayableString
+  sys_updated_by: DisplayableString
+  sys_mod_count: DisplayableInt
+  upon_approval: DisplayableString
+  upon_reject: DisplayableString
+  urgency: DisplayableInt
+  user_input: DisplayableString
+  variables: DisplayableString
+  watch_list: DisplayableString
+  work_notes: DisplayableString
+  work_notes_list: DisplayableString
+  wf_activity: DisplayableReference
+}
+
+type sys_user implements base {
+  accumulated_roles: DisplayableString
+  active: DisplayableBool
+  avatar: DisplayableString
+  building: DisplayableReference
+  calendar_integration: DisplayableInt
+  city: DisplayableString
+  company: DisplayableReference
+  cost_center: DisplayableReference
+  country: DisplayableString
+  date_format: DisplayableString
+  default_perspective: DisplayableReference
+  department: DisplayableReference
+  edu_status: DisplayableString
+  email: DisplayableString
+  employee_number: DisplayableString
+  enable_multifactor_authn: DisplayableBool
+  failed_attempts: DisplayableInt
+  federated_id: DisplayableString
+  first_name: DisplayableString
+  gender: DisplayableString
+  hashed_user_id: DisplayableString
+  home_phone: DisplayableString
+  internal_integration_user: DisplayableBool
+  introduction: DisplayableString
+  last_login: DisplayableString
+  last_login_device: DisplayableString
+  last_login_time: DisplayableString
+  last_name: DisplayableString
+  last_password: DisplayableString
+  ldap_server: DisplayableReference
+  location: DisplayableReference
+  locked_out: DisplayableBool
+  manager: DisplayableReference
+  middle_name: DisplayableString
+  mobile_phone: DisplayableString
+  name: DisplayableString
+  notification: DisplayableInt
+  password_needs_reset: DisplayableBool
+  phone: DisplayableString
+  photo: DisplayableString
+  preferred_language: DisplayableString
+  roles: DisplayableString
+  schedule: DisplayableReference
+  source: DisplayableString
+  state: DisplayableString
+  street: DisplayableString
+  sys_class_name: DisplayableString
+  sys_created_by: DisplayableString
+  sys_created_on: DisplayableString
+  sys_domain: DisplayableString
+  sys_domain_path: DisplayableString
+  sys_id: DisplayableString
+  sys_mod_count: DisplayableInt
+  sys_updated_by: DisplayableString
+  sys_updated_on: DisplayableString
+  time_format: DisplayableString
+  time_zone: DisplayableString
+  title: DisplayableString
+  user_name: DisplayableString
+  user_password: DisplayableString
+  vip: DisplayableBool
+  web_service_access_only: DisplayableBool
+  zip: DisplayableString
+}
+# END CUSTOM TYPES HERE</schema>
+        <sys_class_name>sys_graphql_schema</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-08 17:14:49</sys_created_on>
+        <sys_id>286bea0983e45210926492b6feaad396</sys_id>
+        <sys_mod_count>41</sys_mod_count>
+        <sys_name>Task</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_schema_286bea0983e45210926492b6feaad396</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-28 04:54:28</sys_updated_on>
+        <type_names>base</type_names>
+    </sys_graphql_schema>
+</record_update>

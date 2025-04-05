@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_web_app">
+    <x_509925_fc_web_app action="INSERT_OR_UPDATE">
+        <application_namespace>x_509925_fc</application_namespace>
+        <attributes><![CDATA[((current) => {
+
+    var attributes = new FCWebAppRepository(true).getShellCofigs(current);
+
+    //attributes.themes.classic.light.first_header_background.logo = 'https://dev258535.service-now.com/sys_attachment.do?sys_id=e9d31764831e1210926492b6feaad32d';
+    //attributes.themes.classic.dark.first_header_background.logo = 'https://dev258535.service-now.com/sys_attachment.do?sys_id=e9d31764831e1210926492b6feaad32d';
+    attributes.themes.enterprise.light.first_header_background.value = 'var(--primary-10)';
+    attributes.themes.enterprise.first_header_override_dark_theme = true;
+
+    attributes.themes.enterprise.dark.first_header_background.value = 'var(--sys-surface-container-lowest)';
+
+
+    attributes.themes.enterprise.light.second_header_background.value = 'var(--sys-primary)';
+    attributes.themes.enterprise.light.second_header_foreground.value = 'var(--sys-on-primary)';
+
+
+    attributes.themes.classic.light.left_nav_background.value = 'var(--primary-25)';
+    attributes.themes.classic.dark.left_nav_background.value = 'var(--secondary-10)';
+    
+    return attributes;
+
+})(current);]]></attributes>
+        <brand_font>Noto Serif</brand_font>
+        <embed_fonts>https://fonts.googleapis.com/css2?family=Bungee+Tint&amp;family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap</embed_fonts>
+        <graphql_namespace>x509925fc</graphql_namespace>
+        <plain_font>Roboto</plain_font>
+        <prefix>core</prefix>
+        <primary_color>#111212</primary_color>
+        <shared_data><![CDATA[((current, params) => {
+  return {};
+})(current, params);
+]]></shared_data>
+        <shell>classic</shell>
+        <sys_class_name>x_509925_fc_web_app</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-18 20:45:36</sys_created_on>
+        <sys_id>eeedece497270a14e12c3eb0f053af1a</sys_id>
+        <sys_mod_count>261</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_web_app_eeedece497270a14e12c3eb0f053af1a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-13 12:30:50</sys_updated_on>
+        <template/>
+        <tertiary_color>#00ffb9</tertiary_color>
+    </x_509925_fc_web_app>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>eeedece497270a14e12c3eb0f053af1a</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:19:05</sys_created_on>
+        <sys_id>4752e89783b1d610926492b6feaad3d9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:19:05</sys_updated_on>
+        <table>x_509925_fc_web_app</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCDictionaryRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCDictionaryRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Repository class for interacting with the sys_dictionary table and retrieving dictionary-related data.
+ * Extends the Repository class.
+ * @class
+ * @extends FCRepository
+ */
+var FCDictionaryRepository = Class.create();
+
+FCDictionaryRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initializes a new instance of FCDictionaryRepository.
+	 * @param {boolean} overrideACL - Whether to override ACL checks.
+	 */
+	initialize: function (overrideACL) {
+		this.moduleName = 'FCDictionaryRepository';
+		FCRepository.prototype.initialize.call(this, 'sys_dictionary', overrideACL);
+	},
+
+	/**
+	 * Retrieves the display column for a specified table.
+	 * @param {string} tableName - The name of the table to get the display column for.
+	 * @param {boolean} isSerialized - Whether to serialize the output.
+	 * @returns {Object|null} The display column record, or null if not found.
+	 */
+	getDisplayColumn: function (tableName, isSerialized) {
+		var tableInheritanceNames = this.getTableTree(tableName);
+		this.addQuery('display=true^nameIN' + tableInheritanceNames + '^NQelementINname,title^nameIN' + tableInheritanceNames);
+		return this.getSingle();
+	},
+
+	/**
+	 * Retrieves a specific field from a specified table.
+	 * @param {string} tableName - The name of the table containing the field.
+	 * @param {string} fieldName - The name of the field to retrieve.
+	 * @param {boolean} isSerialized - Whether to serialize the output.
+	 * @returns {Object|null} The field record, or null if not found.
+	 */
+	getField: function (tableName, fieldName, isSerialized) {
+		var tableInheritanceNames = this.getTableTree(tableName);
+		return this.addQuery('nameIN' + tableInheritanceNames + '^element=' + fieldName).getSingle(isSerialized);
+	},
+
+	getMetaData: function (tableName) {
+		const tableInheritanceNames = this.getTableTree(tableName);
+		const fieldsGr = this.addQuery('nameIN' + tableInheritanceNames + '^ORDERBYelement').getMultiple();
+		let result = [];
+		while (fieldsGr.next()) {
+			if (!gs.nil(fieldsGr.getValue('element'))) {
+				let obj = {
+					field_label: fieldsGr.getValue('column_label'),
+					field_name: fieldsGr.getValue('element'),
+					field_type: fieldsGr.getValue('internal_type'),
+					is_reference: fieldsGr.getValue('internal_type') == 'reference',
+					is_choice: !gs.nil(fieldsGr.getValue('choice_field')) || fieldsGr.getValue('choice') > 0,
+					choices: []
+				};
+
+				if (obj.is_choice) {
+					obj.choices = new FCChoiceRepository(true).getByTableField(fieldsGr.getValue('choice_table') || fieldsGr.getValue('name'), fieldsGr.getValue('choice_field') || fieldsGr.getValue('element'));
+				}
+
+				result.push(obj);
+			}
+
+		}
+		return '\n\n' + this.convertMetadataToReadableText(result);
+	},
+
+	convertMetadataToReadableText: function (fields) {
+		let text = "Table Fields Metadata:\n\n";
+
+		fields.forEach(field => {
+			text += `Field Name: ${field.field_name}\n`;
+			text += `Field Label: ${field.field_label}\n`;
+			text += `Field Type: ${field.field_type}\n`;
+			text += `Is Reference Field: ${field.is_reference ? "Yes" : "No"}\n`;
+			text += `Is Choice Field: ${field.is_choice ? "Yes" : "No"}\n`;
+
+			// If the field is a choice field and has defined choices, list them.
+			if (field.is_choice && field.choices && field.choices.length > 0) {
+				text += "Choices:\n";
+				field.choices.forEach(choice => {
+					text += `  - ${choice.label} (Value: ${choice.value})\n`;
+				});
+			}
+			text += "\n"; // Add a blank line between fields
+		});
+
+		return text;
+	},
+
+	/**
+	 * Retrieves all fields for a specified table.
+	 * @param {string} tableName - The name of the table to retrieve fields for.
+	 * @param {boolean} isSerialized - Whether to serialize the output.
+	 * @returns {Array<Object>} An array of field records.
+	 */
+	getByTable: function (tableName, isSerialized) {
+		var tableInheritanceNames = this.getTableTree(tableName);
+		return this.addQuery('nameIN' + tableInheritanceNames + '^ORDERBYelement').getMultiple(isSerialized);
+	},
+
+	/**
+	 * Retrieves the inheritance chain for a specified table as a comma-separated list of table names.
+	 * @param {string} tableName - The name of the table to retrieve the inheritance chain for.
+	 * @returns {string} A comma-separated list of table names in the inheritance chain.
+	 */
+	getTableTree: function (tableName) {
+		/**
+		 * Retrieves an array of all tables in the inheritance chain for a specified table.
+		 * @param {string} tableName - The name of the base table.
+		 * @returns {Array<string>} An array of table names in the inheritance chain.
+		 */
+		function getInheritanceTableNames(tableName) {
+			var tableNames = [];
+
+			/**
+			 * Recursive function to fetch parent tables.
+			 * @param {string} currentTable - The current table being checked.
+			 */
+			function fetchTableNames(currentTable) {
+				if (tableNames.indexOf(currentTable) === -1) {
+					tableNames.push(currentTable);
+				}
+
+				var tableGR = new GlideRecord('sys_db_object');
+				if (tableGR.get('name', currentTable) && !tableGR.super_class.nil()) {
+					fetchTableNames(tableGR.super_class.name);
+				}
+			}
+
+			fetchTableNames(tableName);
+			return tableNames;
+		}
+
+		return getInheritanceTableNames(tableName).join(',');
+	},
+
+	/**
+	 * The type name of the class.
+	 * @type {string}
+	 */
+	type: 'FCDictionaryRepository'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-03 22:46:11</sys_created_on>
+        <sys_id>d6b43723970f02d0e12c3eb0f053af74</sys_id>
+        <sys_mod_count>30</sys_mod_count>
+        <sys_name>FCDictionaryRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_d6b43723970f02d0e12c3eb0f053af74</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-17 06:15:34</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>d6b43723970f02d0e12c3eb0f053af74</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-19 20:14:03</sys_created_on>
+        <sys_id>3fa26f1e83119210926492b6feaad383</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-19 20:14:03</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

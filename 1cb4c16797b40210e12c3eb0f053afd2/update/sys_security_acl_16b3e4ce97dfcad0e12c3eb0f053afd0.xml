@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl">
+    <sys_security_acl action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <admin_overrides>true</admin_overrides>
+        <advanced>true</advanced>
+        <applies_to/>
+        <condition/>
+        <decision_type>allow</decision_type>
+        <description>Default access control on x_509925_fc_taxonomy</description>
+        <local_or_existing>Local</local_or_existing>
+        <name>x_509925_fc_taxonomy</name>
+        <operation display_value="read">read</operation>
+        <script><![CDATA[var evaluator = new GlideScopedEvaluator();
+evaluator.putVariable('current', current);
+evaluator.putVariable('params', {});
+answer = evaluator.evaluateScript(current, 'condition');]]></script>
+        <security_attribute/>
+        <sys_class_name>sys_security_acl</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-11 01:35:39</sys_created_on>
+        <sys_id>16b3e4ce97dfcad0e12c3eb0f053afd0</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>x_509925_fc_taxonomy</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_security_acl_16b3e4ce97dfcad0e12c3eb0f053afd0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-02 19:41:12</sys_updated_on>
+        <type display_value="record">record</type>
+    </sys_security_acl>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>16b3e4ce97dfcad0e12c3eb0f053afd0</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-02 19:38:37</sys_created_on>
+        <sys_id>bd8042ac83561210926492b6feaad3c4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-02 19:38:37</sys_updated_on>
+        <table>sys_security_acl</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

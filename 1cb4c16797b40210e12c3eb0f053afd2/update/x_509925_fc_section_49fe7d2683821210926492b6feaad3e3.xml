@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_section">
+    <x_509925_fc_section action="INSERT_OR_UPDATE">
+        <attributes><![CDATA[(function(current, table, target_id, task_id, params){
+	return {
+		show: true
+	};
+})(current, table, target_id, task_id, params);]]></attributes>
+        <css_classes/>
+        <expression><![CDATA[function execute(keyValue) {
+	return true;
+}]]></expression>
+        <name>Incident Details</name>
+        <number>SEC0001024</number>
+        <order>10</order>
+        <questionnaire display_value="Report Issue">e3beb92a83821210926492b6feaad3a7</questionnaire>
+        <sys_class_name>x_509925_fc_section</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 14:23:54</sys_created_on>
+        <sys_id>49fe7d2683821210926492b6feaad3e3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Incident Details</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_section_49fe7d2683821210926492b6feaad3e3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-26 14:23:54</sys_updated_on>
+    </x_509925_fc_section>
+</record_update>
