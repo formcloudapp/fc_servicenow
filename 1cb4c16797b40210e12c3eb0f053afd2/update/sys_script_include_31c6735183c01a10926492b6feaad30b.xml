@@ -35,7 +35,9 @@ FCQuestionnaireRepository.prototype = Object.extendsObject(FCRepository, {
 			//Get form base attributes
 			var formObj = this._getFormAttributes(formGr, formGr.getValue('table'), targetId, taskId, params);
 
-			if (gs.nil(formObj)) return formObj;
+
+			if (gs.nil(formObj) || formObj.options.condition == false) return formObj;
+
 
 			var targetGr = null;
 			var hasTarget = !gs.nil(formObj.target_id);
@@ -120,6 +122,16 @@ FCQuestionnaireRepository.prototype = Object.extendsObject(FCRepository, {
 
 		//Perform update/insert
 		var updatedForm = this._update(questionnaireGr, form);
+
+		//Close task
+		if (form._task_id && questionnaireGr.getDisplayValue('close_task_on_submit') == 'true') {
+			var taskGr = new FCRepository('x_509925_fc_task', true).getById(form._task_id);
+			if (taskGr) {
+				taskGr.setValue('state', 3);
+				taskGr.update();
+			}
+
+		}
 
 		//Perform submit callback
 		this._submitCallback(questionnaireGr, updatedForm);
@@ -248,13 +260,12 @@ FCQuestionnaireRepository.prototype = Object.extendsObject(FCRepository, {
 			evaluator.putVariable('task_id', task_id || params?.taskId);
 			evaluator.putVariable('params', params || {});
 			var result = evaluator.evaluateScript(current, 'attributes');
-			if(!result) {
+			if (!result) {
 				this.throwError(new Error(`Unable to evaulate ${current.getValue('number')} attributes`), current.getValue('number'), 'attributes');
 			}
 			return result;
 		} catch (err) {
-			// gs.error('QN:' + err.message);
-			// return {};
+
 			var tempGr = new GlideRecord(new FCConstantUtility().getTableName('questionnaire'));
 			tempGr.newRecord();
 
@@ -327,6 +338,7 @@ FCQuestionnaireRepository.prototype = Object.extendsObject(FCRepository, {
 			log: [],
 			data: {},
 			pdf_mappings: {},
+			client_submit_callback: current.getValue('client_submit_callback'),
 			options: {
 				name: current.getValue('name'),
 				show_save: current.getDisplayValue('show_save') == 'true',
@@ -336,7 +348,7 @@ FCQuestionnaireRepository.prototype = Object.extendsObject(FCRepository, {
 				show_cancel: current.getDisplayValue('show_cancel') == 'true',
 				deleteable: current.getDisplayValue('deleteable') == 'true',
 				condition: true,
-				condition_failed_message: 'You are not authorized to access this resource.',
+				condition_failed_message: '',
 				draftable: current.getDisplayValue('draftable') == 'true',
 				delete_draft_on_load: current.getDisplayValue('delete_draft_on_load') == 'true',
 				reassignable: current.getDisplayValue('reassignable') == 'true',
@@ -355,6 +367,14 @@ FCQuestionnaireRepository.prototype = Object.extendsObject(FCRepository, {
 
 		if (task_id) {
 			var taskGr = new FCTaskRepository(null, true).getById(task_id);
+
+			//Make sure only the assigned to user can see the task
+			//If the user is in the same group, then they can see it as readonly
+			if (taskGr.getValue('assigned_to') != gs.getUserID()) {
+				result.options.condition = false;
+				result.options.condition_failed_message = 'You are not authorized to access this resource.';
+			}
+
 			if (taskGr) {
 				result.assigned_to = taskGr.getValue('assigned_to');
 				result.assigned_to_display_value = taskGr.getDisplayValue('assigned_to');
@@ -496,14 +516,14 @@ FCQuestionnaireRepository.prototype = Object.extendsObject(FCRepository, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-08-15 16:12:54</sys_created_on>
         <sys_id>31c6735183c01a10926492b6feaad30b</sys_id>
-        <sys_mod_count>166</sys_mod_count>
+        <sys_mod_count>185</sys_mod_count>
         <sys_name>FCQuestionnaireRepository</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy>protected</sys_policy>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>sys_script_include_31c6735183c01a10926492b6feaad30b</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-12-08 13:44:49</sys_updated_on>
+        <sys_updated_on>2025-05-10 13:12:52</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>31c6735183c01a10926492b6feaad30b</id>

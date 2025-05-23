@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+    function initialize() {
+        let model = {
+            condition: true,
+            incidents: [],
+            _incidents: {},
+            embeddings: [],
+            query: "",
+            result: "",
+            selected: [],
+            active_tab: 'list',
+            list_history: [],
+            readable_query: '',
+            meta_data: new FCDictionaryRepository(true).getMetaData('incident'),
+            params: params
+        };
+
+        if(params.dt_search){
+            model.readable_query = new global.FCGlobalUtility().beautifyEncodedQuery('incident', params.dt_search)
+        }
+        return model;
+    }
+
+    function getFormIdForTask(taskId){
+        var taskGr = new FCTaskRepository('x_509925_fc_task', true).getById(taskId);
+        return taskGr.getValue('correlation_id');
+    }
+
+
+    return {
+        initialize: initialize,
+        getFormIdForTask: getFormIdForTask
+    };
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+
+    function initialize($scope) {
+        const datatableEl = document.querySelector('mdui-datatable');
+
+        datatableEl.addEventListener('selectionChanged', (event) => {
+            $scope.model.list_context = event.detail;
+        });
+
+    }
+
+    function closeTab(selection, $scope) {
+
+        $scope.model.active_tab = '';
+        $scope.model.selected = $scope.model.selected.filter((element) => {
+            return element.sys_id.value != selection.sys_id.value
+        });
+
+        try {
+
+            setTimeout(() => {
+                if ($scope.model.selected[$scope.model.selected.length - 1]) {
+                    $scope.model.active_tab = $scope.model.selected[$scope.model.selected.length - 1].sys_id.value;
+                } else {
+                    $scope.model.active_tab = 'list';
+                }
+            }, 100);
+
+        } catch (err) {
+            setTimeout(() => {
+                $scope.model.active_tab = 'list';
+            }, 100);
+        }
+    }
+
+    async function actionCallback(row, task) {
+        let questionnaireConfig = {
+            formId: '',
+            targetId: row.sys_id.value
+        };
+        this.model.active_tab = '';
+        if (!this.model.selected.some(item => item.sys_id.value === row.sys_id.value)) {
+            if (task) {
+                const formId = await helpers.service.call('getFormIdForTask', [task.sys_id.value]);
+                if (formId) {
+                    questionnaireConfig.formId = formId;
+                    questionnaireConfig.taskId = task.sys_id.value;
+                    console.log(questionnaireConfig)
+                }
+            }else{
+                questionnaireConfig.formId = 'f50426d283d52610005fb955eeaad3be';
+            }
+            row._questionnaire_config = JSON.stringify(questionnaireConfig);
+            this.model.selected.push(row);
+        }
+
+
+
+        setTimeout(() => {
+            this.model.active_tab = row.sys_id.value;
+        }, 100);
+
+    }
+
+    return {
+        initialize: initialize,
+        closeTab: closeTab,
+        actionCallback: actionCallback
+    };
+}]]></client_scripts>
+        <css>.wrapper-container{&#13;
+    height: calc(100vh - 64px);&#13;
+}&#13;
+&#13;
+.close-button{&#13;
+    background: transparent;&#13;
+    border: none;&#13;
+}&#13;
+&#13;
+mdui-questionnaire{&#13;
+    flex-grow: 1;&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>recruit</route>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-28 01:58:06</sys_created_on>
+        <sys_id>d48fcbef83096210005fb955eeaad3fb</sys_id>
+        <sys_mod_count>67</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_d48fcbef83096210005fb955eeaad3fb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-09 11:51:42</sys_updated_on>
+        <template>[{"id":"44elis","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"wrapper-container\" style=\"background-color: var(--sys-surface);\"&gt;\r\n\t&lt;mdui-tabs style=\"height: 100%;overflow: hidden;\" :value=\"$scope.model.active_tab\"&gt;\r\n\t\t&lt;mdui-tab value=\"list\"&gt;\r\n\t\t\tRecruitment Requests\r\n\t\t&lt;/mdui-tab&gt;\r\n\t\t&lt;template x-for=\"selection in $scope.model.selected\"&gt;\r\n\t\t\t&lt;mdui-tab :value=\"selection.sys_id.value\"&gt;\r\n\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\r\n\t\t\t\t\t&lt;span x-text=\"selection.number.value\" class=\"me-2\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t&lt;button class=\"close-button\" @click=\"console.log($scope);$scope.closeTab(selection, $scope)\"&gt;\r\n\t\t\t\t\t\t&lt;mdui-icon&gt;close&lt;/mdui-icon&gt;\r\n\t\t\t\t\t&lt;/button&gt;\r\n\t\t\t\t&lt;/div&gt;\r\n\t\t\t&lt;/mdui-tab&gt;\r\n\t\t&lt;/template&gt;\r\n\r\n\t\t&lt;mdui-tab-panel slot=\"panel\" value=\"list\" class=\"scroll-container\"&gt;\r\n\t\t\t&lt;div class=\"scroll-container\"&gt;\r\n\t\t\t\t&lt;div class=\"d-flex\"&gt;\r\n\t\t\t\t\t&lt;mdui-datatable class=\"flex-grow-1\" query-name=\"recruitment_requests\"\r\n\t\t\t\t\t\tx-init=\"$scope.initialize($scope); $nextTick(() =&gt; {$el.actionCallback = $scope.actionCallback.bind($scope);})\"&gt;\r\n\t\t\t\t\t&lt;/mdui-datatable&gt;\r\n\t\t\t\t&lt;/div&gt;\r\n\t\t\t&lt;/div&gt;\r\n\t\t&lt;/mdui-tab-panel&gt;\r\n\r\n\t\t&lt;template x-for=\"selection in $scope.model.selected\" :key=\"selection.sys_id.value\"&gt;\r\n\t\t\t&lt;template x-if=\"selection.sys_id &amp;&amp; selection.sys_id.value\"&gt;\r\n\t\t\t\t&lt;mdui-tab-panel slot=\"panel\" :value=\"selection.sys_id.value\"&gt;\r\n\t\t\t\t\t&lt;mdui-questionnaire class=\"flex-grow-1\" :config=\"selection._questionnaire_config\"&gt;\r\n\t\t\t\t\t&lt;/mdui-questionnaire&gt;\r\n\t\t\t\t&lt;/mdui-tab-panel&gt;\r\n\t\t\t&lt;/template&gt;\r\n\t\t&lt;/template&gt;\r\n\t&lt;/mdui-tabs&gt;\r\n&lt;/div&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Recruit</title>
+        <type>page</type>
+    </x_509925_fc_page>
+</record_update>

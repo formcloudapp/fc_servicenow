@@ -55,6 +55,7 @@ FCGQLBrokerRepository.prototype = Object.extendsObject(FCRepository, {
 			result.sys_id = gr.getUniqueValue();
 			result.ai_filter = gr.getDisplayValue('ai_filter') == 'true';
 			result.name = gr.getValue('name');
+			result.record_script = gr.getValue('record_script');
 			if (params.sub_dt_search) {
 				result.readable_filter = new global.FCGlobalUtility().beautifyEncodedQuery(gr.getValue('table'), params.sub_dt_search);
 			}else{
@@ -82,14 +83,14 @@ FCGQLBrokerRepository.prototype = Object.extendsObject(FCRepository, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-06-20 01:24:59</sys_created_on>
         <sys_id>34d7d01b97fe8a50e12c3eb0f053af97</sys_id>
-        <sys_mod_count>22</sys_mod_count>
+        <sys_mod_count>23</sys_mod_count>
         <sys_name>FCGQLBrokerRepository</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy>protected</sys_policy>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>sys_script_include_34d7d01b97fe8a50e12c3eb0f053af97</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-21 04:39:31</sys_updated_on>
+        <sys_updated_on>2025-05-06 21:03:09</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>34d7d01b97fe8a50e12c3eb0f053af97</id>

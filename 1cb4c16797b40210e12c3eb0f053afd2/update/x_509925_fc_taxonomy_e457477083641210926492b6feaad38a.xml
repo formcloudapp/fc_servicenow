@@ -11,6 +11,7 @@
         <condition><![CDATA[((current, params) => {
     return true;
 })(current, params);]]></condition>
+        <group/>
         <icon/>
         <name>Widgets</name>
         <order>45</order>

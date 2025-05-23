@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_questionnaire">
+    <x_509925_fc_questionnaire action="INSERT_OR_UPDATE">
+        <attributes><![CDATA[(function(current, table, target_id, task_id, params){
+	
+	var attributes = new FCQuestionnaireRepository().getDefaultAttributes(current, table, target_id, task_id, params);
+	return attributes;
+	
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base>false</base>
+        <cancel_callback><![CDATA[(function(form) {
+    //First we want to check if there's a task_id
+	if(!gs.nil(form._task_id)){
+		var calceledTaskResult = new HRTaskRepository().cancelTask(form._task_id);
+	}
+})(form);]]></cancel_callback>
+        <cancel_label>Cancel</cancel_label>
+        <client_submit_callback><![CDATA[function execute(helper, form, params){
+	helper.service.snackbar('Form submitted successfully!');
+	helper.service.navigate('?id=home');
+}]]></client_submit_callback>
+        <close_task_on_submit>true</close_task_on_submit>
+        <css_classes/>
+        <delete_callback><![CDATA[(function(form){
+	throw new Error('Non Implementation Error.');
+})(form);]]></delete_callback>
+        <delete_draft_on_load>false</delete_draft_on_load>
+        <delete_label>Delete</delete_label>
+        <deleteable>false</deleteable>
+        <draftable>true</draftable>
+        <name>New Recruitment Request</name>
+        <number>QN0001014</number>
+        <on_submit><![CDATA[(function(form) {
+    
+    form.service = 'b7ddc83583156210005fb955eeaad336';
+
+    return form;
+    
+})(form);]]></on_submit>
+        <pdf/>
+        <readonly>false</readonly>
+        <reassignable>false</reassignable>
+        <related_knowledge/>
+        <require_esignature>false</require_esignature>
+        <route/>
+        <save_label>Save Draft</save_label>
+        <show_cancel>false</show_cancel>
+        <show_save>false</show_save>
+        <show_signature>false</show_signature>
+        <show_submit>true</show_submit>
+        <show_title>true</show_title>
+        <signature_list>[]</signature_list>
+        <submit_callback><![CDATA[(function(form) {
+    
+    return form;
+    
+})(form);]]></submit_callback>
+        <submit_confirmation_message>I'm confirming that all information provided is true and correct to the best of my knowledge.</submit_confirmation_message>
+        <submit_label>Submit</submit_label>
+        <subtype>request</subtype>
+        <sys_class_name>x_509925_fc_questionnaire</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 11:38:27</sys_created_on>
+        <sys_id>7fddc83583156210005fb955eeaad330</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>New Recruitment Request</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_questionnaire_7fddc83583156210005fb955eeaad330</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-06 01:08:54</sys_updated_on>
+        <table>x_509925_fc_recruitment_case</table>
+        <type>record_producer</type>
+        <validation><![CDATA[(function(form) {
+    var result = {
+        validation: true,
+        message: ''
+    };
+
+    return result;
+})(form);]]></validation>
+        <whats_next/>
+    </x_509925_fc_questionnaire>
+</record_update>

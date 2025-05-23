@@ -58,6 +58,7 @@ function execute(keyValue, question) {
         <order>4</order>
         <pdf/>
         <pdf_attachment/>
+        <pin>false</pin>
         <placeholder/>
         <property>comments_and_work_notes</property>
         <readonly>false</readonly>

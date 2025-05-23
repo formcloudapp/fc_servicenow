@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_question">
+    <x_509925_fc_question action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_signature_to/>
+        <allow_comment>false</allow_comment>
+        <allow_worknote>false</allow_worknote>
+        <attributes><![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+    attributes.select.select_options = [
+        {label: 'Non-Supervisory', value: 'Non-Supervisory'},
+        {label: 'Team Lead', value: 'Team Lead'},
+        {label: 'Supervisor', value: 'Supervisor'},
+        {label: 'Manager', value: 'Manager'},
+        {label: 'Executive', value: 'Executive'}
+    ];
+    return attributes;
+    
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base_question/>
+        <css_classes/>
+        <css_styles/>
+        <default_value><![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]></default_value>
+        <display_name>QUE0001017 - supervisory_status</display_name>
+        <dynamic_list><![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]></dynamic_list>
+        <dynamic_value><![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]></dynamic_value>
+        <e_signature_type>pdf</e_signature_type>
+        <expression><![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+    return question;
+}]]></expression>
+        <flatten_document/>
+        <hidden>false</hidden>
+        <is_cascading_select>false</is_cascading_select>
+        <is_dynamic_value>false</is_dynamic_value>
+        <label>Supervisory Status</label>
+        <liquid>{% comment %} Liquid Template {% endcomment %}</liquid>
+        <number>QUE0001017</number>
+        <order>20</order>
+        <pdf/>
+        <pdf_attachment/>
+        <pin>false</pin>
+        <placeholder/>
+        <property>supervisory_status</property>
+        <readonly>false</readonly>
+        <required_signature>false</required_signature>
+        <section display_value="Position Description (PD)">3bd369bd83996210005fb955eeaad3d8</section>
+        <signature_field_name/>
+        <signature_list>[]</signature_list>
+        <signatures/>
+        <sys_class_name>x_509925_fc_question</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 17:55:33</sys_created_on>
+        <sys_id>2f24a1fd83996210005fb955eeaad30d</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Supervisory Status</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_question_2f24a1fd83996210005fb955eeaad30d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-06 00:40:03</sys_updated_on>
+        <table>x_509925_fc_recruitment_case</table>
+        <triggered_questions/>
+        <type>select</type>
+        <validate>true</validate>
+        <width>col-md-6</width>
+    </x_509925_fc_question>
+</record_update>

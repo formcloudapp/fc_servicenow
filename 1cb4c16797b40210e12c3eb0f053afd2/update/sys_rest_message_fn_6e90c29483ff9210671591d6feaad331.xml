@@ -26,7 +26,7 @@
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2025-02-16 04:27:43</sys_updated_on>
         <use_basic_auth>false</use_basic_auth>
-        <use_mid_server display_value="FC_DEV">7d3fe9dc837f9210671591d6feaad306</use_mid_server>
+        <use_mid_server display_value="">7d3fe9dc837f9210671591d6feaad306</use_mid_server>
         <use_mutual_auth>false</use_mutual_auth>
     </sys_rest_message_fn>
 </record_update>

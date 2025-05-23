@@ -43,6 +43,7 @@ function execute(keyValue, question) {
         <order>6</order>
         <pdf/>
         <pdf_attachment/>
+        <pin>false</pin>
         <placeholder/>
         <property>short_description</property>
         <readonly>false</readonly>
@@ -55,18 +56,18 @@ function execute(keyValue, question) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-15 14:32:51</sys_created_on>
         <sys_id>4ac9cb2483f71610671591d6feaad363</sys_id>
-        <sys_mod_count>3</sys_mod_count>
+        <sys_mod_count>4</sys_mod_count>
         <sys_name>Short Description</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy/>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>x_509925_fc_question_4ac9cb2483f71610671591d6feaad363</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-15 14:50:00</sys_updated_on>
+        <sys_updated_on>2025-04-28 02:39:50</sys_updated_on>
         <table>incident</table>
         <triggered_questions/>
         <type>text</type>
-        <validate>false</validate>
+        <validate>true</validate>
         <width>col-md-12</width>
     </x_509925_fc_question>
 </record_update>

@@ -46,6 +46,7 @@ function execute(keyValue, question) {
         <order>8</order>
         <pdf/>
         <pdf_attachment/>
+        <pin>true</pin>
         <placeholder/>
         <property>work_notes</property>
         <readonly>false</readonly>
@@ -58,14 +59,14 @@ function execute(keyValue, question) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-02-09 02:43:12</sys_created_on>
         <sys_id>18dde1ae83e31210671591d6feaad3b0</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>Worknotes</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy/>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>x_509925_fc_question_18dde1ae83e31210671591d6feaad3b0</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-15 15:23:42</sys_updated_on>
+        <sys_updated_on>2025-04-30 21:01:52</sys_updated_on>
         <table>incident</table>
         <triggered_questions/>
         <type>worknote</type>

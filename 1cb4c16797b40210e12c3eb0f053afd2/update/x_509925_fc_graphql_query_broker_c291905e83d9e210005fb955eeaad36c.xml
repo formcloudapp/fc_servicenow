@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_graphql_query_broker">
+    <x_509925_fc_graphql_query_broker action="INSERT_OR_UPDATE">
+        <ai_filter>false</ai_filter>
+        <allow_selection>false</allow_selection>
+        <base>false</base>
+        <columns_configs>[{"label":"Tasks","pin":true,"search":false,"search_name":"sys_id","search_default":false,"sorting":false,"sort_name":"sys_id","sort_default":false,"template":"&lt;template x-if=\"getActiveTasksCount() &gt; 0\"&gt;\r\n\t&lt;div class=\"h-100 w-100 p-2\"\r\n\t\tstyle=\"background-color: var(--sys-primary);color: var(--sys-on-primary);font-size: 1.2em;text-align: center;font-size:1.5em;font-weight: bold;\"&gt;\r\n\t\t&lt;span x-text=\"getActiveTasksCount()\"&gt;&lt;/span&gt;\r\n\t&lt;/div&gt;\r\n&lt;/template&gt;","transform":"function execute(value, record, service){\n\n    function getActiveTasksCount(){\n        return record.child_tasks.filter((t)=&gt; t.active.value == true).length;\n    }\n\n    return {\n        value: value,\n        record: record,\n        getActiveTasksCount: getActiveTasksCount\n    }\n}","search_choices":[],"editable":false,"value":"sys_id","display_type":"value"},{"label":"Number","pin":true,"search":true,"search_name":"number","search_default":false,"sorting":true,"sort_name":"number","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    function openSnackbar(){\n        service.snackbar('Something');\n    }\n\n    return {\n        value: value,\n        record: record,\n        openSnackbar: openSnackbar\n    }\n}","value":"number","search_choices":[],"editable":false,"display_type":"display"},{"label":"Service","pin":true,"search":true,"search_name":"service","search_default":false,"sorting":false,"sort_name":"service","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"service","search_choices":[],"editable":false,"display_type":"display"},{"label":"Hiring Manager","pin":true,"search":true,"search_name":"hiring_manager","search_default":false,"sorting":true,"sort_name":"hiring_manager","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"hiring_manager","search_choices":[],"editable":false,"display_type":"display"},{"label":"Request Type","pin":true,"search":true,"search_name":"request_type","search_default":false,"sorting":true,"sort_name":"request_type","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"request_type","search_choices":[],"editable":false,"display_type":"display"},{"label":"Awaiting On","pin":true,"search":true,"search_name":"awaiting_on","search_default":false,"sorting":false,"sort_name":"awaiting_on","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"awaiting_on","search_choices":[],"editable":false,"display_type":"display"},{"label":"Awaiting on Group","pin":true,"search":true,"search_name":"awaiting_on_group","search_default":false,"sorting":false,"sort_name":"awaiting_on_group","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"awaiting_on_group","search_choices":[],"editable":false,"display_type":"display"},{"label":"child_tasks_count","pin":false,"search":false,"search_name":"child_tasks_count","search_default":false,"sorting":false,"sort_name":"child_tasks_count","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"child_tasks_count","search_choices":[],"editable":false,"display_type":"display"},{"label":"sys_id","pin":false,"search":false,"search_name":"sys_id","search_default":false,"sorting":false,"sort_name":"sys_id","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"child_tasks.sys_id","search_choices":[],"editable":false,"display_type":"display"},{"label":"description","pin":false,"search":false,"search_name":"description","search_default":false,"sorting":false,"sort_name":"description","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"child_tasks.description","search_choices":[],"editable":false,"display_type":"display"},{"label":"short_description","pin":false,"search":false,"search_name":"short_description","search_default":false,"sorting":false,"sort_name":"short_description","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"child_tasks.short_description","search_choices":[],"editable":false,"display_type":"display"},{"label":"flsa_category","pin":false,"search":false,"search_name":"flsa_category","search_default":false,"sorting":false,"sort_name":"flsa_category","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"flsa_category","search_choices":[],"editable":false,"display_type":"display"},{"label":"grade","pin":false,"search":false,"search_name":"grade","search_default":false,"sorting":false,"sort_name":"grade","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"grade","search_choices":[],"editable":false,"display_type":"display"},{"label":"impact_of_not_classifying_reclassifying","pin":false,"search":false,"search_name":"impact_of_not_classifying_reclassifying","search_default":false,"sorting":false,"sort_name":"impact_of_not_classifying_reclassifying","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"impact_of_not_classifying_reclassifying","search_choices":[],"editable":false,"display_type":"display"},{"label":"major_duties","pin":false,"search":false,"search_name":"major_duties","search_default":false,"sorting":false,"sort_name":"major_duties","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"major_duties","search_choices":[],"editable":false,"display_type":"display"},{"label":"occupational_series","pin":false,"search":false,"search_name":"occupational_series","search_default":false,"sorting":false,"sort_name":"occupational_series","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"occupational_series","search_choices":[],"editable":false,"display_type":"display"},{"label":"other_reason_for_request","pin":false,"search":false,"search_name":"other_reason_for_request","search_default":false,"sorting":false,"sort_name":"other_reason_for_request","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"other_reason_for_request","search_choices":[],"editable":false,"display_type":"display"},{"label":"pay_plan","pin":false,"search":false,"search_name":"pay_plan","search_default":false,"sorting":false,"sort_name":"pay_plan","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"pay_plan","search_choices":[],"editable":false,"display_type":"display"},{"label":"position_sensitivity_risk_level","pin":false,"search":false,"search_name":"position_sensitivity_risk_level","search_default":false,"sorting":false,"sort_name":"position_sensitivity_risk_level","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"position_sensitivity_risk_level","search_choices":[],"editable":false,"display_type":"display"},{"label":"position_title","pin":false,"search":false,"search_name":"position_title","search_default":false,"sorting":false,"sort_name":"position_title","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"position_title","search_choices":[],"editable":false,"display_type":"display"},{"label":"reason_for_request","pin":false,"search":false,"search_name":"reason_for_request","search_default":false,"sorting":false,"sort_name":"reason_for_request","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"reason_for_request","search_choices":[],"editable":false,"display_type":"display"},{"label":"supervisory_status","pin":false,"search":false,"search_name":"supervisory_status","search_default":false,"sorting":false,"sort_name":"supervisory_status","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"supervisory_status","search_choices":[],"editable":false,"display_type":"display"},{"label":"telework_eligibility","pin":false,"search":false,"search_name":"telework_eligibility","search_default":false,"sorting":false,"sort_name":"telework_eligibility","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"telework_eligibility","search_choices":[],"editable":false,"display_type":"display"},{"label":"work_schedule","pin":false,"search":false,"search_name":"work_schedule","search_default":false,"sorting":false,"sort_name":"work_schedule","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"work_schedule","search_choices":[],"editable":false,"display_type":"display"},{"label":"active","pin":false,"search":false,"search_name":"active","search_default":false,"sorting":false,"sort_name":"active","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"active","search_choices":[],"editable":false,"display_type":"display"},{"label":"active","pin":false,"search":false,"search_name":"active","search_default":false,"sorting":false,"sort_name":"active","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"child_tasks.active","search_choices":[],"editable":false,"display_type":"display"},{"label":"Avatar","pin":false,"search":false,"search_name":"child_tasks.assigned_to_reference.avatar","search_default":false,"sorting":false,"sort_name":"child_tasks.assigned_to_reference.avatar","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"child_tasks.assigned_to_reference.avatar","search_choices":[],"editable":false,"display_type":"display"},{"label":"child_tasks.assigned_to","pin":false,"search":false,"search_name":"child_tasks.assigned_to","search_default":false,"sorting":false,"sort_name":"child_tasks.assigned_to","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"child_tasks.assigned_to","search_choices":[],"editable":false,"display_type":"display"},{"label":"Department","pin":true,"search":false,"search_name":"department_office","search_default":false,"sorting":false,"sort_name":"department_office","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"department_office","search_choices":[],"editable":false,"display_type":"display"}]</columns_configs>
+        <filter_builder><![CDATA[((current, params) => {
+
+    return '';
+
+})(current, params);]]></filter_builder>
+        <filters table="x_509925_fc_recruitment_case">^EQ<item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filters>
+        <gql><![CDATA[function execute(params, configs) {
+    let gql = '';
+    if (configs.schema == 'ootb') {
+        gql = `
+		{
+			GlideRecord_Query{
+				${configs.table}(queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} }) {
+					_rowCount
+					_results ${configs.gql}
+				}
+			}
+		}
+	`;
+    }else{
+		gql = `
+		{
+			${configs.namespace}{
+				${configs.gql_schema}{
+					getMultiple(tableName: "${configs.table}", queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} })
+					{
+						sys_id{
+							value
+						}
+						...on ${configs.namespace}_${configs.gql_schema}_${configs.table}  ${configs.gql}
+					}
+					getCount(tableName: "${configs.table}", queryConditions: "${configs.filters}")
+				}
+			}
+		}
+		`;
+	}
+
+    return gql;
+}]]></gql>
+        <gql_path/>
+        <graphql_schema display_value="Task">286bea0983e45210926492b6feaad396</graphql_schema>
+        <metadata>{"table":"x_509925_fc_recruitment_case","fields":[{"column_name":null,"column_label":null,"max_length":"40","type":"collection","mandatory":"0","is_choice":true,"choices":[]},{"column_name":null,"column_label":null,"max_length":"40","type":"collection","mandatory":"0","is_choice":true,"choices":[]},{"column_name":null,"column_label":null,"max_length":"40","type":"collection","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"active","column_label":"Active","max_length":"40","type":"boolean","mandatory":"0","is_choice":false},{"column_name":"activity_due","column_label":"Activity due","max_length":"40","type":"due_date","mandatory":"0","is_choice":false},{"column_name":"additional_assignee_list","column_label":"Additional assignee list","max_length":"4000","type":"glide_list","mandatory":"0","is_choice":false},{"column_name":"approval","column_label":"Approval","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[{"label":"Approved","value":"approved"},{"label":"Not Yet Requested","value":"not requested"},{"label":"Rejected","value":"rejected"},{"label":"Requested","value":"requested"}]},{"column_name":"approval_history","column_label":"Approval history","max_length":"4000","type":"journal","mandatory":"0","is_choice":false},{"column_name":"approval_set","column_label":"Approval set","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"assigned_to","column_label":"Assigned to","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sys_user"},{"column_name":"assignment_group","column_label":"Assignment group","max_length":"32","type":"reference","mandatory":"0","is_choice":true,"choices":[],"reference":"#/definitions/sys_user_group"},{"column_name":"awaiting_on","column_label":"Awaiting On","max_length":"32","type":"glide_list","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"awaiting_on_group","column_label":"Awaiting On Group","max_length":"4000","type":"glide_list","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"business_duration","column_label":"Business duration","max_length":"40","type":"glide_duration","mandatory":"0","is_choice":false},{"column_name":"business_service","column_label":"Service","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/cmdb_ci_service"},{"column_name":"calendar_duration","column_label":"Duration","max_length":"40","type":"glide_duration","mandatory":"0","is_choice":false},{"column_name":"closed_at","column_label":"Closed","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"closed_by","column_label":"Closed by","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sys_user"},{"column_name":"close_notes","column_label":"Close notes","max_length":"4000","type":"string","mandatory":"0","is_choice":false},{"column_name":"cmdb_ci","column_label":"Configuration item","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/cmdb_ci"},{"column_name":"comments","column_label":"Additional comments","max_length":"4000","type":"journal_input","mandatory":"0","is_choice":false},{"column_name":"comments_and_work_notes","column_label":"Comments and Work notes","max_length":"4000","type":"journal_list","mandatory":"0","is_choice":false},{"column_name":"company","column_label":"Company","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/core_company"},{"column_name":"compliance","column_label":"Compliance","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"contact_type","column_label":"Contact type","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[{"label":"Email","value":"email"},{"label":"Monitoring","value":"monitoring"},{"label":"Phone","value":"phone"},{"label":"Self-service","value":"self-service"},{"label":"Virtual Agent","value":"virtual_agent"},{"label":"Walk-in","value":"walk-in"}]},{"column_name":"contract","column_label":"Contract","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/ast_contract"},{"column_name":"correlation_display","column_label":"Correlation display","max_length":"100","type":"string","mandatory":"0","is_choice":false},{"column_name":"correlation_id","column_label":"Correlation ID","max_length":"100","type":"string","mandatory":"0","is_choice":false},{"column_name":"delivery_plan","column_label":"Delivery plan","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sc_cat_item_delivery_plan"},{"column_name":"delivery_task","column_label":"Delivery task","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sc_cat_item_delivery_task"},{"column_name":"department_office","column_label":"Department/Office","max_length":"32","type":"reference","mandatory":"0","is_choice":true,"choices":[],"reference":"#/definitions/cmn_department"},{"column_name":"description","column_label":"Description","max_length":"4000","type":"string","mandatory":"0","is_choice":false},{"column_name":"due_date","column_label":"Due date","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"escalation","column_label":"Escalation","max_length":"40","type":"integer","mandatory":"0","is_choice":true,"choices":[{"label":"High","value":"2"},{"label":"Moderate","value":"1"},{"label":"Normal","value":"0"},{"label":"Overdue","value":"3"}]},{"column_name":"expected_start","column_label":"Expected start","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"flsa_category","column_label":"FLSA Category","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"follow_up","column_label":"Follow up","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"grade","column_label":"Grade","max_length":"40","type":"integer","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"group_list","column_label":"Group list","max_length":"4000","type":"glide_list","mandatory":"0","is_choice":false},{"column_name":"hiring_manager","column_label":"Hiring Manager","max_length":"32","type":"reference","mandatory":"0","is_choice":true,"choices":[],"reference":"#/definitions/sys_user"},{"column_name":"impact","column_label":"Impact","max_length":"40","type":"integer","mandatory":"0","is_choice":true,"choices":[{"label":"1 - High","value":"1"},{"label":"2 - Medium","value":"2"},{"label":"3 - Low","value":"3"}]},{"column_name":"impact_of_not_classifying_reclassifying","column_label":"Impact of Not Classifying/Reclassifying","max_length":"5000","type":"string_full_utf8","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"knowledge","column_label":"Knowledge","max_length":"40","type":"boolean","mandatory":"0","is_choice":false},{"column_name":"location","column_label":"Location","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/cmn_location"},{"column_name":"made_sla","column_label":"Made SLA","max_length":"40","type":"boolean","mandatory":"0","is_choice":false},{"column_name":"major_duties","column_label":"Major Duties","max_length":"5000","type":"string_full_utf8","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"major_duties_align_with_series","column_label":"Major Duties Align with Series","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"number","column_label":"Number","max_length":"40","type":"string","mandatory":"0","is_choice":false},{"column_name":"occupational_series","column_label":"Occupational Series","max_length":"10","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"opened_at","column_label":"Opened","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"opened_by","column_label":"Opened by","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sys_user"},{"column_name":"order","column_label":"Order","max_length":"40","type":"integer","mandatory":"0","is_choice":false},{"column_name":"other_reason_for_request","column_label":"Other Reason For Request","max_length":"5000","type":"string_full_utf8","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"parent","column_label":"Parent","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/task"},{"column_name":"pay_plan","column_label":"Pay Plan","max_length":"10","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"pd_completeness_check","column_label":"PD Completeness Check","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[{"label":"PD is complete","value":"PD is complete"},{"label":"PD requires revision","value":"PD requires revision"}]},{"column_name":"pd_received_date","column_label":"PD Received Date","max_length":"40","type":"glide_date","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"position_sensitivity_risk_level","column_label":"Position Sensitivity/Risk Level","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"position_title","column_label":"Position Title","max_length":"255","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"priority","column_label":"Priority","max_length":"40","type":"integer","mandatory":"0","is_choice":true,"choices":[{"label":"1 - Critical","value":"1"},{"label":"2 - High","value":"2"},{"label":"3 - Moderate","value":"3"},{"label":"4 - Low","value":"4"},{"label":"5 - Planning","value":"5"}]},{"column_name":"reason_for_request","column_label":"Reason for Request","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"reassignment_count","column_label":"Reassignment count","max_length":"40","type":"integer","mandatory":"0","is_choice":false},{"column_name":"rejection_goto","column_label":"Rejection goto","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/task"},{"column_name":"request_type","column_label":"Request Type","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"route_reason","column_label":"Transfer reason","max_length":"40","type":"integer","mandatory":"0","is_choice":true,"choices":[{"label":"Transfer with Resolution","value":"1"},{"label":"Transfer without Resolution","value":"2"}]},{"column_name":"service","column_label":"FC Service","max_length":"32","type":"reference","mandatory":"1","is_choice":true,"choices":[],"reference":"#/definitions/x_509925_fc_catalog_item"},{"column_name":"service_offering","column_label":"Service offering","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/service_offering"},{"column_name":"short_description","column_label":"Short description","max_length":"160","type":"string","mandatory":"0","is_choice":false},{"column_name":"sla_due","column_label":"SLA due","max_length":"40","type":"due_date","mandatory":"0","is_choice":false},{"column_name":"state","column_label":"State","max_length":"40","type":"integer","mandatory":"0","is_choice":true,"choices":[{"label":"Closed Complete","value":"3"},{"label":"Closed Incomplete","value":"4"},{"label":"Closed Skipped","value":"7"},{"label":"Open","value":"1"},{"label":"Pending","value":"-5"},{"label":"Work in Progress","value":"2"}]},{"column_name":"supervisory_controls","column_label":"Supervisory Controls","max_length":"1000","type":"string_full_utf8","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"supervisory_status","column_label":"Supervisory Status","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"sys_class_name","column_label":"Task type","max_length":"80","type":"sys_class_name","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"sys_created_by","column_label":"Created by","max_length":"40","type":"string","mandatory":"0","is_choice":false},{"column_name":"sys_created_on","column_label":"Created","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"sys_domain","column_label":"Domain","max_length":"32","type":"domain_id","mandatory":"0","is_choice":false},{"column_name":"sys_domain_path","column_label":"Domain Path","max_length":"255","type":"domain_path","mandatory":"0","is_choice":false},{"column_name":"sys_id","column_label":"Sys ID","max_length":"32","type":"GUID","mandatory":"0","is_choice":false},{"column_name":"sys_id","column_label":"Sys ID","max_length":"32","type":"GUID","mandatory":"0","is_choice":false},{"column_name":"sys_id","column_label":"Sys ID","max_length":"32","type":"GUID","mandatory":"0","is_choice":false},{"column_name":"sys_mod_count","column_label":"Updates","max_length":"40","type":"integer","mandatory":"0","is_choice":false},{"column_name":"sys_updated_by","column_label":"Updated by","max_length":"40","type":"string","mandatory":"0","is_choice":false},{"column_name":"sys_updated_on","column_label":"Updated","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"task_effective_number","column_label":"Effective number","max_length":"40","type":"string","mandatory":"0","is_choice":false},{"column_name":"telework_eligibility","column_label":"Telework Eligibility","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"time_worked","column_label":"Time worked","max_length":"40","type":"timer","mandatory":"0","is_choice":false},{"column_name":"universal_request","column_label":"Universal Request","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/task"},{"column_name":"upon_approval","column_label":"Upon approval","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[{"label":"Proceed to Next Task","value":"proceed"},{"label":"Wait for a User to Close this task","value":"do_nothing"}]},{"column_name":"upon_reject","column_label":"Upon reject","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[{"label":"Cancel all future Tasks","value":"cancel"},{"label":"Go to a previous Task","value":"goto"}]},{"column_name":"urgency","column_label":"Urgency","max_length":"40","type":"integer","mandatory":"0","is_choice":true,"choices":[{"label":"1 - High","value":"1"},{"label":"2 - Medium","value":"2"},{"label":"3 - Low","value":"3"}]},{"column_name":"user_input","column_label":"User input","max_length":"4000","type":"user_input","mandatory":"0","is_choice":false},{"column_name":"variables","column_label":"Variables","max_length":"40","type":"variables","mandatory":"0","is_choice":false},{"column_name":"watch_list","column_label":"Watch list","max_length":"4000","type":"glide_list","mandatory":"0","is_choice":false},{"column_name":"wf_activity","column_label":"Workflow activity","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/wf_activity"},{"column_name":"work_end","column_label":"Actual end","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"work_notes","column_label":"Work notes","max_length":"4000","type":"journal_input","mandatory":"0","is_choice":false},{"column_name":"work_notes_list","column_label":"Work notes list","max_length":"4000","type":"glide_list","mandatory":"0","is_choice":false},{"column_name":"work_schedule","column_label":"Work Schedule","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"work_start","column_label":"Actual start","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false}]}</metadata>
+        <name>recruitment_requests</name>
+        <number>GQL0001002</number>
+        <record_details>&lt;style&gt;&#13;
+	.record-section {&#13;
+		margin-bottom: 25px;&#13;
+	}&#13;
+&#13;
+	.record-section-title {&#13;
+		border-bottom: 2px solid var(--sys-primary) !important;&#13;
+		padding-bottom: 8px;&#13;
+		margin-bottom: 15px;&#13;
+		color: var(--sys-primary);&#13;
+		font-size: 1.2rem;&#13;
+	}&#13;
+&#13;
+	.detail-row {&#13;
+		display: flex;&#13;
+		flex-wrap: wrap;&#13;
+		padding: 10px;&#13;
+	}&#13;
+&#13;
+	.detail-row:nth-child(even) {&#13;
+		background-color: var(--sys-surface-container) !important;&#13;
+	}&#13;
+&#13;
+	.detail-row:hover {&#13;
+		background-color: var(--sys-secondary-container) !important;&#13;
+	}&#13;
+&#13;
+	.detail-label {&#13;
+		font-weight: 600;&#13;
+		width: 200px;&#13;
+		min-width: 200px;&#13;
+		margin-right: 15px;&#13;
+		color: var(--sys-on-surface) !important;&#13;
+	}&#13;
+&#13;
+	.detail-value {&#13;
+		flex: 1;&#13;
+		word-break: break-word;&#13;
+	}&#13;
+&#13;
+	.empty-value {&#13;
+		color: #6c757d;&#13;
+		font-style: italic;&#13;
+	}&#13;
+&#13;
+	.assigned-to-avatar {&#13;
+		border-radius: 25px;&#13;
+	}&#13;
+&lt;/style&gt;&#13;
+&lt;div class="mt-3"&gt;&#13;
+	&lt;mdui-tabs value="tab-3"&gt;&#13;
+		&lt;mdui-tab value="tab-3"&gt;Details&lt;/mdui-tab&gt;&#13;
+		&lt;mdui-tab value="tab-1"&gt;Outstanding Tasks &lt;template x-if="activeTaskCount &gt; 0"&gt;&lt;mdui-badge&gt;&lt;span x-text="activeTaskCount"&gt;&lt;/mdui-badge&gt;&lt;/template&gt;&lt;/mdui-tab&gt;&#13;
+		&lt;mdui-tab value="tab-2"&gt;Completed Tasks&lt;/mdui-tab&gt;&#13;
+&#13;
+&#13;
+		&lt;mdui-tab-panel slot="panel" class="p-3" value="tab-3"&gt;&#13;
+			&lt;mdui-tabs value="tab-1" placement="left-start"&gt;&#13;
+				&lt;mdui-tab value="tab-1"&gt;Position Details&lt;/mdui-tab&gt;&#13;
+				&lt;mdui-tab value="tab-2"&gt;Description&lt;/mdui-tab&gt;&#13;
+				&lt;mdui-tab value="tab-3"&gt;Justifications&lt;/mdui-tab&gt;&#13;
+&#13;
+				&lt;mdui-tab-panel slot="panel" value="tab-1"&gt;&#13;
+					&lt;div class="record-section"&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Hiring Manager:&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.hiring_manager.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Department/Office&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.department_office.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Pay Plan&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.pay_plan.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Grade&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.grade.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Occupational Series&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.occupational_series.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Position Sensitivity/Risk Level&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.position_sensitivity_risk_level.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Work Schedule&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.work_schedule.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Telework Eligibility&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.telework_eligibility.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Supervisory Status:&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.supervisory_status.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+					&lt;/div&gt;&#13;
+				&lt;/mdui-tab-panel&gt;&#13;
+				&lt;mdui-tab-panel slot="panel" value="tab-2"&gt;&#13;
+					&lt;div class="record-section"&gt;&#13;
+						&lt;div class="detail-row"&gt;&#13;
+							&lt;div class="detail-label"&gt;Major Duties:&lt;/div&gt;&#13;
+							&lt;div class="detail-value"&gt;&#13;
+								&lt;span x-text="record.major_duties.display_value"&gt;&lt;/span&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/div&gt;&#13;
+					&lt;/div&gt;&#13;
+				&lt;/mdui-tab-panel&gt;&#13;
+				&lt;mdui-tab-panel slot="panel" value="tab-3"&gt;&#13;
+					&lt;div class="detail-row"&gt;&#13;
+						&lt;div class="detail-label"&gt;Justification&lt;/div&gt;&#13;
+						&lt;div class="detail-value"&gt;&#13;
+							&lt;span x-text="record.reason_for_request.display_value"&gt;&lt;/span&gt;&#13;
+						&lt;/div&gt;&#13;
+					&lt;/div&gt;&#13;
+					&lt;div class="detail-row"&gt;&#13;
+						&lt;div class="detail-label"&gt;Impact of Not Classifying/Reclassifying&lt;/div&gt;&#13;
+						&lt;div class="detail-value"&gt;&#13;
+							&lt;span x-text="record.impact_of_not_classifying_reclassifying.display_value"&gt;&lt;/span&gt;&#13;
+						&lt;/div&gt;&#13;
+					&lt;/div&gt;&#13;
+				&lt;/mdui-tab-panel&gt;&#13;
+			&lt;/mdui-tabs&gt;&#13;
+		&lt;/mdui-tab-panel&gt;&#13;
+		&lt;mdui-tab-panel slot="panel" class="p-3" value="tab-1"&gt;&#13;
+			&lt;div class="container"&gt;&#13;
+				&lt;div class="row"&gt;&#13;
+					&lt;template x-if="activeTaskCount &gt; 0"&gt;&#13;
+						&lt;template x-for="task in getActiveTasks()"&gt;&#13;
+							&lt;div class="col-md-4 p-1"&gt;&#13;
+								&lt;mdui-card variant="filled" style="width: 100%;height: 100%;"&gt;&#13;
+									&lt;div class="d-flex align-items-center h-100"&gt;&#13;
+										&lt;div class="p-1"&gt;&#13;
+											&lt;img width="50" height="50" class="assigned-to-avatar" :src="'https://dev316600.service-now.com/' + task.assigned_to_reference.avatar.value + '.iix'"&gt;&lt;/img&gt;&#13;
+										&lt;/div&gt;&#13;
+										&lt;div class="flex-grow-1 p-3"&gt;&#13;
+&#13;
+											&lt;div&gt;&#13;
+												&lt;a :href="'?id=profile&amp;targetId=' + task.assigned_to.value"&gt;&#13;
+													&lt;span x-text="task.assigned_to.display_value"&gt;&lt;/span&gt;&#13;
+												&lt;/a&gt;&#13;
+											&lt;/div&gt;&#13;
+											&lt;div&gt;&#13;
+												&lt;strong&gt;Description: &lt;/strong&gt;&lt;span x-text="task.short_description.value"&gt;&lt;/span&gt;&#13;
+											&lt;/div&gt;&#13;
+&#13;
+										&lt;/div&gt;&#13;
+										&lt;div class="d-flex justify-content-end p-1 h-100 align-items-center"&#13;
+											style="background-color: var(--sys-primary-container);"&gt;&#13;
+											&lt;mdui-button-icon icon="arrow_outward"&#13;
+												@click="$scope.actionCallback(record, task)"&gt;&lt;/mdui-button-icon&gt;&#13;
+										&lt;/div&gt;&#13;
+									&lt;/div&gt;&#13;
+								&lt;/mdui-card&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/template&gt;&#13;
+					&lt;/template&gt;&#13;
+					&lt;template x-if="activeTaskCount == 0"&gt;&#13;
+						&lt;div class="col"&gt;&#13;
+							&lt;h5 class="text-center"&gt;No outstanding tasks.&lt;/h5&gt;&#13;
+						&lt;/div&gt;&#13;
+					&lt;/template&gt;&#13;
+				&lt;/div&gt;&#13;
+			&lt;/div&gt;&#13;
+		&lt;/mdui-tab-panel&gt;&#13;
+		&lt;mdui-tab-panel slot="panel" class="p-3" value="tab-2"&gt;&#13;
+			&lt;div class="container"&gt;&#13;
+				&lt;div class="row"&gt;&#13;
+					&lt;template x-if="inactiveTaskCount &gt; 0"&gt;&#13;
+						&lt;template x-for="task in getInActiveTasks()"&gt;&#13;
+							&lt;div class="col-md-4 p-1"&gt;&#13;
+								&lt;mdui-card variant="filled" style="width: 100%;height: 100%;"&gt;&#13;
+									&lt;div class="d-flex align-items-center h-100"&gt;&#13;
+										&lt;div class="p-1"&gt;&#13;
+											&lt;img width="50" height="50" class="assigned-to-avatar" :src="'https://dev316600.service-now.com/' + task.assigned_to_reference.avatar.value + '.iix'"&gt;&lt;/img&gt;&#13;
+										&lt;/div&gt;&#13;
+										&lt;div class="flex-grow-1 p-3"&gt;&#13;
+											&lt;div&gt;&#13;
+												&lt;a :href="'?id=profile&amp;targetId=' + task.assigned_to.value"&gt;&#13;
+													&lt;span x-text="task.assigned_to.display_value"&gt;&lt;/span&gt;&#13;
+												&lt;/a&gt;&#13;
+											&lt;/div&gt;&#13;
+											&lt;div&gt;&#13;
+												&lt;strong&gt;Description: &lt;/strong&gt;&lt;span x-text="task.short_description.value"&gt;&lt;/span&gt;&#13;
+											&lt;/div&gt;&#13;
+										&lt;/div&gt;&#13;
+										&lt;div class="d-flex justify-content-end p-1 h-100 align-items-center"&#13;
+											style="background-color: var(--sys-primary-container);"&gt;&#13;
+											&lt;mdui-button-icon icon="arrow_outward"&#13;
+												@click="$scope.actionCallback(record, task)"&gt;&lt;/mdui-button-icon&gt;&#13;
+										&lt;/div&gt;&#13;
+									&lt;/div&gt;&#13;
+								&lt;/mdui-card&gt;&#13;
+							&lt;/div&gt;&#13;
+						&lt;/template&gt;&#13;
+					&lt;/template&gt;&#13;
+                    &lt;template x-if="inactiveTaskCount == 0"&gt;&#13;
+						&lt;div class="col"&gt;&#13;
+							&lt;h5 class="text-center"&gt;No completed tasks.&lt;/h5&gt;&#13;
+						&lt;/div&gt;&#13;
+					&lt;/template&gt;&#13;
+				&lt;/div&gt;&#13;
+			&lt;/div&gt;&#13;
+		&lt;/mdui-tab-panel&gt;&#13;
+	&lt;/mdui-tabs&gt;&#13;
+&lt;/div&gt;</record_details>
+        <record_script><![CDATA[function execute(record, service) {
+
+    const activeTaskCount = getActiveTasks().length;
+    const inactiveTaskCount = getInActiveTasks().length;
+
+    function getActiveTasks(){
+        return record.child_tasks.filter((t)=> t.active.value == true)
+    }
+     function getInActiveTasks(){
+        return record.child_tasks.filter((t)=> t.active.value == false)
+    }
+
+    return {
+        record: record,
+        getActiveTasks: getActiveTasks,
+        getInActiveTasks: getInActiveTasks,
+        activeTaskCount: activeTaskCount,
+        inactiveTaskCount: inactiveTaskCount
+    }
+}]]></record_script>
+        <row_count_path/>
+        <schema>custom</schema>
+        <script><![CDATA[((current, params) => {
+	const namespace = gs.getProperty(current.sys_scope.scope + '.graphql_namespace');
+	const gqlSchemaGr = current.graphql_schema.getRefRecord();
+    let datatableConfig = {
+        table: current.getValue('table'),
+        filters: current.getValue('filters'),
+        allow_selection: current.getValue('allow_selection'),
+        gql: current.getValue('gql'),
+        details_template: current.getValue('record_details'),
+		gql_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._results') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getMultiple'),
+        row_count_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._rowCount') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getCount'),
+        data_columns: JSON.parse(current.getValue('columns_configs')),
+		schema: current.getValue('schema'),
+		gql_schema: gqlSchemaGr.getValue('namespace'),
+		tabable: true
+    };
+
+    return datatableConfig;
+
+})(current, params);]]></script>
+        <sys_class_name>x_509925_fc_graphql_query_broker</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-06 01:11:41</sys_created_on>
+        <sys_id>c291905e83d9e210005fb955eeaad36c</sys_id>
+        <sys_mod_count>256</sys_mod_count>
+        <sys_name>recruitment_requests</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_graphql_query_broker_c291905e83d9e210005fb955eeaad36c</sys_update_name>
+        <sys_updated_by>david.galagarza</sys_updated_by>
+        <sys_updated_on>2025-05-21 16:34:42</sys_updated_on>
+        <table>x_509925_fc_recruitment_case</table>
+    </x_509925_fc_graphql_query_broker>
+</record_update>

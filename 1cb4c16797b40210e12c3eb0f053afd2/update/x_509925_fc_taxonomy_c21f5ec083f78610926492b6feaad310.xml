@@ -11,6 +11,7 @@
         <condition><![CDATA[((current, params) => {
     return true;
 })(current, params);]]></condition>
+        <group/>
         <icon/>
         <name>Portal Settings</name>
         <order>20</order>

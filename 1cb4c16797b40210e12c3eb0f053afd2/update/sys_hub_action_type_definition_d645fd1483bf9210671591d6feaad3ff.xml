@@ -51,9 +51,7 @@
     <sys_hub_action_output action="delete_multiple" query="model=d645fd1483bf9210671591d6feaad3ff"/>
     <sys_hub_pill_compound action="delete_multiple" query="attached_to=d645fd1483bf9210671591d6feaad3ff"/>
     <sys_hub_action_status_metadata action="delete_multiple" query="action_type_id=d645fd1483bf9210671591d6feaad3ff"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_input_d645fd1483bf9210671591d6feaad3ff"/>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_d645fd1483bf9210671591d6feaad3ff"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_d645fd1483bf9210671591d6feaad3ff"/>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_output_d645fd1483bf9210671591d6feaad3ff"/>
     <sys_hub_action_plan action="delete_multiple" query="action_id=d645fd1483bf9210671591d6feaad3ff"/>
 </record_update>

@@ -2,7 +2,7 @@
     <sys_dictionary action="INSERT_OR_UPDATE" element="ai_filter" table="x_509925_fc_graphql_query_broker">
         <active>true</active>
         <array>false</array>
-        <attributes/>
+        <attributes>edge_encryption_enabled=true</attributes>
         <audit>false</audit>
         <calculation><![CDATA[(function calculatedFieldValue(current) {
 

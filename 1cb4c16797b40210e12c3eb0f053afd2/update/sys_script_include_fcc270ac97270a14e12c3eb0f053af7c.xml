@@ -112,7 +112,8 @@ FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
 						first_header_background: {
 							label: 'First Header Background Color',
 							key: 'fc_classic_header_bg',
-							value: 'var(--sys-primary)'
+							value: 'var(--sys-primary)',
+							logo: null
 						},
 						first_header_foreground: {
 							label: 'First Header Foreground Color',
@@ -134,7 +135,8 @@ FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
 						first_header_background: {
 							label: 'First Header Background Color',
 							key: 'fc_classic_header_1_bg',
-							value: 'var(--sys-on-primary-fixed)'
+							value: 'var(--sys-on-primary-fixed)',
+							logo: null
 						},
 						first_header_foreground: {
 							label: 'First Header Foreground Color',
@@ -152,8 +154,8 @@ FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
 							value: 'var(--sys-on-surface-container)'
 						},
 					},
-					first_header_override_dark_theme: true,
-					left_nav_override_dark_theme: false
+					first_header_override_appearance: true,
+					left_nav_override_appearance: false
 				}
 			}
 		};
@@ -182,6 +184,7 @@ FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
 			attributes: current.getValue('attributes'),
 			shared_data: current.getValue('shared_data'),
 			avatar: new FCLiveProfileRepository(true).getAvatar(),
+			avatar_id: new FCUserRepository(true).getById(gs.getUserID()).getValue('avatar'),
 			token: token,
 			base_url: gs.getProperty('glide.servlet.uri'),
 			css_classes: this._getCssClasses(),
@@ -189,6 +192,10 @@ FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
 			shell_configs: evaluator.evaluateScript(current, 'attributes'),
 			user_preferences: userPreferences,
 			user_id: gs.getUserID(),
+			user_name: gs.getUserName(),
+			user_display_name: gs.getUserDisplayName(),
+			is_impersonating: new global.FCGlobalUtility().isImpersonating(),
+			real_user_name: new global.FCGlobalUtility().getImpersonatingUserName(),
 			hot_reload: gs.getProperty('x_509925_fc.hot_reload') === 'true',
 			page_elements: {
 				container: {
@@ -794,14 +801,14 @@ FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-07-18 21:09:24</sys_created_on>
         <sys_id>fcc270ac97270a14e12c3eb0f053af7c</sys_id>
-        <sys_mod_count>136</sys_mod_count>
+        <sys_mod_count>147</sys_mod_count>
         <sys_name>FCWebAppRepository</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy>protected</sys_policy>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>sys_script_include_fcc270ac97270a14e12c3eb0f053af7c</sys_update_name>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-01-21 03:28:17</sys_updated_on>
+        <sys_updated_by>david.galagarza</sys_updated_by>
+        <sys_updated_on>2025-05-21 02:54:11</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>fcc270ac97270a14e12c3eb0f053af7c</id>

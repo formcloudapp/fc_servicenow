@@ -54,6 +54,7 @@ function execute(keyValue, question) {
         <order>0</order>
         <pdf/>
         <pdf_attachment/>
+        <pin>false</pin>
         <placeholder/>
         <property>state</property>
         <readonly>false</readonly>

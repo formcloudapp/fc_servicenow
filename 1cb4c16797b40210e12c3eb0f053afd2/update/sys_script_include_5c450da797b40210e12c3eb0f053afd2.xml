@@ -16,284 +16,289 @@
 var FCRepository = Class.create();
 FCRepository.prototype = {
 
-    /**
-     * Initializes the FCRepository for a given table.
-     * @param {string} tableName - The name of the ServiceNow table.
-     * @param {boolean} [overrideACL=false] - Determines whether to use GlideRecord (true) or GlideRecordSecure (false).
-     */
-    initialize: function(tableName, overrideACL) {
-        this.tableName = this.tableName || 'FCRepository';
-        this.errorLogger = new FCLoggerUtility();
-        this.overrideACL = overrideACL;
-        this.tableName = tableName;
-        if (!tableName) {
-            throw new Error("A table name must be provided to the FCRepository.");
-        }
-        if (overrideACL) {
-            this.record = new GlideRecord(this.tableName);
-        } else {
-            this.record = new GlideRecordSecure(this.tableName);
-        }
-    },
+	/**
+	 * Initializes the FCRepository for a given table.
+	 * @param {string} tableName - The name of the ServiceNow table.
+	 * @param {boolean} [overrideACL=false] - Determines whether to use GlideRecord (true) or GlideRecordSecure (false).
+	 */
+	initialize: function (tableName, overrideACL) {
+		this.tableName = this.tableName || 'FCRepository';
+		this.errorLogger = new FCLoggerUtility();
+		this.overrideACL = overrideACL;
+		this.tableName = tableName;
+		if (!tableName) {
+			throw new Error("A table name must be provided to the FCRepository.");
+		}
+		if (overrideACL) {
+			this.record = new GlideRecord(this.tableName);
+		} else {
+			this.record = new GlideRecordSecure(this.tableName);
+		}
+	},
 
-    newRecord: function() {
-        this.record.newRecord();
-        return this.record;
-    },
+	newRecord: function () {
+		this.record.newRecord();
+		return this.record;
+	},
 
-    /**
-     * Logs an error and throws it with an error code.
-     * @param {Error} e - The error object to log and throw.
-     * @param {string} moduleName - The module name associated with the error.
-     * @throws {Error} The provided error with an added error code.
-     */
-    throwError: function(e, moduleName, methodName) {
-        if (!e.errorCode) {
-            var errorCode = this.errorLogger.error(e.message, `${moduleName}.${methodName}`, e.stack);
-            e.errorCode = errorCode;
-        }
-        throw e;
-    },
+	/**
+	 * Logs an error and throws it with an error code.
+	 * @param {Error} e - The error object to log and throw.
+	 * @param {string} moduleName - The module name associated with the error.
+	 * @throws {Error} The provided error with an added error code.
+	 */
+	throwError: function (e, moduleName, methodName) {
+		if (!e.errorCode) {
+			var errorCode = this.errorLogger.error(e.message, `${moduleName}.${methodName}`, e.stack);
+			e.errorCode = errorCode;
+		}
+		throw e;
+	},
 
-    /**
-     * Gets a single record based on the provided sys_id.
-     * @param {string} sysId - The sysId of the record to fetch.
-     * @param {boolean} [isSerialized=false] - Determines if the record should be serialized.
-     * @returns {(GlideRecord|null|Object)} Returns the GlideRecord, serialized record, or null.
-     */
-    getById: function(sysId, isSerialized) {
-        this.record.addEncodedQuery('sys_id=' + sysId);
-        return this.getSingle(isSerialized);
-    },
+	/**
+	 * Gets a single record based on the provided sys_id.
+	 * @param {string} sysId - The sysId of the record to fetch.
+	 * @param {boolean} [isSerialized=false] - Determines if the record should be serialized.
+	 * @returns {(GlideRecord|null|Object)} Returns the GlideRecord, serialized record, or null.
+	 */
+	getById: function (sysId, isSerialized) {
+		this.record.addEncodedQuery('sys_id=' + sysId);
+		return this.getSingle(isSerialized);
+	},
 
-    /**
-     * Adds an encoded query to the FCRepository's record.
-     * @param {string} query - Encoded query string.
-     * @returns {FCRepository} Returns the FCRepository instance for chaining.
-     */
-    addQuery: function(query) {
-        this.record.addEncodedQuery(query);
-        return this;
-    },
+	/**
+	 * Adds an encoded query to the FCRepository's record.
+	 * @param {string} query - Encoded query string.
+	 * @returns {FCRepository} Returns the FCRepository instance for chaining.
+	 */
+	addQuery: function (query) {
+		this.record.addEncodedQuery(query);
+		return this;
+	},
 
-    /**
-     * Orders the FCRepository's record by a specific field.
-     * @param {string} field - Field name to order by.
-     * @returns {FCRepository} Returns the FCRepository instance for chaining.
-     */
-    orderBy: function(field) {
-        this.record.orderBy(field);
-        return this;
-    },
+	/**
+	 * Orders the FCRepository's record by a specific field.
+	 * @param {string} field - Field name to order by.
+	 * @returns {FCRepository} Returns the FCRepository instance for chaining.
+	 */
+	orderBy: function (field) {
+		this.record.orderBy(field);
+		return this;
+	},
 
-    /**
-     * Paginates the results based on the provided offset and limit.
-     * @param {number} offset - The number of records to skip.
-     * @param {number} limit - Maximum number of records to return after the offset.
-     * @returns {FCRepository} Returns the FCRepository instance for chaining.
-     */
-    paginate: function(offset, limit) {
-        this.record.chooseWindow(offset, offset + limit);
-        return this;
-    },
+	/**
+	 * Paginates the results based on the provided offset and limit.
+	 * @param {number} offset - The number of records to skip.
+	 * @param {number} limit - Maximum number of records to return after the offset.
+	 * @returns {FCRepository} Returns the FCRepository instance for chaining.
+	 */
+	paginate: function (offset, limit) {
+		this.record.chooseWindow(offset, offset + limit);
+		return this;
+	},
 
-    /**
-     * Orders the FCRepository's record by a specific field in descending order.
-     * @param {string} field - Field name to order by in descending order.
-     * @returns {FCRepository} Returns the FCRepository instance for chaining.
-     */
-    orderByDesc: function(field) {
-        this.record.orderByDesc(field);
-        return this;
-    },
+	/**
+	 * Orders the FCRepository's record by a specific field in descending order.
+	 * @param {string} field - Field name to order by in descending order.
+	 * @returns {FCRepository} Returns the FCRepository instance for chaining.
+	 */
+	orderByDesc: function (field) {
+		this.record.orderByDesc(field);
+		return this;
+	},
 
-    /**
-     * Sets the limit for the number of records to fetch.
-     * @param {number} limit - Maximum number of records to return.
-     * @returns {FCRepository} Returns the FCRepository instance for chaining.
-     */
-    setLimit: function(limit) {
-        this.record.setLimit(limit);
-        return this;
-    },
+	/**
+	 * Sets the limit for the number of records to fetch.
+	 * @param {number} limit - Maximum number of records to return.
+	 * @returns {FCRepository} Returns the FCRepository instance for chaining.
+	 */
+	setLimit: function (limit) {
+		this.record.setLimit(limit);
+		return this;
+	},
 
-    /**
-     * Gets a single record based on the provided query.
-     * @param {string} sysId - The sysId of the record to fetch.
-     * @param {boolean} [isSerialized=false] - Determines if the record should be serialized.
-     * @returns {(GlideRecord|null|Object)} Returns the GlideRecord, serialized record, or null.
-     */
-    getSingle: function(isSerialized) {
-        this.record.setLimit(1);
-        this.record.query();
-        if (this.record.next()) {
-            if (isSerialized) {
-                return this._serializeRecord(this.record);
-            } else {
-                return this.record;
-            }
-        } else {
-            return undefined;
-        }
-
-
-    },
-
-    /**
-     * Gets multiple records based on the current query.
-     * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
-     * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
-     */
-    getMultiple: function(isSerialized) {
-        this.record.query();
-
-        if (isSerialized) {
-            var results = [];
-            while (this.record.next()) {
-                results.push(this._serializeRecord(this.record));
-            }
-
-            return results;
-        } else {
-            return this.record;
-        }
-    },
+	/**
+	 * Gets a single record based on the provided query.
+	 * @param {string} sysId - The sysId of the record to fetch.
+	 * @param {boolean} [isSerialized=false] - Determines if the record should be serialized.
+	 * @returns {(GlideRecord|null|Object)} Returns the GlideRecord, serialized record, or null.
+	 */
+	getSingle: function (isSerialized) {
+		this.record.setLimit(1);
+		this.record.query();
+		if (this.record.next()) {
+			if (isSerialized) {
+				return this._serializeRecord(this.record);
+			} else {
+				return this.record;
+			}
+		} else {
+			return undefined;
+		}
 
 
+	},
 
-    /**
-     * Updates an existing record in the table based on the conditions set.
-     * @param {Object} fieldValues - An object containing field-value pairs to be updated.
-     * @returns {boolean} Returns true if the update was successful, otherwise false.
-     */
-    update: function(fieldValues) {
+	/**
+	 * Gets multiple records based on the current query.
+	 * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+	 * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+	 */
+	getMultiple: function (isSerialized) {
+		this.record.query();
 
-        if (!fieldValues || typeof fieldValues !== 'object') {
-            throw new Error("Expected fieldValues to be an object.");
-        }
+		if (isSerialized) {
+			var results = [];
+			while (this.record.next()) {
+				results.push(this._serializeRecord(this.record));
+			}
 
-        if (fieldValues.hasOwnProperty('sys_id') == false) {
-            throw new Error("Expecting input object to have a 'sys_id' property.");
-        }
+			return results;
+		} else {
+			return this.record;
+		}
+	},
 
-        this.record.get(fieldValues.sys_id);
 
-        if (gs.nil(this.record)) {
-            throw new Error("Record to be updated is not found. This error prevent the default ServiceNow action of inserting a new record.");
-        }
 
-        for (var field in fieldValues) {
-            if (this.record.hasOwnProperty(field)) {
-                if (field != 'sys_id') {
-                    if (field == 'work_notes') {
-                        this.record.work_notes = fieldValues[field];
-                    } else if (field == 'comments') {
-                        this.record.comments = fieldValues[field];
-                    } else if (field == 'sf_52_work_notes') {
-                        this.record.sf_52_work_notes = fieldValues[field];
-                    } else {
-                        this.record.setValue(field, fieldValues[field]);
-                    }
+	/**
+	 * Updates an existing record in the table based on the conditions set.
+	 * @param {Object} fieldValues - An object containing field-value pairs to be updated.
+	 * @returns {boolean} Returns true if the update was successful, otherwise false.
+	 */
+	update: function (fieldValues) {
 
-                }
-            }
-        }
+		if (!fieldValues || typeof fieldValues !== 'object') {
+			throw new Error("Expected fieldValues to be an object.");
+		}
 
-        return this.record.update();
-    },
+		if (fieldValues.hasOwnProperty('sys_id') == false) {
+			throw new Error("Expecting input object to have a 'sys_id' property.");
+		}
 
-    /**
-     * Inserts a new record into the table.
-     * @param {Object} fieldValues - An object containing field-value pairs for the new record.
-     * @returns {string|null} Returns the sysId of the inserted record or null if failed.
-     */
-    insert: function(fieldValues, isGr) {
+		this.record.get(fieldValues.sys_id);
 
-        this.record.initialize();
+		if (gs.nil(this.record)) {
+			throw new Error("Record to be updated is not found. This error prevent the default ServiceNow action of inserting a new record.");
+		}
 
-        if (!fieldValues || typeof fieldValues !== 'object') {
-            throw new Error("Expected fieldValues to be an object.");
-        }
+		for (var field in fieldValues) {
+			if (this.record.hasOwnProperty(field)) {
+				if (field != 'sys_id') {
+					if (field == 'work_notes') {
+						this.record.work_notes = fieldValues[field];
+					} else if (field == 'comments') {
+						this.record.comments = fieldValues[field];
+					} else {
+						this.record.setValue(field, fieldValues[field]);
+					}
 
-        for (var field in fieldValues) {
-            if (this.record.hasOwnProperty(field)) {
-                this.record.setValue(field, fieldValues[field]);
-            }
-        }
+				}
+			}
+		}
 
-        var result = this.record.insert();
-		if(isGr){
+		return this.record.update();
+	},
+
+	/**
+	 * Inserts a new record into the table.
+	 * @param {Object} fieldValues - An object containing field-value pairs for the new record.
+	 * @returns {string|null} Returns the sysId of the inserted record or null if failed.
+	 */
+	insert: function (fieldValues, isGr) {
+
+		this.record.initialize();
+
+		if (!fieldValues || typeof fieldValues !== 'object') {
+			throw new Error("Expected fieldValues to be an object.");
+		}
+
+		for (var field in fieldValues) {
+			if (this.record.hasOwnProperty(field)) {
+				this.record.setValue(field, fieldValues[field]);
+			}
+		}
+
+		var result = this.record.insert();
+		if (isGr) {
 			var newGr = new GlideRecord(this.table);
 			newGr.get(result);
 			return newGr;
 		}
 
-        return result || null;
-    },
+		return result || null;
+	},
 
-    /**
-     * Serializes a GlideRecord into a plain object.
-     * @param {GlideRecord} record - The GlideRecord to serialize.
-     * @returns {Object} Serialized version of the GlideRecord.
-     * @private
-     */
-    _serializeRecord: function(record) {
-        var serialized = {};
+	/**
+	 * Serializes a GlideRecord into a plain object.
+	 * @param {GlideRecord} record - The GlideRecord to serialize.
+	 * @returns {Object} Serialized version of the GlideRecord.
+	 * @private
+	 */
+	_serializeRecord: function (record) {
+		var serialized = {};
 
-        for (var prop in record) {
+		for (var prop in record) {
 
-            serialized[prop] = {
-                value: record.getValue(prop) || "",
-                display_value: record.getDisplayValue(prop) || "",
-                reference_table: ''
-            };
+			serialized[prop] = {
+				value: record.getValue(prop) || "",
+				display_value: record.getDisplayValue(prop) || "",
+				reference_table: ''
+			};
 
-            try {
-                var element = record.getElement(prop);
-                if (element != null && element != undefined) {
+			try {
+				var element = record.getElement(prop);
+				if (element != null && element != undefined) {
 					serialized[prop].field_label = element.getLabel();
-                    var type = element.getED().getInternalType();
-                    var isReference = type === 'reference';
-                    var isInt = type === 'integer';
-                    var isBoolean = type === 'boolean';
-                    if (isReference) {
-                        serialized[prop].reference_table = element.getReferenceTable() || "";
-                    }
-                    if (isInt) {
-                        serialized[prop].value = parseInt(serialized[prop].value);
-                    }
-                    if (isBoolean) {
-                        serialized[prop].value = serialized[prop].display_value === 'true';
-                    }
-					
-                }
-            } catch (err) {
-                //do nothing
-            }
+					var type = element.getED().getInternalType();
+					var isReference = type === 'reference';
+					var isInt = type === 'integer';
+					var isBoolean = type === 'boolean';
+					if (isReference) {
+						serialized[prop].reference_table = element.getReferenceTable() || "";
+					}
+					if (isInt) {
+						serialized[prop].value = parseInt(serialized[prop].value);
+					}
+					if (isBoolean) {
+						serialized[prop].value = serialized[prop].display_value === 'true';
+					}
 
-        }
-        return serialized;
-    },
+				}
+			} catch (err) {
+				//do nothing
+			}
+
+		}
+
+		var gr = new GlideRecord(this.table);
+		serialized.class_name = {
+			value: this.record.getRecordClassName(),
+			display_value: this.record.getClassDisplayValue(),
+			reference_table: ''
+		};
+		return serialized;
+	},
 
 
-    /** 
-     * Type definition for easier identification of this script include.
-     * @type {string}
-     */
-    type: 'FCRepository'
+	/** 
+	 * Type definition for easier identification of this script include.
+	 * @type {string}
+	 */
+	type: 'FCRepository'
 };]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-03-13 13:16:31</sys_created_on>
         <sys_id>5c450da797b40210e12c3eb0f053afd2</sys_id>
-        <sys_mod_count>33</sys_mod_count>
+        <sys_mod_count>38</sys_mod_count>
         <sys_name>FCRepository</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy>protected</sys_policy>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>sys_script_include_5c450da797b40210e12c3eb0f053afd2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-02-06 03:16:06</sys_updated_on>
+        <sys_updated_on>2025-05-11 02:58:56</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>5c450da797b40210e12c3eb0f053afd2</id>

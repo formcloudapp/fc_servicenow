@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.IncidentRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>IncidentRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[
+
+/**
+ * Repository class for interacting with the incident table.
+ * Extends the FCRepository class.
+ * @class
+ * @extends FCRepository
+ */
+var IncidentRepository = Class.create();
+
+IncidentRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initializes a new instance of IncidentRepository.
+     * @param {boolean} overrideACL - Whether to override ACL checks.
+     * @throws Will throw an error if initialization fails.
+     */
+    initialize: function (overrideACL) {
+		this.moduleName = 'IncidentRepository';
+        IncidentRepository.prototype.initialize.call(this, 'incident', overrideACL);
+    },
+
+    
+    /**
+     * Retrieves all high priority incidents.
+     * @param {boolean} [isSerialized=false] - Determines if the records should be serialized.
+     * @returns {(Array.<Object>|GlideRecord)} Returns an array of serialized records or a GlideRecord.
+     */
+    getHighPriorityIncidents: function (isSerialized) {
+        this.addQuery('priority', 1); // 1 is the value for High priority
+        return this.getMultiple(isSerialized);
+    },
+
+    
+
+    /**
+     * Closes an incident.
+     * @param {string} sysId - The sys_id of the incident to close.
+     * @param {string} closeNotes - The close notes for the incident.
+     * @returns {boolean} Returns true if the incident was closed successfully, otherwise false.
+     */
+    closeIncident: function (sysId, closeNotes) {
+        var updateData = {
+            sys_id: sysId,
+            state: 7, // 7 is the value for Closed
+            close_code: 'Closed/Resolved By Caller', //Example close code
+            close_notes: closeNotes
+        };
+        try {
+            this.update(updateData);
+            return true;
+        } catch (e) {
+            this.throwError(e, this.moduleName, 'closeIncident');
+            return false;
+        }
+    },
+
+    /**
+     * Sets an incident to in progress.
+     * @param {string} sysId - The sys_id of the incident to set to in progress.
+     * @returns {boolean} Returns true if the incident was set to in progress successfully, otherwise false.
+     */
+    setInProgress: function (sysId) {
+        var updateData = {
+            sys_id: sysId,
+            state: 3 // 3 is the value for In Progress
+        };
+        try {
+            this.update(updateData);
+            return true;
+        } catch (e) {
+            this.throwError(e, this.moduleName, 'setInProgress');
+            return false;
+        }
+    },
+
+    
+
+    /**
+     * The type name of the class.
+     * @type {string}
+     */
+    type: 'IncidentRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-07 00:20:17</sys_created_on>
+        <sys_id>babf66388378e210005fb955eeaad360</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>IncidentRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_babf66388378e210005fb955eeaad360</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-10 03:42:49</sys_updated_on>
+    </sys_script_include>
+</record_update>

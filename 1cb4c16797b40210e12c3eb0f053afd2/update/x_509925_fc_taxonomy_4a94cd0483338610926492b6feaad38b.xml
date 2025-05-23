@@ -8,6 +8,7 @@
         <condition><![CDATA[((current, params) => {
     return gs.hasRole('admin');
 })(current, params);]]></condition>
+        <group/>
         <icon/>
         <name>Administrator</name>
         <order>1000</order>

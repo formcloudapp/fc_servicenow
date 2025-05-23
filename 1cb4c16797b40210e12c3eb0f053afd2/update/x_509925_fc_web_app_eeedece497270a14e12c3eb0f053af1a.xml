@@ -5,21 +5,11 @@
 
     var attributes = new FCWebAppRepository(true).getShellCofigs(current);
 
-    //attributes.themes.classic.light.first_header_background.logo = 'https://dev258535.service-now.com/sys_attachment.do?sys_id=e9d31764831e1210926492b6feaad32d';
-    //attributes.themes.classic.dark.first_header_background.logo = 'https://dev258535.service-now.com/sys_attachment.do?sys_id=e9d31764831e1210926492b6feaad32d';
-    attributes.themes.enterprise.light.first_header_background.value = 'var(--primary-10)';
-    attributes.themes.enterprise.first_header_override_dark_theme = true;
-
-    attributes.themes.enterprise.dark.first_header_background.value = 'var(--sys-surface-container-lowest)';
-
-
-    attributes.themes.enterprise.light.second_header_background.value = 'var(--sys-primary)';
-    attributes.themes.enterprise.light.second_header_foreground.value = 'var(--sys-on-primary)';
-
-
+    attributes.themes.classic.first_header_override_appearance = false;
     attributes.themes.classic.light.left_nav_background.value = 'var(--primary-25)';
-    attributes.themes.classic.dark.left_nav_background.value = 'var(--secondary-10)';
-    
+    attributes.themes.classic.dark.left_nav_background.value = 'var(--sys-surface-dim)';
+    //attributes.themes.classic.light.first_header_background.logo = 'https://dev316600.service-now.com/sys_attachment.do?sys_id=c948f9c783a5a610005fb955eeaad327';
+
     return attributes;
 
 })(current);]]></attributes>
@@ -28,7 +18,7 @@
         <graphql_namespace>x509925fc</graphql_namespace>
         <plain_font>Roboto</plain_font>
         <prefix>core</prefix>
-        <primary_color>#111212</primary_color>
+        <primary_color>#200887</primary_color>
         <shared_data><![CDATA[((current, params) => {
   return {};
 })(current, params);
@@ -38,16 +28,16 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-07-18 20:45:36</sys_created_on>
         <sys_id>eeedece497270a14e12c3eb0f053af1a</sys_id>
-        <sys_mod_count>261</sys_mod_count>
+        <sys_mod_count>294</sys_mod_count>
         <sys_name/>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy/>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>x_509925_fc_web_app_eeedece497270a14e12c3eb0f053af1a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-03-13 12:30:50</sys_updated_on>
+        <sys_updated_on>2025-05-22 00:43:34</sys_updated_on>
         <template/>
-        <tertiary_color>#00ffb9</tertiary_color>
+        <tertiary_color>#ff0096</tertiary_color>
     </x_509925_fc_web_app>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>eeedece497270a14e12c3eb0f053af1a</id>

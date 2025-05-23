@@ -9,7 +9,8 @@
         <mobile_callable>false</mobile_callable>
         <name>FCTaxonomyImageRepository</name>
         <sandbox_callable>false</sandbox_callable>
-        <script><![CDATA[/**
+        <script><![CDATA[
+/**
  * Represents a repository for chocies table.
  * @class
  * @extends FCRepository
@@ -25,11 +26,7 @@ FCTaxonomyImageRepository.prototype = Object.extendsObject(FCRepository, {
     initialize: function(overrideACL) {
         FCRepository.prototype.initialize.call(this, 'x_509925_fc_m2m_taxonomy_db_image', overrideACL);
     },
-
-	insert: function(name, type, file){
-
-	},
-
+    
     /** @type {string} The type of the repository. */
     type: 'FCTaxonomyImageRepository'
 });]]></script>
@@ -37,14 +34,14 @@ FCTaxonomyImageRepository.prototype = Object.extendsObject(FCRepository, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-08-05 21:16:28</sys_created_on>
         <sys_id>2e71699a83370210926492b6feaad35c</sys_id>
-        <sys_mod_count>5</sys_mod_count>
+        <sys_mod_count>6</sys_mod_count>
         <sys_name>FCTaxonomyImageRepository</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy>protected</sys_policy>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>sys_script_include_2e71699a83370210926492b6feaad35c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-11-16 05:34:46</sys_updated_on>
+        <sys_updated_on>2025-04-06 02:29:22</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>2e71699a83370210926492b6feaad35c</id>

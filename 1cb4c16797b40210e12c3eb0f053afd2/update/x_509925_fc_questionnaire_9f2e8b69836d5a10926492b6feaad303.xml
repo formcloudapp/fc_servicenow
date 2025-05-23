@@ -15,6 +15,10 @@
 	}
 })(form);]]></cancel_callback>
         <cancel_label>Cancel</cancel_label>
+        <client_submit_callback><![CDATA[function execute(helper, form, params){
+	helper.service.snackbar('Form submitted successfully!');
+	helper.service.navigate('?id=home');
+}]]></client_submit_callback>
         <close_task_on_submit>true</close_task_on_submit>
         <css_classes/>
         <delete_callback><![CDATA[(function(form){
