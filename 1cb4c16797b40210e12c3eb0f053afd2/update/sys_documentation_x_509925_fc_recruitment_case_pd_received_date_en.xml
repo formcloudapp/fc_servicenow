@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="pd_received_date" label="PD Received Date" language="en" table="x_509925_fc_recruitment_case">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>pd_received_date</element>
+            <help/>
+            <hint/>
+            <label>PD Received Date</label>
+            <language>en</language>
+            <name>x_509925_fc_recruitment_case</name>
+            <plural>PD Received Dates</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-05-07 02:07:45</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>PD Received Date</sys_name>
+            <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+            <sys_update_name>sys_documentation_x_509925_fc_recruitment_case_pd_received_date_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-05-07 02:07:45</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

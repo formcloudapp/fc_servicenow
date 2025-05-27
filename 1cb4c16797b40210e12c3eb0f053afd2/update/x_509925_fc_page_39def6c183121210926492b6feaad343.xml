@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+	function initialize() {
+		var model = {
+			condition: true,
+            params: params
+		};
+		return model;
+	}
+
+
+	return {
+		initialize: initialize
+	};
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+    async function search($scope) {
+
+        const baseUrl = "now/table/kb_knowledge";
+        const queryParams = [
+            `sysparm_query=IR_AND_QUERY=${$scope.model.params.searchTerm}`,
+            "sysparm_fields=sys_id,short_description,text,kb_category,ir_query_score,published,author,number",
+            "sysparm_limit=2",
+            "sysparm_offset=0",
+            "sysparm_display_value=all"
+        ];
+
+        const fullUrl = `${baseUrl}?${queryParams.join("&")}`;
+
+        const searchResults = await helpers.service.getAsync(fullUrl);
+        $scope.search_results = searchResults;
+    }
+
+    function openProfile(userId) {
+        helpers.service.navigateToPage('profile', {
+            targetId: userId
+        });
+    }
+
+    function openArticle(articleId){
+        helpers.service.navigateToPage('fc_kb_article', {
+            articleId: articleId
+        });
+    }
+
+    function stripHTML(html) {
+        let text = html.replace(/<[^>]*>/gm, ' ').replace(/\s+/g, ' ').trim();
+        let textArray = _decodeHTML(text).split(' ');
+        return textArray.splice(0, 100).join(' ') + '...';
+    }
+
+
+    function _decodeHTML(html) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        return doc.documentElement.textContent;
+    }
+
+    return {
+        search: search,
+        stripHTML: stripHTML,
+        openProfile: openProfile,
+        openArticle: openArticle
+    };
+}]]></client_scripts>
+        <css>.date{&#13;
+    font-size: 0.9rem;&#13;
+    font-style: italic;&#13;
+    margin-left: 10px;&#13;
+}&#13;
+&#13;
+.pointer{&#13;
+    cursor: pointer;&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>fc_search</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-04 13:27:49</sys_created_on>
+        <sys_id>39def6c183121210926492b6feaad343</sys_id>
+        <sys_mod_count>77</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_39def6c183121210926492b6feaad343</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-19 14:57:25</sys_updated_on>
+        <template>[{"id":"rr3ul","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"container main-container mt-5\" x-init=\"await $scope.search($scope)\"&gt;\r\n\t&lt;div class=\"row\"&gt;\r\n\t\t&lt;div class=\"col-md-12 p-3\"&gt;\r\n\t\t\t&lt;h3&gt;Search Results&lt;/h3&gt;\r\n\t\t\t&lt;template x-if=\"$scope.search_results?.result &amp;&amp; $scope.search_results.result.length &gt; 0\"&gt;\r\n\t\t\t\t&lt;template x-for=\"(item, index) in $scope.search_results.result\"&gt;\r\n\t\t\t\t\t&lt;article&gt;\r\n\t\t\t\t\t\t&lt;header&gt;\r\n\t\t\t\t\t\t\t&lt;h6 class=\"d-flex\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;a class=\"flex-grow-1 pointer\" @click=\"$scope.openArticle(item.sys_id.value)\"&gt;\r\n\t\t\t\t\t\t\t\t\t&lt;span x-text=\"item.short_description.value\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t\t\t&lt;/a&gt;\r\n\t\t\t\t\t\t\t&lt;/h6&gt;\r\n\t\t\t\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;span x-text=\"item.number.value\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t\t\t&lt;span class=\"date\"&gt;25 Feb, 2013&lt;/span&gt;\r\n\t\t\t\t\t\t\t\t&lt;mdui-button variant=\"link\" @click=\"openProfile(item.author.value)\"&gt;\r\n\t\t\t\t\t\t\t\t\t&lt;span x-text=\"item.author.display_value\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t\t\t&lt;/mdui-button&gt;\r\n\t\t\t\t\t\t\t\t&lt;span class=\"category\"&gt;\r\n                                    &lt;a href=\"#\"&gt;\r\n                                        &lt;span x-text=\"item.kb_category.display_value\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t\t\t&lt;/a&gt;\r\n\t\t\t\t\t\t\t\t&lt;/span&gt;\r\n                                &lt;span&gt;&amp;nbsp;&amp;nbsp;|&amp;nbsp;&amp;nbsp; &lt;/span&gt;\r\n\t\t\t\t\t\t\t\t&lt;span class=\"comments\"&gt;\r\n                                    &lt;a href=\"#\" class=\"d-flex align-items-center justify-content-center\"&gt;&lt;span&gt;3&lt;/span&gt; &lt;span&gt;&lt;svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#5f6368\"&gt;&lt;path d=\"M80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z\"/&gt;&lt;/svg&gt;&lt;/span&gt;&lt;/a&gt;\r\n                                &lt;/span&gt;\r\n\r\n\t\t\t\t\t\t\t&lt;/div&gt;&lt;!-- end of post meta --&gt;\r\n\t\t\t\t\t\t&lt;/header&gt;\r\n\t\t\t\t\t\t&lt;p&gt;\r\n\t\t\t\t\t\t\t&lt;span class=\"truncate-multiline\" x-text=\"$scope.stripHTML(item.text.value)\"&gt;&lt;span&gt;\r\n\t\t\t\t\t\t    &lt;a class=\"readmore-link\" href=\"http://knowledgebase.inspirythemes.com/integrating-wordpress-with-your-website/\"&gt;Read more&lt;/a&gt;\r\n                        &lt;/p&gt;\r\n                    &lt;/article&gt;\r\n                &lt;/template&gt;\r\n            &lt;/template&gt;\r\n\t\t&lt;/div&gt;\r\n\t&lt;/div&gt;\r\n&lt;/div&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>FC Search</title>
+        <type>page</type>
+    </x_509925_fc_page>
+</record_update>

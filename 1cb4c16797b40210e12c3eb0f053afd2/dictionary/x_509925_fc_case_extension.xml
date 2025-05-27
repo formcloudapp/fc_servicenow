@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="e08a2f4883711210926492b6feaad3bf" label="Case Extension" max_length="40" name="x_509925_fc_case_extension" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Request" mandatory="true" max_length="32" name="request" reference="task" type="reference"/>
+        <element default="{}" label="Data" mandatory="true" max_length="8000" name="data" type="string_full_utf8"/>
+        <index name="index">
+            <element name="request"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+	function initialize() {
+		var model = {
+			condition: true,
+            test: 'Test value',
+            obj: {
+                test2: 'test2 Value33333'
+            }
+		};
+		return model;
+	}
+
+    function testMethod(value1){
+        return 10;
+    }
+
+
+	return {
+		initialize: initialize,
+        testMethod: testMethod
+	};
+
+})(params);]]></attributes>
+        <base>true</base>
+        <client_scripts><![CDATA[
+function execute(helpers){
+    async function myFunction(model){
+        console.log(helpers.recordWatch);
+    }
+
+    return {
+        myFunction: myFunction
+    };
+}]]></client_scripts>
+        <css>#iframe{&#13;
+    color: rgb(134, 73, 134);&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>demo_page</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-14 21:45:58</sys_created_on>
+        <sys_id>f885d81f97138214e12c3eb0f053af1d</sys_id>
+        <sys_mod_count>151</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_f885d81f97138214e12c3eb0f053af1d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-04 15:13:21</sys_updated_on>
+        <template>[{"id":"eoqel","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;fc-widget widget-id=\"widget_page_header\" options='{ \"title\" : \"Demo Page\" }'&gt;&lt;/fc-widget&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"service_catalogs","options":"function execute(model) {\n    return {};\n}","container":"container"},"config_options":{}},{"id":"bcjhqm","title":"Container","description":"Container","type":"container","css_classes":{"value":["container-fluid"],"options":["container","container-fluid"]},"css_styles":{"value":[],"options":null},"allowable_children":[{"type":"row","icon":"view_stream","title":"Row"}],"children":[{"id":"6jmodd","title":"Row","description":"Row","type":"row","css_classes":{"value":["row"],"options":["row"]},"css_styles":{"value":[],"options":null},"allowable_children":[{"type":"col","icon":"view_column","title":"Column"}],"children":[{"id":"eloy5","title":"Column","description":"Column","type":"col","css_classes":{"value":["col-md-12"],"options":["col","col-sm","col-md","col-lg","col-xl"]},"css_styles":{"value":[],"options":null},"allowable_children":[{"type":"container","icon":"check_box_outline_blank","title":"Container"},{"type":"text","icon":"text_fields","title":"Text"},{"type":"datatable","icon":"table_view","title":"Datatable"},{"type":"form","icon":"edit_note","title":"Form"},{"type":"liquid","icon":"edit_note","title":"Liquid"},{"type":"header","icon":"title","title":"Header"},{"type":"image","icon":"image","title":"Image"}],"children":[{"id":"enc50f","title":"Widget","description":"Widget","type":"widget","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"eloy5","config":{"content":"","css_classes":"m-3","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"col-md-6","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"image_slider","options":"function execute(model) {\n    return {\n        title: 'Slider 1'\n    };\n}","container":"container"},"config_options":{}}],"content":"","parent_id":"6jmodd","config":{"content":"","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"col-md-6","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":"container"},"config_options":{}},{"id":"8c70eo","title":"Column","description":"Column","type":"col","css_classes":{"value":["col-md-12"],"options":["col","col-sm","col-md","col-lg","col-xl"]},"css_styles":{"value":[],"options":null},"allowable_children":[{"type":"container","icon":"check_box_outline_blank","title":"Container"},{"type":"text","icon":"text_fields","title":"Text"},{"type":"datatable","icon":"table_view","title":"Datatable"},{"type":"form","icon":"edit_note","title":"Form"},{"type":"liquid","icon":"edit_note","title":"Liquid"},{"type":"header","icon":"title","title":"Header"},{"type":"image","icon":"image","title":"Image"}],"children":[{"id":"wzvd2j","title":"Widget","description":"Widget","type":"widget","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"8c70eo","config":{"content":"","css_classes":"m-3","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"image_slider","options":"function execute(model) {\n    return {};\n}","container":""},"config_options":{}}],"content":"","parent_id":"6jmodd","config":{"content":"","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"col-md-6","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":"container"},"config_options":{}}],"content":"","parent_id":"bcjhqm","config":{"content":"","css_classes":"main-container","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":"container"},"config_options":{}}],"content":"","parent_id":"","config":{"content":"","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":"container"},"config_options":{"inline_css":""}}]</template>
+        <title>Demo Page</title>
+        <type>page</type>
+    </x_509925_fc_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>f885d81f97138214e12c3eb0f053af1d</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 17:22:01</sys_created_on>
+        <sys_id>0dcbcb7b83dc9210926492b6feaad378</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-04 17:22:01</sys_updated_on>
+        <table>x_509925_fc_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

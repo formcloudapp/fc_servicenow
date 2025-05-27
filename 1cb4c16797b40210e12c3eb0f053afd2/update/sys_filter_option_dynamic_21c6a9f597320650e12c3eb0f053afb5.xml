@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_filter_option_dynamic">
+    <sys_filter_option_dynamic action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <available_for_default>false</available_for_default>
+        <available_for_filter>false</available_for_filter>
+        <available_for_ref_qual>true</available_for_ref_qual>
+        <field_type display_value="List">e3f24e9cc0a80166007d6acccef476e9</field_type>
+        <label>PDF Attachment</label>
+        <order/>
+        <roles/>
+        <script>'document_field_type=signature^document=' + current.pdf_attachment</script>
+        <script_reference_id/>
+        <script_reference_table/>
+        <sys_class_name>sys_filter_option_dynamic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-15 15:19:14</sys_created_on>
+        <sys_id>21c6a9f597320650e12c3eb0f053afb5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>PDF Attachment</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_filter_option_dynamic_21c6a9f597320650e12c3eb0f053afb5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-06-15 15:19:14</sys_updated_on>
+        <table>x_509925_fc_question</table>
+        <table_containing_filter/>
+    </sys_filter_option_dynamic>
+</record_update>

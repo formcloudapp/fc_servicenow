@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+
+
+    function initialize() {
+
+        var model = {
+            condition: true,
+            default_options: {
+                name: 'Chart Name',
+                query: 'active=true',
+                table: 'sys_user',
+                group_by: 'department',
+                chart_type: 'pie',
+                show: true,
+                test: 'abc'
+            },
+            options: params,
+            chart_data: []
+        };
+        
+        var aggr = new GlideAggregate(model.options.table ? model.options.table : model.default_options.table);
+        aggr.addEncodedQuery(model.options.query || model.default_options.query);
+        aggr.groupBy(model.options.group_by || model.default_options.group_by);
+        aggr.addAggregate('COUNT', model.options.group_by || model.default_options.group_by);
+        aggr.query();
+
+        while (aggr.next()) {
+            model.chart_data.push({
+                category: aggr.getDisplayValue(model.options.group_by || model.default_options.group_by),
+                count: aggr.getAggregate('COUNT', model.options.group_by || model.default_options.group_by)
+            })
+        }
+
+        return model;
+    }
+
+    function getData(table, query, groupBy) {
+        var aggr = new GlideAggregate(table);
+        aggr.addEncodedQuery(query);
+        aggr.groupBy(groupBy);
+        aggr.addAggregate('COUNT', groupBy);
+        aggr.query();
+
+        var result = [];
+        while (aggr.next()) {
+            result.push({
+                category: aggr.getDisplayValue(groupBy),
+                count: aggr.getAggregate('COUNT', groupBy)
+            })
+        }
+
+        return result;
+
+    }
+
+
+    return {
+        initialize: initialize,
+        getData: getData
+    };
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+
+    let chart = null;
+    const uniqueId = 'pieChart' + Math.random().toString(36).substring(2, 15);
+    function getCssVar(name) {
+        return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    async function upateData($scope, filter) {
+        const data = await helpers.service.call('getData', [$scope.model.options.table, filter, $scope.model.options.group_by], 'ff1d4f2883fd2610005fb955eeaad34f');
+        $scope.model.chart_data = data;
+    }
+
+    async function initialize($scope) {
+        helpers.service.reactToSignal('abc', async (message) => {
+            $scope.model.options.query = message.query;
+            if (message.query) {
+                await upateData($scope, message.query);
+                initializeChart($scope);
+            }
+        })
+        initializeChart($scope);
+
+    }
+
+    function initializeChart($scope) {
+
+        if (chart) {
+            chart.destroy();
+        }
+
+        const textColor = getCssVar('--sys-on-surface');
+        // Sample data - replace with actual ServiceNow API response
+        const reportData = {
+            "name": $scope.model.options.name ? $scope.model.options.name : $scope.model.default_options.name,
+            "rows": $scope.model.chart_data
+        };
+
+        // Prepare chart data
+        const labels = reportData.rows.map(item => item.category);
+        const data = reportData.rows.map(item => item.count);
+        const backgroundColors = generateMonochromePalette($scope.model.chart_data.length)
+
+        // Create chart
+        const ctx = document.getElementById(uniqueId).getContext('2d');
+
+
+        chart = new Chart(ctx, {
+            type: $scope.model.options.chart_type || $scope.model.default_options.chart_type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: textColor,
+                            font: {
+                                size: 10
+                            },
+                            padding: 5,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: reportData.name,
+                        color: textColor,
+                        font: {
+                            size: 16,
+                            weight: 'normal'
+                        },
+                        padding: {
+                            bottom: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${label}: ${value}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function hexToHSL(H) {
+        let r = 0, g = 0, b = 0;
+        // strip off ‘#’ if present
+        if (H.startsWith('#')) { H = H.slice(1); }
+        // parse 3- or 6-digit
+        if (H.length === 3) {
+            r = parseInt(H[0] + H[0], 16);
+            g = parseInt(H[1] + H[1], 16);
+            b = parseInt(H[2] + H[2], 16);
+        } else {
+            r = parseInt(H.substr(0, 2), 16);
+            g = parseInt(H.substr(2, 2), 16);
+            b = parseInt(H.substr(4, 2), 16);
+        }
+        r /= 255; g /= 255; b /= 255;
+        const max = Math.max(r, g, b), min = Math.min(r, g, b);
+        let h = 0, s = 0, l = (max + min) / 2;
+        if (max !== min) {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = ((g - b) / d + (g < b ? 6 : 0)); break;
+                case g: h = ((b - r) / d + 2); break;
+                case b: h = ((r - g) / d + 4); break;
+            }
+            h /= 6;
+        }
+        return {
+            h: Math.round(h * 360),
+            s: Math.round(s * 100),
+            l: Math.round(l * 100)
+        };
+    }
+
+    // 2) palette generator
+    function generateMonochromePalette(count) {
+        // read your CSS var
+        const primary = getCssVar('--sys-primary')
+
+        const { h, s, l } = hexToHSL(primary || '#000000');
+
+        const maxDelta = 30; // how much total lightness swing you want
+        const colors = [];
+
+        for (let i = 0; i < count; i++) {
+            // spread i evenly from -½ to +½
+            const frac = count === 1 ? 0 : (i / (count - 1)) - 0.5;
+            const lightness = Math.min(
+                100,
+                Math.max(0, l + frac * maxDelta)
+            );
+            colors.push(`hsl(${h}, ${s}%, ${lightness}%)`);
+        }
+
+        return colors;
+    }
+
+    return {
+        uniqueId: uniqueId,
+        initialize: initialize
+    };
+}]]></client_scripts>
+        <css/>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>user_by_department</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-26 00:53:00</sys_created_on>
+        <sys_id>ff1d4f2883fd2610005fb955eeaad34f</sys_id>
+        <sys_mod_count>108</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_ff1d4f2883fd2610005fb955eeaad34f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-27 11:50:46</sys_updated_on>
+        <template>[{"id":"n9hvsx","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;mdui-card variant=\"filled\" style=\"padding: 10px;max-height: 100%;max-width: 100%;min-width:100%;min-height:100%;\"&gt;\r\n    &lt;canvas style=\"w-100 h-100\" :id=\"$scope.uniqueId\"  x-init=\"$scope.initialize($scope)\"&gt;&lt;/canvas&gt;\r\n&lt;/mdui-card&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>User By Department</title>
+        <type>widget</type>
+    </x_509925_fc_page>
+</record_update>

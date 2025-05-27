@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver">
+    <sys_graphql_resolver action="INSERT_OR_UPDATE">
+        <name>x_509925_fc_task.parent_case</name>
+        <schema display_value="Task">286bea0983e45210926492b6feaad396</schema>
+        <script><![CDATA[(function process(/*ResolverEnvironment*/ env) {
+
+  var parentCase = new FCRepository('x_509925_fc_case', true).addQuery('sys_id=' + env.getSource().parent.value).getSingle(true);
+  return parentCase;
+
+})(env);
+      ]]></script>
+        <sys_class_name>sys_graphql_resolver</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-10 21:58:04</sys_created_on>
+        <sys_id>b235d5338359ea10005fb955eeaad378</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>x_509925_fc_task.parent_case</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_resolver_b235d5338359ea10005fb955eeaad378</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-10 22:27:47</sys_updated_on>
+    </sys_graphql_resolver>
+</record_update>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCUserPreferenceRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCUserPreferenceRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Repository for interacting with user preferences in the 'sys_user_preference' table.
+ * Extends the Repository class.
+ * @class
+ * @extends FCRepository
+ */
+var FCUserPreferenceRepository = Class.create();
+FCUserPreferenceRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initializes a new instance of FCUserPreferenceRepository.
+	 * @constructor
+	 * @param {boolean} overrideACL - Flag to indicate whether to override the Access Control List (ACL).
+	 */
+	initialize: function (overrideACL) {
+		FCRepository.prototype.initialize.call(this, 'sys_user_preference', overrideACL);
+	},
+
+	/**
+	 * Retrieves the user preferences stored in the 'fc_user_preferences' key.
+	 * Parses the preference data as JSON and returns it.
+	 * @returns {Object} The parsed user preferences.
+	 * @throws Will log and re-throw an error if JSON parsing fails.
+	 */
+	getUserPreference: function () {
+		try {
+			var userPref = gs.getUserPreference('fc_user_preferences');
+			return userPref ? JSON.parse(userPref) : {};
+		} catch (err) {
+			new FCLoggerUtility().logError(err);
+			throw err;
+		}
+	},
+
+	setUserPreference: function (name, value) {
+		try {
+			var userPref = gs.getUserPreference('fc_user_preferences');
+			var prefObj = userPref ? JSON.parse(userPref) : {};
+			prefObj[name] = value;
+
+			gs.getUser().setPreference('fc_user_preferences', JSON.stringify(prefObj));
+			return this.getUserPreference();
+
+		} catch (err) {
+			new FCLoggerUtility().logError(err);
+			throw err;
+		}
+	},
+
+	/**
+	 * The type name of the repository.
+	 * @type {string}
+	 */
+	type: 'FCUserPreferenceRepository'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-13 21:48:09</sys_created_on>
+        <sys_id>2db7e82283f5d210926492b6feaad317</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>FCUserPreferenceRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_2db7e82283f5d210926492b6feaad317</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-20 19:19:08</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>2db7e82283f5d210926492b6feaad317</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-13 21:48:09</sys_created_on>
+        <sys_id>42f7646283f5d210926492b6feaad3b4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-13 21:48:09</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

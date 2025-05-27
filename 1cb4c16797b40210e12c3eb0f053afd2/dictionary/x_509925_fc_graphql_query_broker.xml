@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="58d4005f977e8a50e12c3eb0f053af43" extends="sys_metadata" label="GraphQL Query Broker" max_length="40" name="x_509925_fc_graphql_query_broker" type="collection">
+        <element default="[]" label="Columns Configs" max_length="8000" name="columns_configs" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="GraphQL Schema" max_length="32" name="graphql_schema" reference="sys_graphql_schema" type="reference"/>
+        <element label="Record Details" max_length="8000" name="record_details" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true" dependent="table" dependent_on_field="table" label="Filters" max_length="4000" name="filters" type="conditions" use_dependent_field="true"/>
+        <element label="Row Count Path" max_length="255" name="row_count_path" type="string"/>
+        <element label="Table" mandatory="true" max_length="80" name="table" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Allow Selection" max_length="40" name="allow_selection" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="((current, params) =&gt; {&#13;&#10;&#9;const namespace = gs.getProperty(current.sys_scope.scope + '.graphql_namespace');&#13;&#10;&#9;const gqlSchemaGr = current.graphql_schema.getRefRecord();&#13;&#10;    let datatableConfig = {&#13;&#10;        table: current.getValue('table'),&#13;&#10;        filters: current.getValue('filters'),&#13;&#10;        allow_selection: current.getValue('allow_selection'),&#13;&#10;        gql: current.getValue('gql'),&#13;&#10;        details_template: current.getValue('record_details'),&#13;&#10;&#9;&#9;gql_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._results') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getMultiple'),&#13;&#10;        row_count_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._rowCount') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getCount'),&#13;&#10;        data_columns: JSON.parse(current.getValue('columns_configs')),&#13;&#10;&#9;&#9;schema: current.getValue('schema'),&#13;&#10;&#9;&#9;gql_schema: gqlSchemaGr.getValue('namespace')&#13;&#10;    };&#13;&#10;&#13;&#10;    return datatableConfig;&#13;&#10;&#13;&#10;})(current, params);" label="Script" mandatory="true" max_length="8000" name="script" type="script"/>
+        <element default="{}" label="Metadata" max_length="8000" name="metadata" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true" default="function execute(params, configs) {&#13;&#10;    let gql = '';&#13;&#10;    if (configs.schema == 'ootb') {&#13;&#10;        gql = `&#13;&#10;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;GlideRecord_Query{&#13;&#10;&#9;&#9;&#9;&#9;${configs.table}(queryConditions: &quot;${configs.filters}&quot;, pagination: { offset: ${configs.offset}, limit: ${configs.limit} }) {&#13;&#10;&#9;&#9;&#9;&#9;&#9;_rowCount&#13;&#10;&#9;&#9;&#9;&#9;&#9;_results ${configs.gql}&#13;&#10;&#9;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;}&#13;&#10;&#9;`;&#13;&#10;    }else{&#13;&#10;&#9;&#9;gql = `&#13;&#10;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;${configs.namespace}{&#13;&#10;&#9;&#9;&#9;&#9;${configs.gql_schema}{&#13;&#10;&#9;&#9;&#9;&#9;&#9;getMultiple(tableName: &quot;${configs.table}&quot;, queryConditions: &quot;${configs.filters}&quot;, pagination: { offset: ${configs.offset}, limit: ${configs.limit} })&#13;&#10;&#9;&#9;&#9;&#9;&#9;{&#13;&#10;&#9;&#9;&#9;&#9;&#9;&#9;sys_id{&#13;&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;value&#13;&#10;&#9;&#9;&#9;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;&#9;&#9;&#9;&#9;...on ${configs.namespace}_${configs.gql_schema}_${configs.table}  ${configs.gql}&#13;&#10;&#9;&#9;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;&#9;&#9;&#9;getCount(tableName: &quot;${configs.table}&quot;, queryConditions: &quot;${configs.filters}&quot;)&#13;&#10;&#9;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;&#9;}&#13;&#10;&#9;&#9;}&#13;&#10;&#9;&#9;`;&#13;&#10;&#9;}&#13;&#10;&#13;&#10;    return gql;&#13;&#10;}" label="GQL" mandatory="true" max_length="8000" name="gql" type="script"/>
+        <element attributes="edge_encryption_enabled=true" default="((current, params) =&gt; {&#13;&#10;&#13;&#10;    return '';&#13;&#10;&#13;&#10;})(current, params);" label="Filter Builder" max_length="8000" name="filter_builder" type="script"/>
+        <element label="Name" mandatory="true" max_length="255" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" default="custom" label="Schema" max_length="40" name="schema" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Custom" value="custom"/>
+                <element inactive_on_update="false" label="OOTB" value="ootb"/>
+            </choice>
+        </element>
+        <element label="GQL Path" max_length="255" name="gql_path" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Base" max_length="40" name="base" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="function execute(record, service) {&#13;&#10;&#13;&#10;    return {&#13;&#10;        record: record&#13;&#10;    }&#13;&#10;}" label="Record Script" max_length="8000" name="record_script" type="script"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="AI Filter" max_length="40" name="ai_filter" type="boolean"/>
+        <index name="index">
+            <element name="graphql_schema"/>
+        </index>
+    </element>
+</database>

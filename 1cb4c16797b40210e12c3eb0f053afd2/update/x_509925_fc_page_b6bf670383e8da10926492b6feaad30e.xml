@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+    function initialize() {
+        var model = {
+            condition: true,
+            params: params,
+        };
+
+        if (params && params.targetId) {
+            var userGr = new GlideRecord('sys_user');
+            userGr.get(params.targetId);
+            model.name = userGr.getValue('name'),
+                model.location = userGr.location.city + ', ' + userGr.location.state;
+                model.department = userGr.getDisplayValue('department');
+                model.email = userGr.getValue('email');
+        }
+        try {
+            model.avatar = new x_509925_fc.FCLiveProfileRepository(true).getAvatar(params.targetId);
+        } catch (err) {
+            model.error = err.message;
+        }
+
+
+        return model;
+    }
+
+
+    return {
+        initialize: initialize
+    };
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+    function initialize() {
+       
+    }
+
+    return {
+        initialize: initialize
+    };
+}]]></client_scripts>
+        <css>.profile-banner{&#13;
+    height: 300px;&#13;
+      background: url(https://images.pexels.com/photos/2300342/pexels-photo-2300342.jpeg) no-repeat center center; &#13;
+  -webkit-background-size: cover;&#13;
+  -moz-background-size: cover;&#13;
+  -o-background-size: cover;&#13;
+  background-size: cover;&#13;
+}&#13;
+.profile-box-wrapper{&#13;
+    width: 400px;&#13;
+    height: 200px;&#13;
+}&#13;
+.profile-box{&#13;
+    width: 400px;&#13;
+    height: 200px;&#13;
+    border-radius: 35px;&#13;
+    padding: 1px;&#13;
+    position: absolute;&#13;
+    top: 70px;&#13;
+    left: 0px;&#13;
+}&#13;
+&#13;
+.profile-avatar{&#13;
+   stroke: var(--sys-on-surface);&#13;
+    width: 100px;&#13;
+    height: 100px;&#13;
+    display: block;&#13;
+    padding: 10px;&#13;
+   &#13;
+}&#13;
+&#13;
+.dark-theme .profile-avatar{&#13;
+     background-color: var(--sys-primary);&#13;
+}&#13;
+&#13;
+.light-theme .profile-avatar{&#13;
+         background-color: var(--sys-primary);&#13;
+}&#13;
+&#13;
+&#13;
+.dark-theme .profile-box{&#13;
+    background-color: var(--sys-surface-container);&#13;
+    border: 7px solid var(--sys-surface-container-lowest);&#13;
+}&#13;
+&#13;
+.light-theme .profile-box{&#13;
+    background-color: var(--sys-surface);&#13;
+    border: 7px solid var(--sys-surface-container-lowest);&#13;
+}&#13;
+&#13;
+.profile-header-bar{&#13;
+        /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */&#13;
+        height: 70px;&#13;
+        /* border-bottom: 1px solid var(--sys-outline-variant); */&#13;
+}&#13;
+&#13;
+&#13;
+.grid-container {&#13;
+  column-count: 3;&#13;
+  column-gap: 10px;&#13;
+}&#13;
+&#13;
+.grid-item {&#13;
+    display: inline-block;&#13;
+    width: 100%;&#13;
+    background-color: var(--sys-surface-bright);&#13;
+    padding: 15px;&#13;
+    margin-bottom: 10px;&#13;
+    box-sizing: border-box;&#13;
+    border-radius: 10px;&#13;
+}&#13;
+&#13;
+@media (max-width: 1200px) {&#13;
+  .grid-container {&#13;
+    column-count: 3;&#13;
+  }&#13;
+}&#13;
+&#13;
+@media (max-width: 900px) {&#13;
+  .grid-container {&#13;
+    column-count: 2;&#13;
+  }&#13;
+}&#13;
+&#13;
+@media (max-width: 600px) {&#13;
+  .grid-container {&#13;
+    column-count: 1;&#13;
+  }&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>profile</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-14 22:19:24</sys_created_on>
+        <sys_id>b6bf670383e8da10926492b6feaad30e</sys_id>
+        <sys_mod_count>80</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_b6bf670383e8da10926492b6feaad30e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-13 12:43:12</sys_updated_on>
+        <template>[{"id":"k6avlh","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"container-fluid profile-banner\" &gt;\r\n\t&lt;div class=\"row  h-100\"&gt;\r\n\t\t&lt;div class=\"col-md-12 h-100 d-flex align-items-center justify-content-center\"&gt;\r\n\t\t\t&lt;div class=\"position-relative profile-box-wrapper\"&gt;\r\n\t\t\t\t&lt;div class=\"profile-box d-flex\"&gt;\r\n\t\t\t\t\t&lt;div class=\"d-flex flex-column justify-content-center align-items-center\"&gt;\r\n\t\t\t\t\t\t&lt;div&gt;\r\n\t\t\t\t\t\t\t&lt;template x-if=\"$scope.model.avatar\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;img class=\"profile-avatar rounded-circle\" :src=\"$scope.model.avatar\"&gt;&lt;/img&gt;\r\n\t\t\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t\t\t\t&lt;template x-if=\"!$scope.model.avatar\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;span style=\"stroke: var(--sys-on-surface);\" class=\"profile-avatar rounded-circle\"&gt;\r\n                                    &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-user\" width=\"100\" height=\"100\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n                                        &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\r\n                                        &lt;path d=\"M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0\" /&gt;\r\n                                        &lt;path d=\"M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2\" /&gt;\r\n                                    &lt;/svg&gt;\r\n                                &lt;/span&gt;\r\n\t\t\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t&lt;div class=\"text-center mt-2\"&gt;\r\n\t\t\t\t\t\t\t&lt;h6 class=\"fw-bold m-0\" x-text=\"$scope.model.name\"&gt;&lt;/h6&gt;\r\n\t\t\t\t\t\t\t&lt;!-- &lt;span x-text=\"$scope.model.location\"&gt;&lt;/span&gt; --&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t&lt;div class=\"flex-grow-1 p-3\"&gt;\r\n\t\t\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\r\n\t\t\t\t\t\t\t&lt;span class=\"d-flex\" style=\"stroke: var(--sys-on-surface);\"&gt;\r\n                               &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-building\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n                                &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\r\n                                &lt;path d=\"M3 21l18 0\" /&gt;\r\n                                &lt;path d=\"M9 8l1 0\" /&gt;\r\n                                &lt;path d=\"M9 12l1 0\" /&gt;\r\n                                &lt;path d=\"M9 16l1 0\" /&gt;\r\n                                &lt;path d=\"M14 8l1 0\" /&gt;\r\n                                &lt;path d=\"M14 12l1 0\" /&gt;\r\n                                &lt;path d=\"M14 16l1 0\" /&gt;\r\n                                &lt;path d=\"M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16\" /&gt;\r\n                                &lt;/svg&gt;\r\n                                &amp;nbsp;\r\n                            &lt;/span&gt;\r\n\t\t\t\t\t\t\t&lt;span x-text=\"$scope.model.department\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\r\n\t\t\t\t\t\t\t&lt;span class=\"d-flex\" style=\"stroke: var(--sys-on-surface);\"&gt;\r\n                                &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-mail\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n                                    &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\r\n                                    &lt;path d=\"M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z\" /&gt;\r\n                                    &lt;path d=\"M3 7l9 6l9 -6\" /&gt;\r\n                                &lt;/svg&gt;\r\n                                &amp;nbsp;\r\n                            &lt;/span&gt;\r\n\t\t\t\t\t\t\t&lt;span x-text=\"$scope.model.email\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t&lt;/div&gt;\r\n\t\t\t&lt;/div&gt;\r\n\r\n\t\t&lt;/div&gt;\r\n\t&lt;/div&gt;\r\n\r\n\r\n&lt;/div&gt;\r\n&lt;div class=\"profile-header-bar\"&gt;&lt;/div&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Profile</title>
+        <type>page</type>
+    </x_509925_fc_page>
+</record_update>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_taxonomy">
+    <x_509925_fc_taxonomy action="INSERT_OR_UPDATE">
+        <advance><![CDATA[((current, params) => {
+    let attributes = new FCTaxonomyRepository(true).getAttributes(current, params);
+    // let aggr = new GlideAggregate('task');
+    // aggr.addEncodedQuery('ref_change_request.requested_byDYNAMIC90d1921e5f510100a9ad2572f2b477fe^active=true^NQref_sn_hr_core_case.subject_personDYNAMIC90d1921e5f510100a9ad2572f2b477fe^ref_sn_hr_core_case.opened_forDYNAMIC90d1921e5f510100a9ad2572f2b477fe^active=true^NQref_incident.caller_idDYNAMIC90d1921e5f510100a9ad2572f2b477fe^active=true');
+    // aggr.addAggregate('COUNT');
+    // aggr.query();
+    // aggr.next();
+    // attributes.count = aggr.getAggregate('COUNT');
+    return attributes;
+})(current, params);
+]]></advance>
+        <base>false</base>
+        <condition><![CDATA[((current, params) => {
+    return true;
+})(current, params);]]></condition>
+        <group/>
+        <icon>&lt;svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"&gt;&lt;path d="M168-216v-432 432Zm12.31 52q-27.01 0-45.66-18.65Q116-201.3 116-228.31v-407.38q0-27.01 18.65-45.66Q153.3-700 180.31-700H356v-59.9q0-27.1 18.68-45.6Q393.35-824 420.4-824h119.56q27.04 0 45.54 18.65t18.5 45.66V-700h175.69q27.01 0 45.66 18.65Q844-662.7 844-635.69v225.46q-11.77-12.54-24.58-23.54-12.81-11-27.42-20.46v-181.46q0-5.39-3.46-8.85t-8.85-3.46H180.31q-5.39 0-8.85 3.46t-3.46 8.85v407.38q0 5.39 3.46 8.85t8.85 3.46H429q2.62 13 3.89 26.31 1.27 13.3 6.57 25.69H180.31ZM408-700h144v-59.69q0-5.38-3.46-8.85-3.46-3.46-8.85-3.46H420.31q-5.39 0-8.85 3.46-3.46 3.47-3.46 8.85V-700ZM671.77-68q-71.69 0-121.73-50.27Q500-168.53 500-240.23q0-71.69 50.27-121.73Q600.53-412 672.23-412q71.69 0 121.73 50.27Q844-311.47 844-239.77q0 71.69-50.27 121.73Q743.47-68 671.77-68Zm21.92-181.23v-84.46h-43.38v102.92L727-154.08 757.92-185l-64.23-64.23Z"/&gt;&lt;/svg&gt;</icon>
+        <name>My Requests</name>
+        <order>50</order>
+        <parent/>
+        <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-15 20:27:53</sys_created_on>
+        <sys_id>7ecfd0e783a05e10926492b6feaad366</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>My Requests</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_taxonomy_7ecfd0e783a05e10926492b6feaad366</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-03 21:12:13</sys_updated_on>
+        <type>menu_item</type>
+        <url>my_requests</url>
+        <url_type>page</url_type>
+    </x_509925_fc_taxonomy>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>7ecfd0e783a05e10926492b6feaad366</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:20:23</sys_created_on>
+        <sys_id>c6a2e4d783b1d610926492b6feaad391</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:20:23</sys_updated_on>
+        <table>x_509925_fc_taxonomy</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_taxonomy">
+    <x_509925_fc_taxonomy action="INSERT_OR_UPDATE">
+        <advance><![CDATA[((current, params) => {
+    return new FCTaxonomyRepository(true).getAttributes(current, params);
+})(current, params);
+]]></advance>
+        <base>false</base>
+        <condition><![CDATA[((current, params) => {
+    return true;
+})(current, params);]]></condition>
+        <group/>
+        <icon>&lt;svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"&gt;&lt;path d="m324-684.15 106.15-138.93q9.59-12.86 22.77-18.89 13.17-6.03 27.86-6.03 14.68 0 27.49 6.26 12.81 6.25 22.58 18.66L637-684.15l163.38 53.84q20.7 7.62 31.96 24.07 11.27 16.45 11.27 36.34 0 9.47-2.67 18.87-2.67 9.41-8.79 18.03L726.46-388.54l4 156.62q0 27.59-18.83 46.75Q692.81-166 666.59-166q-.67 0-16.9-2.62L480-216.85l-169.75 48.27q-4.94 1.96-8.76 2.27-3.82.31-7.79.31-26.29 0-45.73-19.17-19.43-19.16-18.43-46.75l4-156.62L127.46-533q-6.18-8.83-8.82-17.55-2.64-8.73-2.64-18.48 0-20.6 11.87-37.58 11.86-16.97 33.13-24.08l163-53.46Zm30.08 44.69-176.85 58.92q-5.77 1.92-7.88 7.89-2.12 5.96 1.73 10.96l114.74 158.35-4.28 172.65q-.39 6.54 4.61 10.38 5 3.85 11.16 1.93L480-271.08l183.69 51.7q6.16 1.92 11.16-1.93 5-3.84 4.61-10.38l-5.38-172.69 114.84-158.31q3.85-5 1.73-10.96-2.11-5.97-7.88-7.89l-177.85-57.92-115.3-149.15q-3.47-5.01-9.62-5.01-6.15 0-9.62 5.01l-116.3 149.15ZM480-505.62Z"/&gt;&lt;/svg&gt;</icon>
+        <name>Service Catalogs</name>
+        <order>20</order>
+        <parent/>
+        <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-05 03:24:20</sys_created_on>
+        <sys_id>4ca5558883a8d210926492b6feaad3d3</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Service Catalogs</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_taxonomy_4ca5558883a8d210926492b6feaad3d3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-29 04:01:13</sys_updated_on>
+        <type>menu_item</type>
+        <url>service_catalogs</url>
+        <url_type>page</url_type>
+    </x_509925_fc_taxonomy>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4ca5558883a8d210926492b6feaad3d3</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:20:38</sys_created_on>
+        <sys_id>25b2a4d783b1d610926492b6feaad3d6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:20:38</sys_updated_on>
+        <table>x_509925_fc_taxonomy</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

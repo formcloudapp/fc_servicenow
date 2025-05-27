@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCDraftRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCDraftRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for chocies table.
+ * @class
+ * @extends FCRepository
+ */
+var FCDraftRepository = Class.create();
+FCDraftRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initialize a new instance of the ChoiceRepository.
+     * @constructor
+     * @param {boolean} overrideACL - Flag to override Access Control List.
+     */
+    initialize: function(overrideACL) {
+		this.moduleName = 'FCDraftRepository';
+        FCRepository.prototype.initialize.call(this, 'x_509925_fc_draft', overrideACL);
+    },
+
+
+    /** @type {string} The type of the repository. */
+    type: 'FCDraftRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-16 21:13:13</sys_created_on>
+        <sys_id>c55a4af583809a10926492b6feaad345</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>FCDraftRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_c55a4af583809a10926492b6feaad345</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:43</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c55a4af583809a10926492b6feaad345</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-14 04:32:54</sys_created_on>
+        <sys_id>c394862683bdd210926492b6feaad37d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-14 04:32:54</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

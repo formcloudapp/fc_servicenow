@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-10 13:39:06</sys_created_on>
+        <sys_id>98d263af83ddaa10005fb955eeaad332</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_509925_fc_service.canvas_user</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_security_acl display_value="x_509925_fc_service">9d769eed83992210005fb955eeaad35d</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_98d263af83ddaa10005fb955eeaad332</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-10 13:39:06</sys_updated_on>
+        <sys_user_role display_value="canvas_user" name="canvas_user">8536f54bc713330072b211d4d8c26080</sys_user_role>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>sys_security_acl_role_98d263af83ddaa10005fb955eeaad332</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-05-10 13:39:06</sys_created_on><sys_id>98d263af83ddaa10005fb955eeaad332</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_509925_fc_service.canvas_user</sys_name><sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package><sys_policy/><sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope><sys_security_acl display_value="x_509925_fc_service">9d769eed83992210005fb955eeaad35d</sys_security_acl><sys_update_name>sys_security_acl_role_98d263af83ddaa10005fb955eeaad332</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-05-10 13:39:06</sys_updated_on><sys_user_role display_value="canvas_user" name="canvas_user">8536f54bc713330072b211d4d8c26080</sys_user_role></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>-2144973524</payload_hash>
+        <record_name>x_509925_fc_service.canvas_user</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-10 13:39:06</sys_created_on>
+        <sys_id>f503a7638311ea10005fb955eeaad37d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>196ba6bc39c0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-10 13:39:06</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>f903a763a611ea109fb9b2053e278c7c</update_guid>
+        <update_guid_history>f903a763a611ea109fb9b2053e278c7c:-2144973524</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_509925_fc_service.canvas_user">4b5327a38311ea10005fb955eeaad382</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-10 13:40:33</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>8a5f9994f50b480cb751a6c149116ce9</sys_id>
+        <sys_metadata>98d263af83ddaa10005fb955eeaad332</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_509925_fc_service.canvas_user</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent display_value="">9d769eed83992210005fb955eeaad35d</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_98d263af83ddaa10005fb955eeaad332</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_98d263af83ddaa10005fb955eeaad332">f503a7638311ea10005fb955eeaad37d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-10 13:40:33</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

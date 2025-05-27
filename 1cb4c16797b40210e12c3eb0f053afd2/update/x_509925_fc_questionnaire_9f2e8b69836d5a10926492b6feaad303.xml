@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_questionnaire">
+    <x_509925_fc_questionnaire action="INSERT_OR_UPDATE">
+        <attributes><![CDATA[(function(current, table, target_id, task_id, params){
+	
+	var attributes = new FCQuestionnaireRepository().getDefaultAttributes(current, table, target_id, task_id, params);
+    attributes.options.condition = new FCPersonaUtility().isPersona('admin');
+	return attributes;
+	
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base>true</base>
+        <cancel_callback><![CDATA[(function(form) {
+    //First we want to check if there's a task_id
+	if(!gs.nil(form._task_id)){
+		var calceledTaskResult = new HRTaskRepository().cancelTask(form._task_id);
+	}
+})(form);]]></cancel_callback>
+        <cancel_label>Cancel</cancel_label>
+        <client_submit_callback><![CDATA[function execute(helper, form, params){
+	helper.service.snackbar('Form submitted successfully!');
+	helper.service.navigate('?id=home');
+}]]></client_submit_callback>
+        <close_task_on_submit>true</close_task_on_submit>
+        <css_classes/>
+        <delete_callback><![CDATA[(function(form){
+	throw new Error('Non Implementation Error.');
+})(form);]]></delete_callback>
+        <delete_draft_on_load>false</delete_draft_on_load>
+        <delete_label>Delete</delete_label>
+        <deleteable>false</deleteable>
+        <draftable>false</draftable>
+        <name>New Form</name>
+        <number>QN0001018</number>
+        <on_submit><![CDATA[(function(form) {
+    
+    return form;
+    
+})(form);]]></on_submit>
+        <pdf/>
+        <readonly>false</readonly>
+        <reassignable>false</reassignable>
+        <related_knowledge/>
+        <require_esignature>false</require_esignature>
+        <route/>
+        <save_label>Save Draft</save_label>
+        <show_cancel>false</show_cancel>
+        <show_save>false</show_save>
+        <show_signature>false</show_signature>
+        <show_submit>true</show_submit>
+        <show_title>true</show_title>
+        <signature_list>[]</signature_list>
+        <submit_callback><![CDATA[(function (form) {
+
+    var formGr = new FCQuestionnaireRepository(true).getById(form.target_id);
+
+    var catalogIds = [];
+    form.sc_catalogs.forEach(sc => {
+        catalogIds.push(sc.value);
+    })
+
+    var inputs = {};
+    inputs['form'] = formGr; // GlideRecord of table: x_509925_fc_questionnaire 
+    inputs['catalogs'] = catalogIds.join(','); // String 
+    inputs['category'] = form.category; // String 
+
+
+    // Execute Synchronously: Run in foreground. Code snippet has access to outputs.
+    sn_fd.FlowAPI.getRunner().subflow('x_509925_fc.create_new_catalog_item').inForeground().withInputs(inputs).run();
+
+})(form);]]></submit_callback>
+        <submit_confirmation_message>I'm confirming that all information provided is true and correct to the best of my knowledge.</submit_confirmation_message>
+        <submit_label>Submit</submit_label>
+        <subtype>request</subtype>
+        <sys_class_name>x_509925_fc_questionnaire</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-29 21:04:42</sys_created_on>
+        <sys_id>9f2e8b69836d5a10926492b6feaad303</sys_id>
+        <sys_mod_count>27</sys_mod_count>
+        <sys_name>New Form</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_questionnaire_9f2e8b69836d5a10926492b6feaad303</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-06 01:30:38</sys_updated_on>
+        <table>x_509925_fc_questionnaire</table>
+        <type>record_producer</type>
+        <validation><![CDATA[(function(form) {
+    var result = {
+        validation: true,
+        message: ''
+    };
+
+    return result;
+})(form);]]></validation>
+        <whats_next/>
+    </x_509925_fc_questionnaire>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>9f2e8b69836d5a10926492b6feaad303</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-02 03:45:25</sys_created_on>
+        <sys_id>eaa600fe83215210926492b6feaad354</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-02 03:45:25</sys_updated_on>
+        <table>x_509925_fc_questionnaire</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

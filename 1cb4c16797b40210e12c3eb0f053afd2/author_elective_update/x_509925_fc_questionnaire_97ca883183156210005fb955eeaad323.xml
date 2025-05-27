@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_questionnaire">
+    <x_509925_fc_questionnaire action="DELETE">
+        <attributes><![CDATA[(function(current, table, target_id, task_id, params){
+	
+	var attributes = new FCQuestionnaireRepository().getDefaultAttributes(current, table, target_id, task_id, params);
+	return attributes;
+	
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base>false</base>
+        <cancel_callback><![CDATA[(function(form) {
+    //First we want to check if there's a task_id
+	if(!gs.nil(form._task_id)){
+		var calceledTaskResult = new HRTaskRepository().cancelTask(form._task_id);
+	}
+})(form);]]></cancel_callback>
+        <cancel_label>Cancel</cancel_label>
+        <close_task_on_submit>true</close_task_on_submit>
+        <css_classes/>
+        <delete_callback><![CDATA[(function(form){
+	throw new Error('Non Implementation Error.');
+})(form);]]></delete_callback>
+        <delete_draft_on_load>false</delete_draft_on_load>
+        <delete_label>Delete</delete_label>
+        <deleteable>false</deleteable>
+        <draftable>false</draftable>
+        <name>Test23</name>
+        <number>QN0001011</number>
+        <on_submit><![CDATA[(function(form) {
+    
+    return form;
+    
+})(form);]]></on_submit>
+        <pdf/>
+        <readonly>false</readonly>
+        <reassignable>false</reassignable>
+        <related_knowledge/>
+        <require_esignature>false</require_esignature>
+        <route/>
+        <save_label>Save Draft</save_label>
+        <show_cancel>false</show_cancel>
+        <show_save>false</show_save>
+        <show_signature>false</show_signature>
+        <show_submit>true</show_submit>
+        <show_title>true</show_title>
+        <signature_list>[]</signature_list>
+        <submit_callback><![CDATA[(function(form) {
+
+})(form);]]></submit_callback>
+        <submit_confirmation_message>I'm confirming that all information provided is true and correct to the best of my knowledge.</submit_confirmation_message>
+        <submit_label>Submit</submit_label>
+        <subtype>request</subtype>
+        <sys_class_name>x_509925_fc_questionnaire</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 11:25:02</sys_created_on>
+        <sys_id>97ca883183156210005fb955eeaad323</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Test23</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_questionnaire_97ca883183156210005fb955eeaad323</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-04 11:25:02</sys_updated_on>
+        <table>x_509925_fc_case</table>
+        <type>record_producer</type>
+        <validation><![CDATA[(function(form) {
+    var result = {
+        validation: true,
+        message: ''
+    };
+
+    return result;
+})(form);]]></validation>
+        <whats_next/>
+    </x_509925_fc_questionnaire>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_questionnaire_97ca883183156210005fb955eeaad323</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_questionnaire"&gt;&lt;x_509925_fc_questionnaire action="INSERT_OR_UPDATE"&gt;&lt;attributes&gt;&lt;![CDATA[(function(current, table, target_id, task_id, params){
+	
+	var attributes = new FCQuestionnaireRepository().getDefaultAttributes(current, table, target_id, task_id, params);
+	return attributes;
+	
+})(current, table, target_id, task_id, params);]]&gt;&lt;/attributes&gt;&lt;base&gt;false&lt;/base&gt;&lt;cancel_callback&gt;&lt;![CDATA[(function(form) {
+    //First we want to check if there's a task_id
+	if(!gs.nil(form._task_id)){
+		var calceledTaskResult = new HRTaskRepository().cancelTask(form._task_id);
+	}
+})(form);]]&gt;&lt;/cancel_callback&gt;&lt;cancel_label&gt;Cancel&lt;/cancel_label&gt;&lt;close_task_on_submit&gt;true&lt;/close_task_on_submit&gt;&lt;css_classes/&gt;&lt;delete_callback&gt;&lt;![CDATA[(function(form){
+	throw new Error('Non Implementation Error.');
+})(form);]]&gt;&lt;/delete_callback&gt;&lt;delete_draft_on_load&gt;false&lt;/delete_draft_on_load&gt;&lt;delete_label&gt;Delete&lt;/delete_label&gt;&lt;deleteable&gt;false&lt;/deleteable&gt;&lt;draftable&gt;false&lt;/draftable&gt;&lt;name&gt;Test23&lt;/name&gt;&lt;number&gt;QN0001011&lt;/number&gt;&lt;on_submit&gt;&lt;![CDATA[(function(form) {
+    
+    return form;
+    
+})(form);]]&gt;&lt;/on_submit&gt;&lt;pdf/&gt;&lt;readonly&gt;false&lt;/readonly&gt;&lt;reassignable&gt;false&lt;/reassignable&gt;&lt;related_knowledge/&gt;&lt;require_esignature&gt;false&lt;/require_esignature&gt;&lt;route/&gt;&lt;save_label&gt;Save Draft&lt;/save_label&gt;&lt;show_cancel&gt;false&lt;/show_cancel&gt;&lt;show_save&gt;false&lt;/show_save&gt;&lt;show_signature&gt;false&lt;/show_signature&gt;&lt;show_submit&gt;true&lt;/show_submit&gt;&lt;show_title&gt;true&lt;/show_title&gt;&lt;signature_list&gt;[]&lt;/signature_list&gt;&lt;submit_callback&gt;&lt;![CDATA[(function(form) {
+
+})(form);]]&gt;&lt;/submit_callback&gt;&lt;submit_confirmation_message&gt;I'm confirming that all information provided is true and correct to the best of my knowledge.&lt;/submit_confirmation_message&gt;&lt;submit_label&gt;Submit&lt;/submit_label&gt;&lt;subtype&gt;request&lt;/subtype&gt;&lt;sys_class_name&gt;x_509925_fc_questionnaire&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-05-04 11:25:02&lt;/sys_created_on&gt;&lt;sys_id&gt;97ca883183156210005fb955eeaad323&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Test23&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_questionnaire_97ca883183156210005fb955eeaad323&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-04 11:25:02&lt;/sys_updated_on&gt;&lt;table&gt;x_509925_fc_case&lt;/table&gt;&lt;type&gt;record_producer&lt;/type&gt;&lt;validation&gt;&lt;![CDATA[(function(form) {
+    var result = {
+        validation: true,
+        message: ''
+    };
+
+    return result;
+})(form);]]&gt;&lt;/validation&gt;&lt;whats_next/&gt;&lt;/x_509925_fc_questionnaire&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1722841314</payload_hash>
+        <record_name>Test23</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 11:25:02</sys_created_on>
+        <sys_id>17ca883183156210005fb955eeaad327</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1969b0ade380000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-04 11:25:02</sys_updated_on>
+        <type>Questionnaire</type>
+        <update_guid>1bca8831781562101c22369656e8df26</update_guid>
+        <update_guid_history>1bca8831781562101c22369656e8df26:-1722841314</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Test23">5fec08f183156210005fb955eeaad37c</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 11:34:19</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_questionnaire">x_509925_fc_questionnaire</sys_db_object>
+        <sys_id>6007441b09f84790a73b255a9f1eeae4</sys_id>
+        <sys_metadata>97ca883183156210005fb955eeaad323</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Test23</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_questionnaire_97ca883183156210005fb955eeaad323</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_questionnaire_97ca883183156210005fb955eeaad323">17ca883183156210005fb955eeaad327</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-04 11:34:19</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

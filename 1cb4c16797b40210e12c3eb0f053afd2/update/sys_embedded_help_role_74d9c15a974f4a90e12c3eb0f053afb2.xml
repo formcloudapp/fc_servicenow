@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_embedded_help_role">
+    <sys_embedded_help_role action="INSERT_OR_UPDATE">
+        <order>1000</order>
+        <role display_value="x_509925_fc.page_user" name="x_509925_fc.page_user">2cd9c15a974f4a90e12c3eb0f053afae</role>
+        <sys_class_name>sys_embedded_help_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-29 12:44:54</sys_created_on>
+        <sys_id>74d9c15a974f4a90e12c3eb0f053afb2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>2cd9c15a974f4a90e12c3eb0f053afae</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_embedded_help_role_74d9c15a974f4a90e12c3eb0f053afb2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-06-29 12:44:54</sys_updated_on>
+    </sys_embedded_help_role>
+</record_update>

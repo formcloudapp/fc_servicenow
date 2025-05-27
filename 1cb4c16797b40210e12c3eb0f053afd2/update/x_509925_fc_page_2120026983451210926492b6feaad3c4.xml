@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function(params) {
+
+    function initialize() {
+        var model = {
+            condition: true,
+            products: [{
+                title: 'test'
+            }],
+            params: params,
+            category_items: [],
+            category_id: params.kb_category,
+            cart: [],
+            breadcrumbs: [],
+            __side: true,
+            catalogs: new FCKnowledgeRepository(true).getKnowledgeTree(params.kb_knowledge_base)
+        };
+        return model;
+    }
+
+    if(params.kb_category){
+        
+    }
+
+
+    return {
+        initialize: initialize
+    };
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+
+    function openDialog() {
+        const dialog = document.getElementById("productDetailDialog");
+        dialog.open = true;
+    }
+
+    function closeDialog() {
+        const dialog = document.getElementById("productDetailDialog");
+        dialog.open = false;
+        helpers.model.__side = true;
+    }
+
+    function openCart() {
+        const dialog = document.getElementById("cart");
+        dialog.open = true;
+    }
+
+    function closeCart() {
+        const dialog = document.getElementById("cart");
+        dialog.open = false;
+    }
+
+    function handleImageError(element, item) {
+        element.error = true;
+        item._hasError = true;
+    }
+
+    function initTree(model) {
+        if (model.params.kb_category) {
+            localStorage.setItem('active_category', model.params.kb_category);
+            model.breadcrumbs = findBreadcrumbPath([model.catalogs], model.params.kb_category);
+
+            model.catalogs = updateItemCount([model.catalogs])[0];
+            
+        }else{
+            localStorage.setItem('active_category', null);
+        }
+
+        initStateRecursive([model.catalogs])
+    }
+
+    function findBreadcrumbPath(data, categoryId, path = []) {
+        for (const item of data) {
+            const newPath = [...path, { name: item.name, id: item.id, isLast: false }];
+
+            if (item.id === categoryId) {
+                newPath[newPath.length - 1].isLast = true;
+                return newPath; 
+            }
+
+            if (item.children && item.children.length) {
+                const result = findBreadcrumbPath(item.children, categoryId, newPath);
+                if (result) {
+                    return result;  
+                }
+            }
+        }
+        return null;
+    }
+
+    function initStateRecursive(cats) {
+        cats.forEach(cat => {
+            if (localStorage.getItem('category_' + cat.id) === 'open' && cat.children && cat.children.length > 0) {
+                cat.showChildren = true;
+            } else {
+                cat.showChildren = false;
+            }
+
+            if (localStorage.getItem('active_category') == cat.id) {
+                cat._active = true;
+            } else {
+                cat._active = false;
+            }
+
+            if (cat.children && cat.children.length > 0) {
+                initStateRecursive(cat.children);
+            }
+        });
+    }
+
+
+    function updateItemCount(nodes) {
+        function traverseAndUpdate(node) {
+            let currentCount = node.item_count ? parseInt(node.item_count) : 0;
+
+            node.children?.forEach(child => {
+                currentCount += traverseAndUpdate(child); // Add the item_count from each child
+            });
+
+            node.item_count = currentCount;
+
+            return currentCount;
+        }
+
+        nodes.forEach(node => traverseAndUpdate(node));
+
+        return nodes;
+    }
+
+
+    
+
+    function lookupCategory(categoryId) {
+        localStorage.setItem('active_category', categoryId);
+        helpers.service.search({
+            kb_category: categoryId
+        });
+    }
+
+    function gotoUrl(url) {
+        helpers.service.navigate(url);
+    }
+
+    function addToCart(newItem) {
+        
+        if (!localStorage.getItem('__cart')) {
+            localStorage.setItem('__cart', JSON.stringify('[]'));
+        }
+
+        let cart = Array.from(JSON.parse(localStorage.getItem('__cart')));
+
+        let cartItem = cart.find(item => item.id == newItem.id);
+        if (cartItem) {
+            let currentCount = cartItem.count ? cartItem.count : 1;
+            cartItem.count = currentCount;
+        } else {
+            newItem.count = 1;
+            cart.push(newItem);
+        }
+        helpers.model.cart = cart;
+        localStorage.setItem('__cart', JSON.stringify(cart));
+        helpers.service.snackbar('Item added to cart.');
+    }
+
+    function removeFromCart(item) {
+        helpers.model.cart = helpers.model.cart.filter((cartItem) => cartItem.id != item.id);
+        helpers.service.snackbar('Item removed to cart.');
+    }
+
+    function renderCategory(child) {
+
+        var html = '';
+        if (child.children && child.children.length > 0) {
+            html += `<div class="d-flex align-items-center">
+                <mdui-button @click="$scope.lookupCategory('${child.id}')" :class="${child._active} ? 'active' : ''" full-width class="flex-grow-1 category-tree-button" variant="text">
+                    <span class="text-truncate" style="max-width: 250px;">${child.name}</span>
+                    &nbsp;&nbsp;(<span>${child.item_count || 0}</span>)
+                </mdui-button>
+                <button class="expand-collapse-btn" @click="$scope.toggleCategory(child)">
+                    <span x-show="!child.showChildren">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 12h6" />
+                            <path d="M12 9v6" />
+                            <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
+                        </svg>
+                    </span>
+                    <span class="can-expand" x-show="child.showChildren">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-minus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 12h6" />
+                            <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                        </svg>
+                    </span>
+                </button>
+            </div>
+            <ul x-show="child.showChildren" x-transition>`; // Open the list here
+            child.children.forEach(subChild => {
+                html += `<li">${this.renderCategory(subChild)}</li>`; // Recursive call
+            });
+            html += `</ul>`;
+        } else {
+            html += `<mdui-button @click="$scope.lookupCategory('${child.id}')" :class="${child._active} ? 'active' : ''" full-width class="flex-grow-1 category-tree-button" variant="text">
+                        <span class="text-truncate" style="max-width: 250px;">${child.name}</span>
+                        &nbsp;&nbsp;(<span>${child.item_count || 0}</span>)
+                    </mdui-button>`;
+        }
+
+        return html;
+    }
+
+
+    function toggleCategory(category) {
+        category.showChildren = !category.showChildren;
+
+        if (category.showChildren) {
+            localStorage.setItem('category_' + category.id, 'open');
+        } else {
+            localStorage.removeItem('category_' + category.id);
+        }
+    }
+
+    function toggleAll(nodeList, shouldShow) {
+        nodeList.forEach(node => {
+            node.showChildren = shouldShow;
+            if (shouldShow) {
+                localStorage.setItem('category_' + node.id, 'open');
+            } else {
+                localStorage.removeItem('category_' + node.id);
+            }
+
+            if (node.children && node.children.length > 0) {
+                toggleAll(node.children, shouldShow);
+            }
+        });
+    }
+
+    return {
+        initTree: initTree,
+        addToCart: addToCart,
+        removeFromCart: removeFromCart,
+        gotoUrl: gotoUrl,
+        renderCategory: renderCategory,
+        toggleCategory: toggleCategory,
+        lookupCategory: lookupCategory,
+        openDialog: openDialog,
+        closeDialog: closeDialog,
+        handleImageError: handleImageError,
+        toggleAll: toggleAll,
+        openCart: openCart,
+        closeCart: closeCart
+    };
+}]]></client_scripts>
+        <css>.dark-theme .product-container{&#13;
+    height: 350px;&#13;
+    min-width: 300px;&#13;
+    background-color: var(--sys-background);&#13;
+    color: var(--sys-on-surface-container);&#13;
+}&#13;
+&#13;
+.light-theme .product-container{&#13;
+    height: 350px;&#13;
+    min-width: 300px;&#13;
+    background-color: var(--sys-surface-container-lowest);&#13;
+    color: var(--sys-on-surface-container);&#13;
+}&#13;
+.product-image-container{&#13;
+    max-height:200px;&#13;
+    max-width:100%;&#13;
+    overflow:hidden !important;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    height: 100%;&#13;
+}&#13;
+&#13;
+#target_4sk6wp{&#13;
+    position: sticky !important;&#13;
+    top: -20px;&#13;
+    z-index: 2;&#13;
+    background-color: var(--sys-surface);&#13;
+}&#13;
+.expand-collapse-btn{&#13;
+    border: none;&#13;
+    cursor: pointer;&#13;
+    stroke: var(--sys-primary);&#13;
+    margin-right: 3px;&#13;
+    background: transparent;&#13;
+}&#13;
+.catalog-list-container{&#13;
+    min-width: 300px;&#13;
+    position: sticky;&#13;
+    height: 100%;&#13;
+    /* max-height: calc(100vh - 158px);&#13;
+    overflow: auto; */&#13;
+}&#13;
+.catalog-category-list, .catalog-category-list ul{&#13;
+    list-style: none;&#13;
+    padding-left: 25px;&#13;
+}&#13;
+&#13;
+.catalog-list-container mdui-button::part(button) {&#13;
+  justify-content: start;&#13;
+}&#13;
+&#13;
+.category-tree-button.active{&#13;
+    color: var(--sys-error) !important;&#13;
+}&#13;
+&#13;
+.breadcrumbs {&#13;
+    list-style: none;&#13;
+    display: flex;&#13;
+    stroke: var(--sys-on-surface-container);&#13;
+    max-width: 100vw;&#13;
+    overflow: auto;&#13;
+}&#13;
+.breadcrumbs li {&#13;
+    margin-right: 10px;&#13;
+}&#13;
+.breadcrumbs li:not(:last-child)::after {&#13;
+    margin-left: 10px;&#13;
+}&#13;
+&#13;
+.item-count-tick{&#13;
+        background-color: var(--sys-secondary-container);&#13;
+    padding: 2px 8px;&#13;
+    border-radius: 5px;&#13;
+    color: var(--sys-on-secondary-container);&#13;
+}&#13;
+#cart{&#13;
+    --shape-corner: 0px;&#13;
+}&#13;
+.cart-button{&#13;
+    border: 0;&#13;
+    background-color: transparent;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.cart-button:hover span{&#13;
+        stroke: var(--sys-primary) !important;&#13;
+}&#13;
+&#13;
+.can-expand{&#13;
+    stroke: var(--sys-tertiary) !important;&#13;
+}&#13;
+&#13;
+ul.catalog-category-list li {&#13;
+    background-color: var(--sys-secondary-container);&#13;
+    margin-bottom: 1px;&#13;
+    border-radius: 0;&#13;
+    padding: 5px;&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>knowledge_base</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-04 18:52:23</sys_created_on>
+        <sys_id>2120026983451210926492b6feaad3c4</sys_id>
+        <sys_mod_count>93</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_2120026983451210926492b6feaad3c4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-03 14:42:31</sys_updated_on>
+        <template>[{"id":"nccyt","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div&gt;\r\n\t&lt;div class=\"d-flex breadcrumbs overflow-auto pt-1\" style=\"max-width: 100vw;\"&gt;\r\n\t\t&lt;ul class=\" m-0 flex-grow-1 d-flex\"&gt;\r\n\t\t\t&lt;template x-for=\"crumb in $scope.model.breadcrumbs\"&gt;\r\n\t\t\t\t&lt;li class=\"d-flex align-items-center\"&gt;\r\n\t\t\t\t\t&lt;mdui-button variant=\"text\" @click=\"$scope.lookupCategory(crumb.id)\"&gt;\r\n\t\t\t\t\t\t&lt;span x-text=\"crumb.name\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t&lt;/mdui-button&gt;\r\n\t\t\t\t\t&lt;template x-if=\"!crumb.isLast\"&gt;\r\n\t\t\t\t\t\t&lt;span class=\"d-flex align-items-center\" style=\"stroke:var(--sys-on-secondary-container);\"\"&gt;\r\n                            &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-arrow-narrow-right\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n                                &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\r\n                                &lt;path d=\"M5 12l14 0\" /&gt;\r\n                                &lt;path d=\"M15 16l4 -4\" /&gt;\r\n                                &lt;path d=\"M15 8l4 4\" /&gt;\r\n                            &lt;/svg&gt;\r\n                        &lt;/span&gt;\r\n\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t&lt;/li&gt;\r\n\t\t\t&lt;/template&gt;\r\n\t\t&lt;/ul&gt;\r\n\t&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;div class=\"container catalog-container main-container mt-5\" style=\"position: relative; overflow: hidden\"&gt;\r\n\t&lt;div class=\"d-flex align-items-center\"&gt;\r\n\t\t&lt;fc-widget class=\"flex-grow-1\" widget-id=\"widget_page_header\" options='{\"title\":\"Knowledge Base\"}'&gt;&lt;/fc-widget&gt;\r\n\t\t&lt;mdui-button @click=\"$scope.openDialog()\" variant=\"text\" icon=\"menu\" class=\"mt-5 d-block d-lg-none\"&gt;\r\n\t\t\tKnowledge Base\r\n\t\t&lt;/mdui-button&gt;\r\n\t&lt;/div&gt;\r\n\t&lt;div class=\"d-flex\"&gt;\r\n\t\t&lt;div id=\"originalLocation\" class=\"catalog-list-container scroll-container d-none d-lg-block\"&gt;\r\n\t\t\t&lt;div class=\"d-flex justify-content-end\"&gt;\r\n\t\t\t\t&lt;mdui-button variant=\"text\" @click=\"$scope.toggleAll([$scope.model.catalogs], false)\"&gt;\r\n\t\t\t\t\t&lt;mdui-icon slot=\"icon\" name=\"remove\"&gt;&lt;/mdui-icon&gt; Collapse All\r\n\t\t\t\t&lt;/mdui-button&gt;\r\n\t\t\t\t&lt;mdui-button variant=\"text\" @click=\"$scope.toggleAll([$scope.model.catalogs], true)\"&gt;\r\n\t\t\t\t\t&lt;mdui-icon slot=\"icon\" name=\"add_box\"&gt;&lt;/mdui-icon&gt; Expand All\r\n\t\t\t\t&lt;/mdui-button&gt;\r\n\t\t\t&lt;/div&gt;\r\n\t\t\t&lt;mdui-divider&gt;&lt;/mdui-divider&gt;\r\n\t\t\t&lt;ul class=\"catalog-category-list\" x-init=\"$scope.initTree($scope.model)\"&gt;\r\n\t\t\t\t&lt;template x-for=\"category in $scope.model.catalogs.children\"&gt;\r\n\t\t\t\t\t&lt;li&gt;\r\n\t\t\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\r\n\t\t\t\t\t\t\t&lt;mdui-button @click=\"$scope.lookupCategory(category.id)\" variant=\"link\" full-width class=\"flex-grow-1 category-tree-button\" :class=\"category._active ? 'active' : ''\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;span class=\"text-truncate\" style=\"max-width: 250px;\" x-text=\"category.name\"&gt;&lt;/span&gt;&amp;nbsp;\r\n                                (&lt;span x-text=\"category.item_count || 0\"&gt;&lt;/span&gt;)\r\n\t\t\t\t\t\t\t&lt;/mdui-button&gt;\r\n                            &lt;div class=\"flex-grow-1\"&gt;&lt;/div&gt;\r\n\t\t\t\t\t\t\t&lt;button class=\"expand-collapse-btn\" x-show=\"category.children &amp;&amp; category.children.length &gt; 0\" @click=\"$scope.toggleCategory(category)\"&gt;\r\n                            &lt;span x-show=\"!category.showChildren\"&gt;\r\n                                &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-square-plus\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n                                    &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\r\n                                    &lt;path d=\"M9 12h6\" /&gt;\r\n                                    &lt;path d=\"M12 9v6\" /&gt;\r\n                                    &lt;path d=\"M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z\" /&gt;\r\n                                &lt;/svg&gt;\r\n                            &lt;/span&gt;\r\n                            &lt;span class=\"can-expand\" x-show=\"category.showChildren\"&gt;\r\n                                &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-square-rounded-minus\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n                                    &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\r\n                                    &lt;path d=\"M9 12h6\" /&gt;\r\n                                    &lt;path d=\"M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z\" /&gt;\r\n                                &lt;/svg&gt;\r\n                            &lt;/span&gt;\r\n                        &lt;/button&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t&lt;ul x-show=\"category.showChildren\" x-transition&gt;\r\n\t\t\t\t\t\t\t&lt;template x-for=\"child in category.children\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;li x-html=\"$scope.renderCategory(child)\"&gt;&lt;/li&gt;\r\n\t\t\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t\t\t&lt;/ul&gt;\r\n\t\t\t\t\t&lt;/li&gt;\r\n\t\t\t\t&lt;/template&gt;\r\n\t\t\t&lt;/ul&gt;\r\n\t\t&lt;/div&gt;\r\n\t\t&lt;div class=\"flex-grow-1\"&gt;\r\n\t\t\t&lt;div class=\"container p-0\"&gt;\r\n\t\t\t\t&lt;div class=\"row\"&gt;\r\n\t\t\t\t\t&lt;div class=\"col\"&gt;\r\n\t\t\t\t\t\t&lt;mdui-datatable query-name=\"kb_knowledge\"&gt;&lt;/mdui-datatable&gt;\r\n\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t&lt;div class=\"row\"&gt;\r\n\t\t\t\t\t&lt;template x-for=\"product in $scope.model.category_items\"&gt;\r\n\t\t\t\t\t\t&lt;div class=\"col\"&gt;\r\n\t\t\t\t\t\t\t&lt;div class=\"p-3\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;mdui-card variant=\"filled\" class=\"p-3 w-100 product-container\"&gt;\r\n\t\t\t\t\t\t\t\t\t&lt;div class=\"d-flex flex-column h-100\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t&lt;div class=\"d-flex mb-2\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t&lt;span class=\"flex-grow-1 text-truncate fw-bold\" x-text=\"product.name\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t&lt;span x-show=\"product.has_price\" class=\"ms-2 fw-bold\" x-text=\"`${product.price.display_value}`\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t\t\t\t\t&lt;div class=\"flex-grow-1\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t&lt;div class=\"product-image-container\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;template x-if=\"product.image &amp;&amp; !product._hasError\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;img x-bind:src=\"product.image\" @error=\"$scope.handleImageError(this, product)\" class=\"w-100\"&gt;&lt;/img&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;template x-if=\"!product.image || product._hasError\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;svg xmlns=\"http://www.w3.org/2000/svg\"\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass=\"icon icon-tabler icon-tabler-photo-off\" width=\"76\"\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\theight=\"76\" viewBox=\"0 0 24 24\" stroke-width=\"0.5\"\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tstroke=\"var(--sys-on-surface)\" fill=\"none\"\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tstroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path d=\"M15 8h.01\" /&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\td=\"M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153\" /&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path d=\"M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5\" /&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path d=\"M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3\" /&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path d=\"M3 3l18 18\" /&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/svg&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t\t\t&lt;/mdui-card&gt;\r\n\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t&lt;/div&gt;\r\n\t\t\t&lt;/div&gt;\r\n\t\t&lt;/div&gt;\r\n\t&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;mdui-dialog id=\"productDetailDialog\" fullscreen&gt;\r\n\t&lt;mdui-button @click=\"$scope.closeDialog()\" slot=\"action\"&gt;Close&lt;/mdui-button&gt;\r\n\t&lt;div id=\"newLocation\" class=\"h-100 overflow-auto scroll-container catalog-list-container\"&gt;\r\n\t\t&lt;ul class=\"catalog-category-list\"&gt;\r\n\t\t\t&lt;template x-for=\"category in [$scope.model.catalogs]\"&gt;\r\n\t\t\t\t&lt;li&gt;\r\n\t\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\r\n\t\t\t\t\t\t&lt;div class=\"flex-grow-1 fw-bold\"&gt;\r\n\t\t\t\t\t\t\t&lt;span x-text=\"category.name\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t&lt;button class=\"expand-collapse-btn\" x-show=\"category.children &amp;&amp; category.children.length &gt; 0\" @click=\"$scope.toggleCategory(category)\"&gt;\r\n                    &lt;span x-show=\"!category.showChildren\"&gt;\r\n                        &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-square-plus\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n                            &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\r\n                            &lt;path d=\"M9 12h6\" /&gt;\r\n                            &lt;path d=\"M12 9v6\" /&gt;\r\n                            &lt;path d=\"M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z\" /&gt;\r\n                        &lt;/svg&gt;\r\n                    &lt;/span&gt;\r\n                    &lt;span x-show=\"category.showChildren\" style=\"stroke: var(--sys-error) !important;\"&gt;\r\n                        &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-square-rounded-minus\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\r\n                            &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\r\n                            &lt;path d=\"M9 12h6\" /&gt;\r\n                            &lt;path d=\"M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z\" /&gt;\r\n                        &lt;/svg&gt;\r\n                    &lt;/span&gt;\r\n                &lt;/button&gt;\r\n\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t&lt;ul x-show=\"category.showChildren\" x-transition&gt;\r\n\t\t\t\t\t\t&lt;template x-for=\"child in category.children\"&gt;\r\n\t\t\t\t\t\t\t&lt;li x-html=\"$scope.renderCategory(child)\"&gt;&lt;/li&gt;\r\n\t\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t\t&lt;/ul&gt;\r\n\t\t\t\t&lt;/li&gt;\r\n\t\t\t&lt;/template&gt;\r\n\t\t&lt;/ul&gt;\r\n\t&lt;/div&gt;\r\n&lt;/mdui-dialog&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Knowledge Base</title>
+        <type>page</type>
+    </x_509925_fc_page>
+</record_update>

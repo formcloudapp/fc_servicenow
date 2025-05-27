@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCSignatureImageRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCSignatureImageRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for signature images.
+ * Extends the Repository class.
+ */
+var FCSignatureImageRepository = Class.create();
+FCSignatureImageRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initializes a new instance of the FCSignatureImageRepository class.
+     * @param {boolean} overrideACL - Indicates whether to override Access Control Lists.
+     */
+    initialize: function(overrideACL) {
+        FCRepository.prototype.initialize.call(this, 'signature_image', overrideACL);
+    },
+
+    /**
+     * Retrieves a signature image record by its document ID.
+     * @param {string} documentId - The identifier of the document.
+     * @returns The single signature image record matching the given document ID.
+     */
+    getByDocumentId: function(documentId) {
+        this.addQuery('sys_id', documentId);
+        return this.getSingle();
+    },
+
+    /**
+     * Creates a new signature image record.
+     * @param {string} document - The document identifier.
+     * @param {string} table - The table name where the document resides.
+     * @returns The result of the creation operation.
+     */
+    create: function(document, table) {
+        return this.insert({
+            document: document,
+            table: table,
+            user: gs.getUserID(),
+            signed_on: new GlideDateTime(),
+            is_drawing: true
+        });
+    },
+
+    /** 
+     * Type definition for easier identification of this script include.
+     * @type {string}
+     */
+    type: 'FCSignatureImageRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-16 01:06:33</sys_created_on>
+        <sys_id>cf3d27bd97ba0650e12c3eb0f053af65</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>FCSignatureImageRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_cf3d27bd97ba0650e12c3eb0f053af65</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:45</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>cf3d27bd97ba0650e12c3eb0f053af65</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:01:53</sys_created_on>
+        <sys_id>366ed41383b1d610926492b6feaad3c7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:01:53</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

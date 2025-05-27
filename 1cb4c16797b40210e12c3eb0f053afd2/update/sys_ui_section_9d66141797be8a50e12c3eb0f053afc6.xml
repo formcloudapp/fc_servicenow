@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="GraphQL Query Broker" section_id="9d66141797be8a50e12c3eb0f053afc6" sys_domain="global" table="x_509925_fc_graphql_query_broker" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>number</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>d49762ed83d01a10926492b6feaad338</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>name</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>dc9762ed83d01a10926492b6feaad338</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>schema</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>d49762ed83d01a10926492b6feaad339</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>allow_selection</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>dc9762ed83d01a10926492b6feaad339</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>d49762ed83d01a10926492b6feaad33a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>sys_scope</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>dc9762ed83d01a10926492b6feaad33a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>table</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>d49762ed83d01a10926492b6feaad33b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>dc9762ed83d01a10926492b6feaad33b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>filter_builder</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>d49762ed83d01a10926492b6feaad33c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>gql_path</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>dc9762ed83d01a10926492b6feaad33c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>row_count_path</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>d49762ed83d01a10926492b6feaad33d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>gql</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>dc9762ed83d01a10926492b6feaad33d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>script</element>
+            <position>12</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>d49762ed83d01a10926492b6feaad33e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>record_details</element>
+            <position>13</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>dc9762ed83d01a10926492b6feaad33e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>columns_configs</element>
+            <position>14</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-28 14:57:32</sys_created_on>
+            <sys_id>d49762ed83d01a10926492b6feaad33f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:57:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>record_script</element>
+            <position>15</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-08-29 01:19:03</sys_created_on>
+            <sys_id>24d5743d839c1a10926492b6feaad3dc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-29 01:19:03</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>graphql_schema</element>
+            <position>16</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-09-05 17:12:20</sys_created_on>
+            <sys_id>0523909c83681610926492b6feaad3c2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-09-05 17:12:20</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>base</element>
+            <position>17</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-11-26 02:24:27</sys_created_on>
+            <sys_id>ee4a1b9283421210926492b6feaad336</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-11-26 02:24:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>metadata</element>
+            <position>18</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-02-28 20:21:24</sys_created_on>
+            <sys_id>26369b7883c42210671591d6feaad3b6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-02-28 20:21:24</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ai_filter</element>
+            <position>19</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-03-21 04:21:32</sys_created_on>
+            <sys_id>32e30827835c2210671591d6feaad33e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="GraphQL Query Broker" display_value="GraphQL Query Broker" name="x_509925_fc_graphql_query_broker" sys_domain="global" view="Default view">9d66141797be8a50e12c3eb0f053afc6</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-03-21 04:21:32</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>GraphQL Query Broker</caption>
+            <header>false</header>
+            <name>x_509925_fc_graphql_query_broker</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-06-20 01:18:26</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>9d66141797be8a50e12c3eb0f053afc6</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>x_509925_fc_graphql_query_broker</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+            <sys_update_name>sys_ui_section_9d66141797be8a50e12c3eb0f053afc6</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-08-28 14:55:20</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

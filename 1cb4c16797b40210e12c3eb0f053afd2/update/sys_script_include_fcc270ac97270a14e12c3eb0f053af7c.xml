@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCWebAppRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCWebAppRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * @class
+ * Repository for interacting with the HR Case table in ServiceNow.
+ * @extends TaskRepository
+ */
+var FCWebAppRepository = Class.create();
+FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initializes the QuestionnaireRepository for the FCWebAppRepository table.
+	 * @param {boolean} [overrideACL=false] - Determines whether to use GlideRecord (true) or GlideRecordSecure (false).
+	 */
+	initialize: function (overrideACL) {
+		var tableName = new FCConstantUtility().getTableName('web_app');
+		FCRepository.prototype.initialize.call(this, tableName, overrideACL);
+	},
+
+	getByPrefix: function (prefix) {
+		this.addQuery('prefix=' + prefix);
+		var appGr = this.getSingle();
+		if (appGr) {
+
+			return JSON.stringify(this.getAttributes(appGr));
+		} else {
+			return {};
+		}
+	},
+
+	/**
+	 * Retrieves a specific questionnaire by its ID.
+	 * @private
+	 * @param {string} sys_id - The ID of the questionnaire.
+	 * @returns {Object} - The GlideRecord object of the questionnaire.
+	 */
+	getById: function (sysId) {
+		this.addQuery('sys_id=' + sysId);
+		return this.getSingle();
+	},
+
+	getShellCofigs: function (current) {
+		var result = {
+			themes: {
+				enterprise: {
+					light: {
+						first_header_background: {
+							label: 'First Header Background Color',
+							key: 'fc_enterprise_header_1_bg',
+							value: 'var(--sys-primary)',
+							logo: null,
+							is_dark: true
+						},
+						first_header_foreground: {
+							label: 'First Header Foreground Color',
+							key: 'fc_enterprise_header_1_fg',
+							value: 'var(--sys-on-primary)'
+						},
+						second_header_background: {
+							label: 'Second Header Background Color',
+							key: 'fc_enterprise_header_2_bg',
+							value: 'var(--sys-surface-container)',
+							logo: null,
+							is_dark: true
+						},
+						second_header_foreground: {
+							label: 'Second Header Foreground Color',
+							key: 'fc_enterprise_header_2_fg',
+							value: 'var(--sys-on-surface-container)'
+						},
+					},
+					dark: {
+						first_header_background: {
+							label: 'First Header Background Color',
+							key: 'fc_enterprise_header_1_bg',
+							value: 'var(--sys-on-primary-fixed)',
+							logo: null,
+							is_dark: true
+						},
+						first_header_foreground: {
+							label: 'First Header Foreground Color',
+							key: 'fc_enterprise_header_1_fg',
+							value: 'var(--sys-primary-fixed)'
+						},
+						second_header_background: {
+							label: 'Second Header Background Color',
+							key: 'fc_enterprise_header_2_bg',
+							value: 'var(--sys-surface-container)',
+							logo: null,
+							is_dark: true
+						},
+						second_header_foreground: {
+							label: 'Second Header Foreground Color',
+							key: 'fc_enterprise_header_2_fg',
+							value: 'var(--sys-on-surface-container)'
+						},
+					},
+					first_header_override_dark_theme: true,
+					second_header_override_dark_theme: false
+				},
+				classic: {
+					light: {
+						first_header_background: {
+							label: 'First Header Background Color',
+							key: 'fc_classic_header_bg',
+							value: 'var(--sys-primary)',
+							logo: null
+						},
+						first_header_foreground: {
+							label: 'First Header Foreground Color',
+							key: 'fc_classic_header_fg',
+							value: 'var(--sys-on-primary)'
+						},
+						left_nav_background: {
+							label: 'Left Nav Background Color',
+							key: 'fc-classic-left-nav-bg',
+							value: 'var(--sys-primary)'
+						},
+						left_nav_foreground: {
+							label: 'Left Nav Foreground Color',
+							key: 'fc-classic-left-nav-fg',
+							value: 'var(--sys-on-primary)'
+						},
+					},
+					dark: {
+						first_header_background: {
+							label: 'First Header Background Color',
+							key: 'fc_classic_header_1_bg',
+							value: 'var(--sys-on-primary-fixed)',
+							logo: null
+						},
+						first_header_foreground: {
+							label: 'First Header Foreground Color',
+							key: 'fc_classic_header_1_fg',
+							value: 'var(--sys-primary-fixed)'
+						},
+						left_nav_background: {
+							label: 'Let Nav Background Color',
+							key: 'fc-classic-left-nav-bg',
+							value: 'var(--sys-surface-container)'
+						},
+						left_nav_foreground: {
+							label: 'Left Nav Foreground Color',
+							key: 'fc-classic-left-nav-fg',
+							value: 'var(--sys-on-surface-container)'
+						},
+					},
+					first_header_override_appearance: true,
+					left_nav_override_appearance: false
+				}
+			}
+		};
+		return result;
+	},
+
+	getAttributes: function (current) {
+		var userPreferences = this.getUserPreference();
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('current', current);
+		evaluator.evaluateScript(current, 'attributes');
+
+		var session = gs.getSession();
+		var token = session.getSessionToken();
+		return {
+			sys_id: current.getUniqueValue(),
+			application_namespace: current.getValue('application_namespace'),
+			graphql_namespace: current.getValue('graphql_namespace'),
+			prefix: current.getValue('prefix'),
+			base: 'x_509925_fc_core',
+			primary_color: current.getValue('primary_color'),
+			tertiary_color: current.getValue('tertiary_color'),
+			brand_font: current.getValue('brand_font'),
+			plain_font: current.getValue('plain_font'),
+			embed_fonts: current.getValue('embed_fonts'),
+			attributes: current.getValue('attributes'),
+			shared_data: current.getValue('shared_data'),
+			avatar: new FCLiveProfileRepository(true).getAvatar(),
+			avatar_id: new FCUserRepository(true).getById(gs.getUserID()).getValue('avatar'),
+			token: token,
+			base_url: gs.getProperty('glide.servlet.uri'),
+			css_classes: this._getCssClasses(),
+			shell: current.getValue('shell'),
+			shell_configs: evaluator.evaluateScript(current, 'attributes'),
+			user_preferences: userPreferences,
+			user_id: gs.getUserID(),
+			user_name: gs.getUserName(),
+			user_display_name: gs.getUserDisplayName(),
+			is_impersonating: new global.FCGlobalUtility().isImpersonating(),
+			real_user_name: new global.FCGlobalUtility().getImpersonatingUserName(),
+			hot_reload: gs.getProperty('x_509925_fc.hot_reload') === 'true',
+			page_elements: {
+				container: {
+					id: '',
+					title: 'Container',
+					description: 'Container',
+					type: 'container',
+					css_classes: {
+						value: ['container-fluid'],
+						options: ['container', 'container-fluid']
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [{
+						type: 'row',
+						icon: 'view_stream',
+						title: 'Row'
+					}],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						header_tag: 'h2',
+						container: 'container'
+					},
+					config_options: {
+						inline_css: ''
+					}
+				},
+				row: {
+					id: '',
+					title: 'Row',
+					description: 'Row',
+					type: 'row',
+
+					css_classes: {
+						value: ['row'],
+						options: ['row']
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [{
+						type: 'col',
+						icon: 'view_column',
+						title: 'Column'
+					}],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2'
+					},
+					config_options: {}
+				},
+				col: {
+					id: '',
+					title: 'Column',
+					description: 'Column',
+					type: 'col',
+
+					css_classes: {
+						value: ['col-md-12'],
+						options: ['col', 'col-sm', 'col-md', 'col-lg', 'col-xl']
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [
+						{
+							type: 'container',
+							icon: 'check_box_outline_blank',
+							title: 'Container',
+						}, {
+							type: 'text',
+							icon: 'text_fields',
+							title: 'Text',
+						}, {
+							type: 'datatable',
+							icon: 'table_view',
+							title: 'Datatable',
+						}, {
+							type: 'form',
+							icon: 'edit_note',
+							title: 'Form',
+						}, {
+							type: 'liquid',
+							icon: 'edit_note',
+							title: 'Liquid',
+						}, {
+							type: 'header',
+							icon: 'title',
+							title: 'Header',
+						}, {
+							type: 'image',
+							icon: 'image',
+							title: 'Image',
+						}
+					],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2'
+					},
+					config_options: {}
+				},
+				text: {
+					id: '',
+					title: 'Text',
+					description: 'Text',
+					type: 'text',
+
+					css_classes: {
+						value: [],
+						options: []
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2'
+					},
+					config_options: {}
+				},
+				header: {
+					id: '',
+					title: 'Header',
+					description: 'Header',
+					type: 'header',
+
+					css_classes: {
+						value: [],
+						options: []
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2'
+					},
+					config_options: {}
+				},
+				image: {
+					id: '',
+					title: 'Image',
+					description: 'Image',
+					type: 'image',
+
+					css_classes: {
+						value: [],
+						options: []
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2',
+						img_src: '',
+						img_width: '',
+						img_height: ''
+					},
+					config_options: {}
+				},
+				liquid: {
+					id: '',
+					title: 'Liquid',
+					description: 'Liquid',
+					type: 'liquid',
+
+					css_classes: {
+						value: [],
+						options: []
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2'
+					},
+					config_options: {}
+				},
+				datatable: {
+					id: '',
+					title: 'Datatable',
+					description: 'Datatable',
+					type: 'datatable',
+
+					css_classes: {
+						value: [],
+						options: []
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2'
+
+					},
+					config_options: {}
+				},
+				form: {
+					id: '',
+					title: 'Form',
+					description: 'form',
+					type: 'form',
+
+					css_classes: {
+						value: [],
+						options: []
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						css_classes: '',
+						form_id: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2'
+					},
+					config_options: {}
+				},
+				widget: {
+					id: '',
+					title: 'Widget',
+					description: 'Widget',
+					type: 'widget',
+
+					css_classes: {
+						value: [],
+						options: []
+					},
+					css_styles: {
+						value: [],
+						options: this.styleOptions
+					},
+					allowable_children: [],
+					children: [],
+					content: '',
+					parent_id: '',
+					config: {
+						widget_id: '',
+						options: `function execute(model) {
+    return {};
+}`,
+						css_classes: '',
+						task_id: '',
+						target_id: '',
+						type: 'static',
+						form_id: '',
+						name: '',
+						content: '',
+						grid: {
+							xs: '',
+							sm: '',
+							md: '',
+							lg: '',
+							xl: ''
+						},
+						header_tag: 'h2'
+
+					},
+					config_options: {}
+				},
+			},
+			snippets: [{
+				label: 'Components',
+				list: [{
+					label: 'FC Button',
+					snippet: '<mdui-button variant="filled">Button</mdui-button>',
+					documentation: ''
+				},
+				{
+					label: 'FC Checkbox',
+					snippet: '<mdui-checkbox checked>Checkbox</mdui-checkbox>',
+					documentation: 'Checkboxes allow users to select one or more options from a set. Each checkbox can toggle between checked and unchecked states.'
+				},
+				{
+					label: 'FC Card',
+					snippet: '<mdui-card variant="filled" style="width: 200px;height: 124px"></mdui-card>',
+					documentation: 'Cards are versatile components that serve as containers for content and actions about a single subject.'
+				},
+				{
+					label: 'FC Radio',
+					snippet: `
+							<mdui-radio-group value="chinese">
+  <mdui-radio value="chinese">Chinese</mdui-radio>
+  <mdui-radio value="english">English</mdui-radio>
+</mdui-radio-group>`,
+					documentation: 'The radio group component is designed for selecting a single option from a set of options.'
+				},
+				{
+					label: 'FC Switch',
+					snippet: '<mdui-switch checked></mdui-switch>',
+					documentation: 'The Switch component is utilized to toggle the state of a single setting between on and off.'
+				},
+				{
+					label: 'FC Slider',
+					snippet: '<mdui-slider value="50"></mdui-slider>',
+					documentation: 'Sliders provide a way for users to select from a range of values.'
+				},
+				{
+					label: 'FC List',
+					snippet: `<mdui-list>
+  <mdui-list-subheader>Subheader</mdui-list-subheader>
+  <mdui-list-item>Item 1</mdui-list-item>
+  <mdui-list-item>Item 2</mdui-list-item>
+</mdui-list>`,
+					documentation: 'A List is a vertical arrangement of items that can contain text or images.'
+				},
+				{
+					label: 'FC Collapse',
+					snippet: `<mdui-list>
+  <mdui-collapse accordion>
+    <mdui-collapse-item>
+      <mdui-list-item slot="header" icon="near_me">Item 1</mdui-list-item>
+      <div style="margin-left: 2.5rem">
+        <mdui-list-item>Item 1 - subitem</mdui-list-item>
+      </div>
+    </mdui-collapse-item>
+    <mdui-collapse-item>
+      <mdui-list-item slot="header" icon="near_me">Item 2</mdui-list-item>
+      <div style="margin-left: 2.5rem">
+        <mdui-list-item>Item 2 - subitem</mdui-list-item>
+      </div>
+    </mdui-collapse-item>
+  </mdui-collapse>
+</mdui-list>`,
+					documentation: 'Collapse panels are utilized to group and conceal complex content areas, enhancing page organization.'
+				},
+				{
+					label: 'FC Tabs',
+					snippet: `<mdui-tabs value="tab-1">
+  <mdui-tab value="tab-1">Tab 1</mdui-tab>
+  <mdui-tab value="tab-2">Tab 2</mdui-tab>
+  <mdui-tab value="tab-3">Tab 3</mdui-tab>
+
+  <mdui-tab-panel slot="panel" value="tab-1">Panel 1</mdui-tab-panel>
+  <mdui-tab-panel slot="panel" value="tab-2">Panel 2</mdui-tab-panel>
+  <mdui-tab-panel slot="panel" value="tab-3">Panel 3</mdui-tab-panel>
+</mdui-tabs>`,
+					documentation: 'Tabs are used to group different content or datasets.'
+				}, {
+					label: 'FC Menu',
+					snippet: `<mdui-dropdown>
+  <mdui-button slot="trigger">open dropdown</mdui-button>
+  <mdui-menu>
+    <mdui-menu-item>Item 1</mdui-menu-item>
+    <mdui-menu-item>Item 2</mdui-menu-item>
+  </mdui-menu>
+</mdui-dropdown>`,
+					documentation: ''
+				}, {
+					label: 'FC Datatable',
+					snippet: `<mdui-datatable query-name="DATATABLE"></mdui-datatable>`,
+					documentation: 'Replace DATATABLE with name of a datatable record.'
+				}, {
+					label: 'FC Form',
+					snippet: `<mdui-questionnaire query-name="FORM_ID"></mdui-questionnaire>`,
+					documentation: 'Replace FORM_ID with name of a questinnaire sys_id.'
+				}
+				]
+			}]
+		};
+	},
+
+	// Function to get value from object by path
+	getValueByPath: function (obj, path) {
+		try {
+			// Convert indexes to properties e.g., [property] -> .property
+			path = path.replace(/\[(\w+)\]/g, '.$1');
+			// Strip a leading dot if it exists
+			path = path.replace(/^\./, '');
+			const pathSegments = path.split('.');
+
+			for (let i = 0; i < pathSegments.length; i++) {
+				const key = pathSegments[i];
+				if (key in obj) {
+					obj = obj[key];
+				} else {
+					return undefined; // Return undefined explicitly when the property is not found
+				}
+			}
+			return obj;
+		} catch (err) {
+			return undefined; // Ensure function returns undefined if an error occurs
+		}
+	},
+
+	// Function to replace placeholders with actual values from the object
+	parseTemplate: function (template, obj) {
+		return template.replace(/{{(.*?)}}/g, (match, path) => {
+			const value = this.getValueByPath(obj, path.trim());
+			return value !== undefined ? value : match;
+		});
+	},
+
+	_getCssClasses: function () {
+		return {};
+
+	},
+
+	getUserPreference: function () {
+		var gr = new GlideRecord('sys_user_preference');
+		gr.addEncodedQuery('name=fc_user_preferences^userDYNAMIC90d1921e5f510100a9ad2572f2b477fe');
+		gr.query();
+		if (gr.next()) {
+			var result = JSON.parse(gr.getValue('value'));
+			result.sys_id = gr.getUniqueValue();
+			return result;
+		} else {
+			return null;
+		}
+
+	},
+
+	generateBootstrapSpacingUtilities: function () {
+		const spacingUtilities = [];
+		const spacingValues = [0, 1, 2, 3, 4, 5];
+		const directions = ['t', 'b', 'l', 'r', 'x', 'y'];
+		const propertyTypes = ['m', 'p'];
+
+		for (const propertyType of propertyTypes) {
+			for (const value of spacingValues) {
+				// General classes for margin and padding
+				spacingUtilities.push({
+					class: `${propertyType}-${value}`,
+					description: `Sets all ${propertyType === 'm' ? 'margins' : 'paddings'} of an element to ${value === 0 ? '0' : `${value * 0.25}rem`}.`,
+					example: `<div class='${propertyType}-${value}'>This div has ${value === 0 ? 'no' : `${value * 0.25}rem`} ${propertyType === 'm' ? 'margins' : 'padding'}.</div>`
+				});
+
+				for (const direction of directions) {
+					spacingUtilities.push({
+						class: `${propertyType}${direction}-${value}`,
+						description: `Sets the ${direction === 'x' ? 'left and right' : direction === 'y' ? 'top and bottom' : direction} ${propertyType === 'm' ? 'margin' : 'padding'} of an element to ${value === 0 ? '0' : `${value * 0.25}rem`}.`,
+						example: `<div class='${propertyType}${direction}-${value}'>This div has ${value === 0 ? 'no' : `${value * 0.25}rem`} ${direction === 'x' ? 'horizontal' : direction === 'y' ? 'vertical' : direction} ${propertyType === 'm' ? 'margin' : 'padding'}.</div>`
+					});
+				}
+			}
+		}
+
+		// Sort the classes: first by "m" and "p", then by number
+		spacingUtilities.sort((a, b) => {
+			const [aType, aValue] = a.class.match(/^[mp]|\d+/g);
+			const [bType, bValue] = b.class.match(/^[mp]|\d+/g);
+
+			if (aType === bType) {
+				return parseInt(aValue) - parseInt(bValue);
+			}
+			return aType.localeCompare(bType);
+		});
+
+		return spacingUtilities;
+	},
+
+	/** 
+	 * Type definition for easier identification of this script include.
+	 * @type {string}
+	 */
+	type: 'QuestionnaireRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-18 21:09:24</sys_created_on>
+        <sys_id>fcc270ac97270a14e12c3eb0f053af7c</sys_id>
+        <sys_mod_count>148</sys_mod_count>
+        <sys_name>FCWebAppRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_fcc270ac97270a14e12c3eb0f053af7c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-24 13:16:29</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>fcc270ac97270a14e12c3eb0f053af7c</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-10 19:57:29</sys_created_on>
+        <sys_id>f4e8a63983a05610926492b6feaad32a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-10 19:57:29</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

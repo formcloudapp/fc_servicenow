@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCServiceCatalogRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCServiceCatalogRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for chocies table.
+ * @class
+ * @extends FCRepository
+ */
+var FCServiceCatalogRepository = Class.create();
+FCServiceCatalogRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initialize a new instance of the FCServiceCatalogRepository.
+	 * @constructor
+	 * @param {boolean} overrideACL - Flag to override Access Control List.
+	 */
+	initialize: function (overrideACL) {
+		FCRepository.prototype.initialize.call(this, 'sc_catalog', overrideACL);
+	},
+
+	getTree: function (id) {
+		var catalogs = [];
+		var catalogGr = this.addQuery('active=true' + (id ? ('^sys_id=' + id) : '')).getMultiple();
+		while (catalogGr.next()) {
+			catalogs.push({
+				id: catalogGr.getUniqueValue(),
+				title: catalogGr.getValue('title'),
+				description: catalogGr.getValue('description'),
+				children: this._getCategoryTreeForCatalog(catalogGr.getUniqueValue()),
+				selectable: false
+			});
+		}
+
+
+		return catalogs;
+	},
+
+	_getCategoryTreeForCatalog: function (catalogSysId) {
+		var topLevelCategories = [];
+		var catGr = new FCServiceCategoryRepository(true).addQuery('sc_catalog=' + catalogSysId + '^parentISEMPTY^active=true').getMultiple();
+
+		while (catGr.next()) {
+			var aggr = new GlideAggregate('x_509925_fc_catalog_item');
+			aggr.addEncodedQuery('active=true^category=' + catGr.getUniqueValue());
+			aggr.addAggregate('COUNT');
+			aggr.query();
+			aggr.next();
+
+			topLevelCategories.push({
+				id: catGr.getUniqueValue(),
+				title: catGr.getValue('title'),
+				item_count: aggr.getAggregate('COUNT'),
+				children: this._getNestedCategories(catGr.getUniqueValue()),
+				selectable: true
+			});
+		}
+
+		return topLevelCategories;
+	},
+
+	_getNestedCategories(parentId) {
+		var result = [];
+		var catGr = new GlideRecord('sc_category');
+		if (parentId) {
+			catGr.addQuery('parent', parentId); // Get only children of the given parent
+		} else {
+			catGr.addNullQuery('parent'); // Get top-level categories if no parent is specified
+		}
+		catGr.addActiveQuery();
+		catGr.query();
+
+		while (catGr.next()) {
+			var aggr = new GlideAggregate('x_509925_fc_catalog_item');
+			aggr.addEncodedQuery('active=true^category=' + catGr.getUniqueValue());
+			aggr.addAggregate('COUNT');
+			aggr.query();
+			aggr.next();
+			var category = {
+				id: catGr.getUniqueValue(),
+				title: catGr.getValue('title'),
+				item_count: aggr.getAggregate('COUNT'),
+				children: this._getNestedCategories(catGr.getUniqueValue()),
+				selectable: true
+			};
+			result.push(category);
+		}
+		return result;
+	},
+
+	/** @type {string} The type of the repository. */
+	type: 'FCServiceCatalogRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-29 13:23:30</sys_created_on>
+        <sys_id>90b4933183d85a10926492b6feaad37a</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>FCServiceCatalogRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_90b4933183d85a10926492b6feaad37a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-21 06:13:27</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>90b4933183d85a10926492b6feaad37a</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-05 03:42:31</sys_created_on>
+        <sys_id>52c9598c83a8d210926492b6feaad33b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-05 03:42:31</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

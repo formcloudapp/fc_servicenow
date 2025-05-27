@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+	function initialize() {
+		var model = {
+			condition: true
+		};
+		return model;
+	}
+
+
+	return {
+		initialize: initialize
+	};
+
+})(params);]]></attributes>
+        <base>true</base>
+        <client_scripts><![CDATA[function execute(helpers){
+    function myFunction(){
+        return 'Hello World!';
+    }
+
+    return {
+        myFunction: myFunction
+    };
+}]]></client_scripts>
+        <css>.tab-panel-body{&#13;
+    padding: 20px;&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>recruiting_hiring</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-31 14:13:06</sys_created_on>
+        <sys_id>28e0de2c833f0a10926492b6feaad3c8</sys_id>
+        <sys_mod_count>30</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_28e0de2c833f0a10926492b6feaad3c8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-08 00:07:15</sys_updated_on>
+        <template>[{"id":"parkda","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"p-3\"&gt;\r\n    &lt;h2&gt;Recruiting &amp; Hiring&lt;/h2&gt;\r\n&lt;/div&gt;\r\n&lt;div class=\"container\"&gt;\r\n\t&lt;div class=\"row\"&gt;\r\n\t\t&lt;div class=\"col-md-12\"&gt;\r\n            \r\n        &lt;/div&gt;\r\n\t&lt;/div&gt;\r\n\r\n&lt;/div&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":""},"config_options":{}},{"id":"7vd84","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"p-3\"&gt;\r\n\t&lt;mdui-tabs value=\"tab-1\"&gt;\r\n\t\t&lt;mdui-tab value=\"tab-1\"&gt;Active&lt;/mdui-tab&gt;\r\n\t\t&lt;mdui-tab value=\"tab-2\"&gt;Completed&lt;/mdui-tab&gt;\r\n\r\n\t\t&lt;mdui-tab-panel slot=\"panel\" value=\"tab-1\" class=\"tab-panel-body\"&gt;\r\n\r\n\t\t&lt;/mdui-tab-panel&gt;\r\n\t\t&lt;mdui-tab-panel slot=\"panel\" value=\"tab-2\" class=\"tab-panel-body\"&gt;\r\n\r\n\t\t&lt;/mdui-tab-panel&gt;\r\n\t&lt;/mdui-tabs&gt;\r\n&lt;/div&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":""},"config_options":{}}]</template>
+        <title>Recruiting &amp; Hiring</title>
+        <type>page</type>
+    </x_509925_fc_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>28e0de2c833f0a10926492b6feaad3c8</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 17:21:26</sys_created_on>
+        <sys_id>e4ab077b83dc9210926492b6feaad380</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-04 17:21:26</sys_updated_on>
+        <table>x_509925_fc_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCPageRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCPageRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Repository for interacting with the 'x_509925_fc_page' table.
+ * Extends the Repository class to manage page-specific data retrieval and processing.
+ * @class
+ * @extends FCRepository
+ */
+var FCPageRepository = Class.create();
+
+FCPageRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initializes a new instance of FCPageRepository.
+	 * @constructor
+	 * @param {boolean} overrideACL - Flag to indicate whether to override Access Control List (ACL).
+	 */
+	initialize: function (overrideACL) {
+		this.moduleName = this.moduleName || 'FCPageRepository';
+		FCRepository.prototype.initialize.call(this, new FCConstantUtility().getTableName('page'), overrideACL);
+	},
+
+	getByName: function (name, editMode, params) {
+
+		try {
+			if (!name) {
+				throw new Error('Invalid input: "name" is required.');
+			}
+			this.addQuery('active=true^route=' + name + '^ORsys_id=' + name);
+			var pageGr = this.getSingle();
+
+			if (!pageGr) return null;
+
+			var result = {};
+			var evaluator = new GlideScopedEvaluator();
+			evaluator.putVariable('params', params || {});
+
+
+			var attributes = evaluator.evaluateScript(pageGr, 'attributes');
+			if (!attributes.initialize) throw new Error('Initialize method is not found!');
+			result.attributes = attributes.initialize();
+		} catch (e) {
+
+			result.attributes = {
+				condition: true,
+				params: params,
+				error: {
+					errorCode: new FCLoggerUtility().error(e.message, this.moduleName, arguments.callee.name),
+					message: e.message,
+					stack: e.stack
+				}
+			};
+		}
+
+		result.title = pageGr.getValue('title');
+		result.route = pageGr.getValue('route');
+		result.template = JSON.parse(pageGr.getValue('template') || '[]');
+		result.sys_id = pageGr.getUniqueValue();
+		result.css = pageGr.getValue('css');
+		result.client_scripts = pageGr.getValue('client_scripts');
+		result.is_admin = gs.hasRole('admin');
+		result.is_homepage = pageGr.getDisplayValue('is_homepage') == 'true';
+		result.type = pageGr.getValue('type');
+		result.instance_id = this.generateGUID();
+		result.settings = pageGr.getValue('settings');
+
+        if (result.attributes.condition == false && params.editMode && !result.attributes.error) {
+			var isAdmin = new FCPersonaUtility().isPersona('admin');
+			if (isAdmin) {
+				result.attributes.condition == true;
+			}
+		}
+		return result;
+
+	},
+
+	generateGUID: function () {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+			const r = Math.random() * 16 | 0;
+			const v = c === 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		}).replace(/-/g, '');
+	},
+
+
+	/**
+	 * The type name of the repository.
+	 * @type {string}
+	 */
+	type: 'FCPageRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-01 19:32:23</sys_created_on>
+        <sys_id>cdd9b88b97874e90e12c3eb0f053af06</sys_id>
+        <sys_mod_count>63</sys_mod_count>
+        <sys_name>FCPageRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_cdd9b88b97874e90e12c3eb0f053af06</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-26 17:34:15</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>cdd9b88b97874e90e12c3eb0f053af06</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 14:27:20</sys_created_on>
+        <sys_id>92c36ab7831c9210926492b6feaad334</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-04 14:27:20</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

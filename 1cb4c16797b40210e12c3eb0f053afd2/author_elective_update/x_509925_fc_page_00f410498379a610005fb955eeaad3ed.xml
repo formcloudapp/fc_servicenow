@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="DELETE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+    function initialize() {
+        var model = {
+            condition: true,
+            default_options: {
+                value: 0,
+                table: 'sys_user',
+                query: 'active=true',
+                title: 'Number of Accounts'
+            },
+            options: params
+        };
+
+
+        var aggr = new GlideAggregate(model.options.table || model.default_options.table);
+        aggr.addEncodedQuery(model.options.query || model.default_options.query);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+
+        model.options.value = aggr.getAggregate('COUNT');
+        return model;
+    }
+
+
+    function refreshCount(table, query) {
+        var aggr = new GlideAggregate(table);
+        aggr.addEncodedQuery(query);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+
+        return aggr.getAggregate('COUNT');
+    }
+
+    return {
+        initialize: initialize,
+        refreshCount: refreshCount
+    };
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+
+    function initialize($scope) {
+        helpers.service.reactToSignal('abc', async (message) => {
+
+            const result = await helpers.service.call('refreshCount', [
+                $scope.model.options.table,
+                message.query
+            ], '00f410498379a610005fb955eeaad3ed');
+            $scope.model.options.value = result;
+        })
+    }
+
+
+    return {
+        initialize: initialize
+    };
+}]]></client_scripts>
+        <css/>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>single_score</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-27 00:45:16</sys_created_on>
+        <sys_id>00f410498379a610005fb955eeaad3ed</sys_id>
+        <sys_mod_count>33</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_00f410498379a610005fb955eeaad3ed</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-27 12:10:02</sys_updated_on>
+        <template>[{"id":"mpuv84","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;mdui-card x-init=\"$scope.initialize($scope)\" class=\"d-flex justify-content-center align-items-center flex-column\" variant=\"filled\"\r\n\tstyle=\"width: 100%;height: 100%\"&gt;\r\n\t&lt;h1 x-text=\"$scope.model.options.value\"&gt;&lt;/h1&gt;\r\n\t&lt;span class=\"fw-bold\" x-text=\"$scope.model.options.title\"&gt;&lt;/span&gt;\r\n&lt;/mdui-card&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Single Score</title>
+        <type>widget</type>
+    </x_509925_fc_page>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_page_00f410498379a610005fb955eeaad3ed</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_page"&gt;&lt;x_509925_fc_page action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;add_to_menu&gt;false&lt;/add_to_menu&gt;&lt;attributes&gt;&lt;![CDATA[(function (params) {
+
+    function initialize() {
+        var model = {
+            condition: true,
+            default_options: {
+                value: 0,
+                table: 'sys_user',
+                query: 'active=true',
+                title: 'Number of Accounts'
+            },
+            options: params
+        };
+
+
+        var aggr = new GlideAggregate(model.options.table || model.default_options.table);
+        aggr.addEncodedQuery(model.options.query || model.default_options.query);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+
+        model.options.value = aggr.getAggregate('COUNT');
+        return model;
+    }
+
+
+    function refreshCount(table, query) {
+        var aggr = new GlideAggregate(table);
+        aggr.addEncodedQuery(query);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+
+        return aggr.getAggregate('COUNT');
+    }
+
+    return {
+        initialize: initialize,
+        refreshCount: refreshCount
+    };
+
+})(params);]]&gt;&lt;/attributes&gt;&lt;base&gt;false&lt;/base&gt;&lt;client_scripts&gt;&lt;![CDATA[function execute(helpers) {
+
+    function initialize($scope) {
+        helpers.service.reactToSignal('abc', async (message) =&gt; {
+
+            const result = await helpers.service.call('refreshCount', [
+                $scope.model.options.table,
+                message.query
+            ], '00f410498379a610005fb955eeaad3ed');
+            $scope.model.options.value = result;
+        })
+    }
+
+
+    return {
+        initialize: initialize
+    };
+}]]&gt;&lt;/client_scripts&gt;&lt;css/&gt;&lt;is_homepage&gt;false&lt;/is_homepage&gt;&lt;is_page_template&gt;false&lt;/is_page_template&gt;&lt;route&gt;single_score&lt;/route&gt;&lt;settings&gt;{}&lt;/settings&gt;&lt;sys_class_name&gt;x_509925_fc_page&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-05-27 00:45:16&lt;/sys_created_on&gt;&lt;sys_id&gt;00f410498379a610005fb955eeaad3ed&lt;/sys_id&gt;&lt;sys_mod_count&gt;33&lt;/sys_mod_count&gt;&lt;sys_name/&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_page_00f410498379a610005fb955eeaad3ed&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-27 12:10:02&lt;/sys_updated_on&gt;&lt;template&gt;[{"id":"mpuv84","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&amp;lt;mdui-card x-init=\"$scope.initialize($scope)\" class=\"d-flex justify-content-center align-items-center flex-column\" variant=\"filled\"\r\n\tstyle=\"width: 100%;height: 100%\"&amp;gt;\r\n\t&amp;lt;h1 x-text=\"$scope.model.options.value\"&amp;gt;&amp;lt;/h1&amp;gt;\r\n\t&amp;lt;span class=\"fw-bold\" x-text=\"$scope.model.options.title\"&amp;gt;&amp;lt;/span&amp;gt;\r\n&amp;lt;/mdui-card&amp;gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]&lt;/template&gt;&lt;title&gt;Single Score&lt;/title&gt;&lt;type&gt;widget&lt;/type&gt;&lt;/x_509925_fc_page&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>122966181</payload_hash>
+        <record_name/>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-27 12:10:02</sys_created_on>
+        <sys_id>fea1320d8375e610005fb955eeaad3a7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19711a6528c0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-27 12:10:02</sys_updated_on>
+        <type>Page</type>
+        <update_guid>b6a1320dc575e610256e549a3a87cfa7</update_guid>
+        <update_guid_history>b6a1320dc575e610256e549a3a87cfa7:122966181,a3017a498775e610121b05703cbb3873:635170463,3bf0320da675e6101fdee3cafe1784a3:639821685,7d607a857875e610b29575712f3741aa:635170463,9330f2458475e61076e51d2e1c8692a2:1585194363,28007a452975e610d54d2ed01c12ca2b:265017767,9a082881cef9a610514cb6d972bda184:1709601968,b6c7e08103f9a6104dc920f4f312b9cd:-256460789,0d77a84197f9a6106de516510244d84e:1007267945,3d95ac8d04b9a610223302aaf7d209c3:6861822,5525a04d8cb9a61056b8cfc74ba3b097:-455895802,05746c4dcab9a610d75d9e6d58eb73a5:-1418781385,2483ecc985b9a6108343b50a1a50ec74:527768041,7d82608966b9a6102897067caff40a21:-1723086572,8172e445dbb9a610341d5b10c0efda02:-1186028540,0842280569b9a6109260debb4d375d00:540479230,eacdd405c4b9a610225fd985c5e4bc7d:612971987,e75c98c1eab9a61016a6b65db2dd8606:-1254458836,964c1c0d2d79a610487846f1f2e0c503:1528510488,9e0c90c181b9a610b150dd081cc5dcfa:-1837809508,898a5c011bb9a610119c1b2217d34672:6813233,647ad8cd8079a6109cae685ae0c58bd1:573444004,7b5a948df879a610bf7b7db4792554ee:-1999259154,004a5c01adb9a6103a67b76aae0e2e6d:158383050,ae48d40dc879a610a277928b78359985:1863775698,38f7d40def79a61049de2f226fc26d0b:1536048393,e0e75c4df779a610c907506e09c077e8:392288266,e5c7d44d5b79a610b49e37a873c0ef05:-1594285151,93871c0d6f79a61027026f47c765503c:-833873294,5ae6100d1e79a61050e40794db900cd3:1863775698,05b6900d5279a610894733be3b6ec203:1840122062,988614c9f579a610efa6f6e3280922d4:287333540,89d5dc452379a610a565b3c48009ff46:359762092,0cf410492779a6102359bc2dbab5e4ee:-1899113447</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">e542fe4d8375e610005fb955eeaad33c</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-27 12:12:40</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_page">x_509925_fc_page</sys_db_object>
+        <sys_id>11b2ab6554974c1c87ee9e631ab71590</sys_id>
+        <sys_metadata>00f410498379a610005fb955eeaad3ed</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_page_00f410498379a610005fb955eeaad3ed</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_page_00f410498379a610005fb955eeaad3ed">fea1320d8375e610005fb955eeaad3a7</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-27 12:12:40</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

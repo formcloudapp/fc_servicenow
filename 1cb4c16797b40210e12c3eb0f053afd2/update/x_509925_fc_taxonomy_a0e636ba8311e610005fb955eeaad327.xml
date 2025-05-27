@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_taxonomy">
+    <x_509925_fc_taxonomy action="INSERT_OR_UPDATE">
+        <advance><![CDATA[((current, params) => {
+    let attributes = new FCTaxonomyRepository(true).getAttributes(current, params);
+    attributes.icon = 'work';
+
+    //Get all tasks assigned to my groups
+    let groupIds = [];
+    let groupAggr = new GlideAggregate('sys_user_grmember');
+    groupAggr.addEncodedQuery('user=' + gs.getUserID());
+    groupAggr.groupBy('user');
+    groupAggr.query();
+
+    while(groupAggr.next()){
+        groupIds.push(groupAggr.getUniqueValue());
+    }
+
+    return attributes;
+})(current, params);
+]]></advance>
+        <base>false</base>
+        <condition><![CDATA[((current, params) => {
+    return true;
+})(current, params);]]></condition>
+        <group/>
+        <icon/>
+        <name>Group Tasks</name>
+        <order>20</order>
+        <parent display_value="My Work">1da5169f83012210005fb955eeaad3e5</parent>
+        <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-08 02:30:48</sys_created_on>
+        <sys_id>a0e636ba8311e610005fb955eeaad327</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Group Tasks</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_taxonomy_a0e636ba8311e610005fb955eeaad327</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-08 11:53:55</sys_updated_on>
+        <type>menu_item</type>
+        <url>group_task</url>
+        <url_type>page</url_type>
+    </x_509925_fc_taxonomy>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>a0e636ba8311e610005fb955eeaad327</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-08 11:47:57</sys_created_on>
+        <sys_id>8666f8878399e610005fb955eeaad367</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-08 11:47:57</sys_updated_on>
+        <table>x_509925_fc_taxonomy</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

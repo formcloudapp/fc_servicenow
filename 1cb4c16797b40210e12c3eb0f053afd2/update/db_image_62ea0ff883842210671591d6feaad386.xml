@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="db_image">
+    <db_image action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>Service Portal</category>
+        <format/>
+        <height/>
+        <image>a3fa4b3883442210671591d6feaad3ba</image>
+        <name>x_509925_fc.no_avatar.svg</name>
+        <size_bytes>1307</size_bytes>
+        <sys_class_name>db_image</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 19:32:13</sys_created_on>
+        <sys_id>62ea0ff883842210671591d6feaad386</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>x_509925_fc.no_avatar.svg</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>db_image_62ea0ff883842210671591d6feaad386</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-28 19:32:19</sys_updated_on>
+        <thumbnail/>
+        <width/>
+    </db_image>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color/>
+        <chunk_size_bytes>700000</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/svg+xml</content_type>
+        <file_name>image</file_name>
+        <hash>7de0545fc727ccacb10e1231de10a82393ce2e1389874917e143594736d9b8c3</hash>
+        <image_height/>
+        <image_width/>
+        <size_bytes>1307</size_bytes>
+        <size_compressed>650</size_compressed>
+        <state>available</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 19:32:19</sys_created_on>
+        <sys_id>a3fa4b3883442210671591d6feaad3ba</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2025-02-28 19:32:19</sys_updated_on>
+        <table_name>ZZ_YYdb_image</table_name>
+        <table_sys_id>62ea0ff883842210671591d6feaad386</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAA/w==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="image" sys_id="a3fa4b3883442210671591d6feaad3ba">a3fa4b3883442210671591d6feaad3ba</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 19:32:19</sys_created_on>
+        <sys_id>e3fa4b3883442210671591d6feaad3ba</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>bVS7bhtBDPwV4lJzte9HYLlI70KtugB2LAFW7IsXlj8/Q/KSqEih0ywfwyGXd3fvH8/0eXn5+b5fTnO+fd3trteruyb3+ut5F733O0QsdHo6P5/mfsn97XOhj/PT9dvr537xxKN62n4LXc+P8/Qn6sf55WW/fCk/aqp9ub97+z5P9LhfHmKsHEtzvq/VuxE5R5coxOhi51qcT1SDS4VhaZlCCq617dC8y4G8GksiMyI6BMVCk5VAaUBcI5cooRVFAgdfXYsUhquDS3ZhbDiE6iJ5DsgpmUdDDsfsoVIP/zGlLRhZZiWz6pNukmhzexHhoRT6tRyAaajJ1UAm7niJJbkeOfTuYlq5dDcaiowhAwJV1ie6ETw2DG+uiJLoTuaRjEE3GaRRG954SXktg8yjGXSTMa2Uha5849/qKj4+5A5P455X7toqBopmWmfcl0/c9CoFZw6xuFG5F1f6lD8IM9uhZ06Y3BgEJJylrZ7lvxOS0U3ApaY8JVmYqktjxSh9lUutsgbwRGGt7WBc3Bt0KpnA1ehwFUplvFOoQiUVJYRpyA35IZZalbaPA9K5YOtiIYHW9epJe7ZW6aZvrK32rWqUo5VNJ4JGtwYy6QwORowZ0t9pHi8sABcmbYJXri34xtiilmbw0QUwCgkup7sCEdlhgzzqDnkBoDfJ9oTuMC/fXKqKpx0K4RDGqlHNDvCgfBSJeLuyrDMlrAzeHjggoWAWRdwR3VZzNEPHi/OFk7zGK5R00Qv1gWOSjZRnVtw3LM4yza2H1dz6TOY2PPWgad2CMlmaYfHWaXWU6F+ZpIZiWGYKjR0Sx/HiKeHTEupx2d3fyTfv/jcFzejaGwUAAA==</data>
+        <length>856</length>
+        <position>1</position>
+        <sys_attachment display_value="image" sys_id="a3fa4b3883442210671591d6feaad3ba">a3fa4b3883442210671591d6feaad3ba</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 19:32:19</sys_created_on>
+        <sys_id>67fa4b3883442210671591d6feaad3ba</sys_id>
+    </sys_attachment_doc>
+</record_update>

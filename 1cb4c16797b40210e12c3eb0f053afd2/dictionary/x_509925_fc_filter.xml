@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="aaec8b1b83ef8210926492b6feaad3b7" extends="sys_filter" label="Filter" max_length="40" name="x_509925_fc_filter" type="collection">
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(current, params){&#13;&#10;  return current.getValue('filter');&#13;&#10;})(current, params);" label="Advance" max_length="8000" name="advance" type="script"/>
+    </element>
+</database>

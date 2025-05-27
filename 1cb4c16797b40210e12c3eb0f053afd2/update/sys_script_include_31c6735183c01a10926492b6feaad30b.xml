@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCQuestionnaireRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCQuestionnaireRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * @class
+ * Repository for interacting with the HR Case table in ServiceNow.
+ * @extends FCQuestionnaireRepository
+ */
+var FCQuestionnaireRepository = Class.create();
+FCQuestionnaireRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initializes the QuestionnaireRepository for the Questionnaire table.
+	 * @param {boolean} [overrideACL=false] - Determines whether to use GlideRecord (true) or GlideRecordSecure (false).
+	 */
+	initialize: function (overrideACL) {
+		this.moduleName = 'FCQuestionnaireRepository';
+		var tableName = new FCConstantUtility().getTableName('questionnaire');
+		FCRepository.prototype.initialize.call(this, tableName, overrideACL);
+	},
+
+	getForm: function (formId, targetId, taskId, params) {
+		try {
+			formGr = new FCQuestionnaireRepository(true).getById(formId);
+			if (!formGr) throw new Error(`Form with ID: ${formId} is not found.`);
+
+			//Get form base attributes
+			var formObj = this._getFormAttributes(formGr, formGr.getValue('table'), targetId, taskId, params);
+
+
+			if (gs.nil(formObj) || formObj.options.condition == false) return formObj;
+
+
+			var targetGr = null;
+			var hasTarget = !gs.nil(formObj.target_id);
+			if (hasTarget) {
+				targetGr = new FCRepository(formObj.table, true).getById(formObj.target_id);
+			} else {
+				formObj.is_new_record = true;
+				targetGr = new FCRepository(formObj.table, true).newRecord();
+			}
+
+			//Get all dictionary fields for specified table
+			formObj.dictionaries = {};
+			var dictionaryGr = new FCDictionaryRepository(true).getByTable(formGr.getValue('table'));
+			while (dictionaryGr.next()) {
+				var dictionaryObj = {
+					internal_type: dictionaryGr.getValue('internal_type'),
+				};
+				formObj.dictionaries[dictionaryGr.getValue('element')] = dictionaryObj;
+			}
+
+			if (!formObj.params) formObj.params = params || {};
+			formObj.params.fc_form = {
+				data: formObj.data,
+				options: formObj.options
+			};
+
+
+			formObj.sections = new FCSectionRepository(true).getSections(formObj, targetGr, params);
+
+			//Get extension if there are any
+			if (hasTarget) {
+				new FCCaseExtensionRepository(true).loadExtensionToTarget(formObj, targetGr.getUniqueValue());
+			}
+
+
+			//Get draft if there are any
+			if (formObj.options.draftable) {
+				this._setDraftValues(formObj);
+			}
+			return formObj;
+		} catch (err) {
+			this.throwError(err, this.moduleName, arguments.callee.name);
+		}
+	},
+
+	saveDraft: function (form) {
+		var query = 'user=' + form.user + '^table=' + form.table + '^questionnaire=' + form.questionnaire;
+		if (form.target_id) {
+			query += '^document=' + form.target_id;
+		}
+		var draftGr = new FCDraftRepository()
+			.addQuery(query)
+			.getSingle();
+
+		if (draftGr) {
+			var draftSysId = draftGr.getUniqueValue();
+			draftGr.setValue('json', form.json);
+			draftGr.update();
+			return draftSysId;
+		} else {
+			return new FCDraftRepository().insert(form);
+		}
+	},
+
+	submitForm: function (form) {
+
+		if (gs.nil(form._questionnaire_id)) throw new Error('Form ID is required.');
+		if (gs.nil(form._table)) throw new Error('Table name is required.');
+
+		var questionnaireGr = new FCQuestionnaireRepository(true).getById(form._questionnaire_id);
+		if (!questionnaireGr) throw new Error('Form id: ' + form._questionnaire_id + ' is not found');
+
+		//Validate form
+		var validateResult = this._validate(questionnaireGr, form);
+		if (!validateResult.validation) throw new Error('Validation error: ' + validateResult.message);
+
+		//Perform onSubmit
+		this._onSubmit(questionnaireGr, form);
+		if (form.abort_submission) {
+			return form;
+		}
+
+		//Perform update/insert
+		var updatedForm = this._update(questionnaireGr, form);
+
+		//Close task
+		if (form._task_id && questionnaireGr.getDisplayValue('close_task_on_submit') == 'true') {
+			var taskGr = new FCRepository('x_509925_fc_task', true).getById(form._task_id);
+			if (taskGr) {
+				taskGr.setValue('state', 3);
+				taskGr.update();
+			}
+
+		}
+
+		//Perform submit callback
+		this._submitCallback(questionnaireGr, updatedForm);
+
+		//Delete all drafts
+		if (updatedForm._draftable) {
+			var draftsGr = new FCDraftRepository(true).addQuery('user=' + gs.getUserID() + '^questionnaire=' + form._questionnaire_id).getMultiple();
+			if (draftsGr.getRowCount() > 0) {
+				draftsGr.deleteMultiple();
+			}
+		}
+
+		return updatedForm;
+	},
+
+	cancelForm: function (questionnaireGr, form) {
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('form', form);
+		return evaluator.evaluateScript(questionnaireGr, 'cancel_callback');
+	},
+
+	deleteForm: function (questionnaireGr, form) {
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('form', form);
+		return evaluator.evaluateScript(questionnaireGr, 'delete_callback');
+	},
+
+	_validate: function (questionnaireGr, form) {
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('form', form);
+		return evaluator.evaluateScript(questionnaireGr, 'validation');
+	},
+
+	_onSubmit: function (questionnaireGr, form) {
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('form', form);
+		form = evaluator.evaluateScript(questionnaireGr, 'on_submit');
+	},
+
+	_submitCallback: function (questionnaireGr, form) {
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('form', form);
+		return evaluator.evaluateScript(questionnaireGr, 'submit_callback');
+	},
+
+	_update: function (questionnaireGr, form) {
+
+		var targetGr = new GlideRecord(form._table);
+		if (form._target_id) {
+			targetGr.get(form._target_id);
+			if (gs.nil(targetGr)) throw new Error('Record is not found for id: ' + form._target_id);
+		} else {
+			targetGr.newRecord();
+		}
+
+		var extensionObj = null;
+		for (prop in form) {
+			if (prop && targetGr.hasOwnProperty(prop)) {
+				var field = targetGr.getElement(prop);
+				var ed = field.getED();
+				var t = ed.getInternalType();
+				if (t == 'glide_date_time' && form[prop]) {
+					var dt = new GlideDateTime(form[prop]);
+					var offset = dt.getTZOffset();
+
+					if (offset < 0) {
+						dt.add(offset * -1);
+					} else {
+						dt.add(offset);
+					}
+					targetGr.setValue(prop, dt);
+				} else {
+					if (form[prop] && form[prop].value) {
+						targetGr.setValue(prop, form[prop].value);
+					} else {
+						targetGr.setValue(prop, form[prop]);
+					}
+				}
+			} else if (prop && !targetGr.hasOwnProperty(prop)) {
+				if (!extensionObj) {
+					extensionObj = {};
+				}
+				extensionObj[prop] = form[prop];
+			}
+		}
+
+		if (extensionObj != null) {
+			var extensionGr = new FCCaseExtensionRepository(true).getByTarget(targetGr.getUniqueValue());
+			if (extensionGr) {
+				extensionGr.setValue('data', JSON.stringify(extensionObj));
+				extensionGr.update();
+			} else {
+				extensionObj._target_id = targetGr.getUniqueValue();
+				new FCCaseExtensionRepository(true).insert({
+					request: targetGr.getUniqueValue(),
+					data: JSON.stringify(extensionObj)
+				});
+			}
+		}
+		if (form._target_id) {
+			form.target_id = form._target_id;
+			targetGr.update();
+		} else {
+			form.target_id = targetGr.getUniqueValue();
+			targetGr.insert();
+		}
+
+		return form;
+	},
+
+	_getFormAttributes: function (current, table, target_id, task_id, params) {
+
+		if (target_id) {
+			var gr = new GlideRecord(table);
+			gr.get(target_id);
+
+			if (!gs.nil(gr.getValue('sys_class_name')) && gr.getValue('sys_class_name') != table) {
+				table = gr.getValue('sys_class_name');
+			}
+		}
+		try {
+			var evaluator = new GlideScopedEvaluator();
+			evaluator.putVariable('current', current);
+			evaluator.putVariable('table', table);
+			evaluator.putVariable('target_id', target_id || params?.targetId);
+			evaluator.putVariable('task_id', task_id || params?.taskId);
+			evaluator.putVariable('params', params || {});
+			var result = evaluator.evaluateScript(current, 'attributes');
+			if (!result) {
+				this.throwError(new Error(`Unable to evaulate ${current.getValue('number')} attributes`), current.getValue('number'), 'attributes');
+			}
+			return result;
+		} catch (err) {
+
+			var tempGr = new GlideRecord(new FCConstantUtility().getTableName('questionnaire'));
+			tempGr.newRecord();
+
+			current.setValue('attributes', tempGr.getValue('attributes'));
+
+			var evaluator2 = new GlideScopedEvaluator();
+			evaluator2.putVariable('current', current);
+			evaluator2.putVariable('table', table);
+			evaluator2.putVariable('target_id', target_id || params?.targetId);
+			evaluator2.putVariable('task_id', task_id || params?.taskId);
+			evaluator2.putVariable('params', params || {});
+			var result = evaluator2.evaluateScript(current, 'attributes');
+			result.error = {
+				message: err.message,
+				errorCode: err.errorCode,
+				stack: err.stack
+			};
+			return result;
+		}
+	},
+
+	_setDraftValues: function (formObj) {
+		if (formObj._target_id) {
+			var draftGr = new FCDraftRepository().addQuery('document_id=' + formObj._target_id + 'user=' + gs.getUserID() + '^questionnaire=' + formObj.sys_id).getMultiple();
+		} else {
+			draftGr = new FCDraftRepository().addQuery('user=' + gs.getUserID() + '^questionnaire=' + formObj.sys_id).getMultiple();
+		}
+
+		while (draftGr.next()) {
+			var drafObj = {
+				sys_created_on: {
+					value: draftGr.getValue('sys_created_on'),
+					display_value: draftGr.getDisplayValue('sys_created_on')
+				},
+				json: JSON.parse(draftGr.getValue('json'))
+			};
+			formObj.draft_id = draftGr.getUniqueValue();
+			formObj.drafts.push(drafObj);
+			for (var i = 0; i < formObj.sections.length; i++) {
+				var section = formObj.sections[i];
+				for (var e = 0; e < section.questions.length; e++) {
+					var question = section.questions[e];
+					if (drafObj.json.hasOwnProperty(question.property)) {
+						question.answer = drafObj.json[question.property];
+					}
+				}
+			}
+		}
+	},
+
+	getDefaultAttributes: function (current, table, target_id, task_id, params) {
+		target_id = target_id || params.target_id;
+		task_id = task_id || params.task_id;
+		var result = {
+			sys_id: current.getUniqueValue(),
+			target_id: target_id || params.targetId,
+			type: current.getValue('type'),
+			subtype: current.getValue('subtype'),
+			name: current.getValue('name'),
+			css_classes: current.getValue('css_classes'),
+			show_title: current.getValue('show_title'),
+			table: table,
+			task_id: task_id,
+			json_fields: current.getValue('json_field'),
+			drafts: [],
+			onbefore_submit: current.getValue('onbefore_submit'),
+			assigned_to: '',
+			assignment_group: '',
+			loggedin_user: gs.getUserID(),
+			log: [],
+			data: {},
+			pdf_mappings: {},
+			client_submit_callback: current.getValue('client_submit_callback'),
+			options: {
+				name: current.getValue('name'),
+				show_save: current.getDisplayValue('show_save') == 'true',
+				show_submit: current.getDisplayValue('show_submit') == 'true',
+				submit_label: current.getValue('submit_label'),
+				submit_confirmation_message: current.getValue('submit_confirmation_message'),
+				show_cancel: current.getDisplayValue('show_cancel') == 'true',
+				deleteable: current.getDisplayValue('deleteable') == 'true',
+				condition: true,
+				condition_failed_message: '',
+				draftable: current.getDisplayValue('draftable') == 'true',
+				delete_draft_on_load: current.getDisplayValue('delete_draft_on_load') == 'true',
+				reassignable: current.getDisplayValue('reassignable') == 'true',
+				hide_tab_if_one: true,
+				cancel_label: current.getDisplayValue('cancel_label'),
+				save_label: current.getDisplayValue('save_label'),
+				delete_label: current.getDisplayValue('delete_label'),
+				show_title: current.getDisplayValue('show_title') == 'true',
+				pdf: current.getValue('pdf'),
+				require_esignature: current.getDisplayValue('require_esignature') == 'true',
+				signature_list: JSON.parse(current.getValue('signature_list')),
+				close_task_on_submit: current.getDisplayValue('close_task_on_submit') == 'true',
+				readonly: false
+			}
+		};
+
+		if (task_id) {
+			var taskGr = new FCTaskRepository(null, true).getById(task_id);
+
+			//Make sure only the assigned to user can see the task
+			//If the user is in the same group, then they can see it as readonly
+			if (taskGr.getValue('assigned_to') != gs.getUserID()) {
+				result.options.condition = false;
+				result.options.condition_failed_message = 'You are not authorized to access this resource.';
+			}
+
+			if (taskGr) {
+				result.assigned_to = taskGr.getValue('assigned_to');
+				result.assigned_to_display_value = taskGr.getDisplayValue('assigned_to');
+				result.assignment_group = taskGr.getValue('assignment_group');
+				result.assignment_group_members = [{
+					label: 'Unassign',
+					value: ''
+				}];
+				result.task_class = taskGr.getValue('sys_class_name');
+
+				if (!gs.nil(result.assignment_group)) {
+					var groupMemberGr = new GlideRecord('sys_user_grmember');
+					groupMemberGr.addEncodedQuery('group=' + result.assignment_group);
+					groupMemberGr.query();
+					while (groupMemberGr.next()) {
+						result.assignment_group_members.push({
+							label: groupMemberGr.getDisplayValue('user'),
+							value: groupMemberGr.getValue('user')
+						});
+					}
+				}
+			}
+		}
+
+		if (result.options.require_esignature && result.options.pdf) {
+			try {
+				var util = new global.GeneralPdfUtils();
+				result.pdf_mapping_fields = JSON.parse(util.getFieldType(result.options.pdf));
+				for (let prop in result.pdf_mapping_fields) {
+					result.pdf_mapping_fields[prop] = JSON.parse(result.pdf_mapping_fields[prop]);
+				}
+			} catch (err) {
+				//result.pdf_mapping_fields = err;
+			}
+		}
+
+		return result;
+	},
+
+	getPrefillPdf: function (form) {
+		var questionnaireId = form._questionnaire_id;
+		var taskId = form._task_id;
+		var table = form._table;
+		var params = form._params;
+		var targetId = form._target_id;
+		var pdf = form._pdf;
+		var questionnaireGr = new FCQuestionnaireRepository(true).getById(questionnaireId);
+		if (questionnaireGr) {
+
+			// if (taskId) {
+			// 	//delete all PDF Draft for this task
+			// 	var existingPdfDraftGr = new GlideRecord('pdf_draft');
+			// 	existingPdfDraftGr.addQuery('document', taskId);
+			// 	existingPdfDraftGr.query();
+			// 	existingPdfDraftGr.deleteMultiple();
+			// }
+
+			// var draftGr = new GlideRecord('pdf_draft');
+			// draftGr.initialize();
+			// draftGr.setValue('table', 'task');
+			// draftGr.setValue('document', taskId);
+			// draftGr.setValue('user', gs.getUserID());
+			// draftGr.setValue('active', true);
+			// var draftId = draftGr.insert();
+
+			var evaluator = new GlideScopedEvaluator();
+			evaluator.putVariable('current', questionnaireGr);
+			evaluator.putVariable('table', table);
+			evaluator.putVariable('task_id', taskId);
+			evaluator.putVariable('target_id', targetId);
+			evaluator.putVariable('params', params || {});
+			var attributeObj = evaluator.evaluateScript(questionnaireGr, 'attributes');
+			var pdfMappings = JSON.stringify(attributeObj.pdf_mappings);
+
+			var fileName = questionnaireGr.getValue('name') + '.pdf';
+
+			var pdfUtil = new sn_pdfgeneratorutils.PDFGenerationAPI;
+			var pdfResult = pdfUtil.fillDocumentFields(attributeObj.pdf_mappings || {}, pdf, 'x_509925_fc_task', taskId, fileName);
+			return {
+				mappings: pdfMappings,
+				taskId: taskId,
+				file_name: fileName,
+				result: pdfResult
+			};
+		}
+		throw new Error('Form ' + questionnaireId + ' not found.');
+	},
+
+	mergeSignature: function (taskId, taskClassName, fileName, boundaries) {
+
+		//Get draft PDF
+		var draftPdfGr = new GlideRecord('pdf_draft');
+		draftPdfGr.addQuery('document', taskId);
+		draftPdfGr.query();
+		if (draftPdfGr.next()) {
+
+			//Get draft attachment
+			var draftPdfAttachmentGr = new FCAttachmentRepository(true).addQuery('table_sys_id=' + draftPdfGr.getUniqueValue()).getSingle();
+			if (!draftPdfAttachmentGr) throw new Error('Draft PDF attachment is not found');
+
+			var signatureGr = new FCSignatureImageRepository(true).addQuery('document=' + taskId).getSingle();
+			if (!signatureGr) throw new Error('Signature record is not found.');
+
+			//Get signature attachment
+			var signatureAttachmentGr = new FCAttachmentRepository(true).addQuery('table_sys_id=' + signatureGr.getUniqueValue()).getSingle();
+			if (!signatureAttachmentGr) throw new Error('Signature Image is not found.');
+
+			var requestor = new sn_pdfgeneratorutils.PdfMergeSignRequestor;
+			requestor.createRequest(draftPdfAttachmentGr.getUniqueValue(), taskClassName, taskId, fileName);
+
+			//Get all coordinates to apply signature
+			boundaries.forEach(function (boundary) {
+
+				//Get proportion for image size vs boundary size
+				var width = parseInt(signatureAttachmentGr.getValue('image_width'));
+				var height = parseInt(signatureAttachmentGr.getValue('image_height'));
+				if (height > boundary.height) {
+					var proportion = boundary.height / height;
+					width = width * proportion;
+					height = height * proportion;
+				}
+				requestor.addSignatureMapping(boundary.pageNumber, boundary.x, boundary.y, width, height, signatureAttachmentGr.getUniqueValue());
+			});
+			var result = requestor.processRequest();
+			gs.info(result);
+			return result;
+		} else {
+			throw new Error('Draft Record is not found.');
+		}
+	},
+
+	/**
+	 * Type definition for easier identification of this script include.
+	 * @type {string}
+	 */
+	type: 'FCQuestionnaireRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-15 16:12:54</sys_created_on>
+        <sys_id>31c6735183c01a10926492b6feaad30b</sys_id>
+        <sys_mod_count>185</sys_mod_count>
+        <sys_name>FCQuestionnaireRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_31c6735183c01a10926492b6feaad30b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-10 13:12:52</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>31c6735183c01a10926492b6feaad30b</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-20 04:28:06</sys_created_on>
+        <sys_id>7cc31daa83599210926492b6feaad3d4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-20 04:28:06</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

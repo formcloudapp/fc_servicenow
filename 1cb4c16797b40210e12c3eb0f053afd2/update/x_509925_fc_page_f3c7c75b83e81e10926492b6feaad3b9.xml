@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+	function initialize() {
+		var model = {
+			condition: true
+		};
+		return model;
+	}
+
+
+	return {
+		initialize: initialize
+	};
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers){
+    function initialize(){
+
+    }
+
+    return {
+        initialize: initialize
+    };
+}]]></client_scripts>
+        <css>.avatar{&#13;
+  background-size: cover;&#13;
+  width: 35px;&#13;
+  height: 35px;&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>fc_avatar</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-15 14:03:28</sys_created_on>
+        <sys_id>f3c7c75b83e81e10926492b6feaad3b9</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_f3c7c75b83e81e10926492b6feaad3b9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-04 13:28:08</sys_updated_on>
+        <template>[{"id":"wkwnnl","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[],"options":null},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"avatar rounded-circle\" :style=\"$scope.options.style ? $scope.options.style: ''\" x-init=\"$scope.initialize()\"&gt;&lt;/div&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>FC Avatar</title>
+        <type>widget</type>
+    </x_509925_fc_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>f3c7c75b83e81e10926492b6feaad3b9</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-15 18:53:55</sys_created_on>
+        <sys_id>164ac02383605e10926492b6feaad3d1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-15 18:53:55</sys_updated_on>
+        <table>x_509925_fc_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

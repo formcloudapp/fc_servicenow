@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+    function initialize() {
+        var model = {
+            condition: true,
+            personas: new FCPersonaUtility().getAllPersonas(),
+            products: [{
+                title: 'test'
+            }],
+            params: params,
+            category_items: [],
+            category_id: params.sc_category,
+            cart: [],
+            breadcrumbs: [],
+            __side: true,
+            catalogs: new FCServiceCatalogRepository(true).getTree(params.catalogId ? params.catalogId : null)
+        };
+        var userId = gs.getUserID();
+        if (params.sysId) {
+            model.catalog_item = new FCServiceCatalogItemRepository(true).getFormById(params.sysId);
+        }
+        if (model.category_id) {
+            var itemsGr = new FCServiceCatalogItemRepository(true).getActiveByCategory(model.category_id);
+            while (itemsGr.next()) {
+                var image = itemsGr.getValue('picture');
+                model.category_items.push({
+                    id: itemsGr.getUniqueValue(),
+                    name: itemsGr.getValue('name'),
+                    image: gs.nil(image) ? null : `${gs.getProperty('glide.servlet.uri')}/sys_attachment.do?sys_id=${image}`,
+                    short_description: itemsGr.getValue('short_description'),
+                    price: {
+                        value: itemsGr.getValue('price'),
+                        display_value: itemsGr.getDisplayValue('price')
+                    },
+                    has_price: parseFloat(itemsGr.getValue('price')) > 0,
+                    form_id: itemsGr.getValue('questionnaire'),
+                    request_method: itemsGr.getDisplayValue('request_method') || 'Request',
+                    favorite: new FCPortalFavoriteRepository()
+                        .addQuery(`user=${userId}^reference_document=${itemsGr.getUniqueValue()}`)
+                        .getSingle() != null
+                });
+            }
+        }
+        return model;
+    }
+
+    function addToFavorite(catItemId) {
+        const userId = gs.getUserID();
+        const existingFavoriteGr = new FCPortalFavoriteRepository()
+            .addQuery(`user=${userId}^reference_document=${catItemId}`)
+            .getSingle();
+
+        if (existingFavoriteGr) {
+            existingFavoriteGr.deleteRecord();
+            return {
+                favorite: false,
+                message: 'Favorite removed successfully!'
+            };
+        } else {
+            const inputObj = {
+                user: userId,
+                reference_table: new FCConstantUtility().getTableName('catalog_item'),
+                reference_document: catItemId
+            }
+
+            new FCPortalFavoriteRepository().insert(inputObj);
+            return {
+                favorite: true,
+                message: 'Favorite added successfully!'
+            };
+        }
+    }
+
+    return {
+        initialize: initialize,
+        addToFavorite: addToFavorite
+    };
+
+})(params);]]></attributes>
+        <base>true</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+
+    async function addToFavorite(catItem){
+        const result = await helpers.service.call('addToFavorite', [catItem.id]);
+        catItem.favorite = result.favorite;
+        helpers.service.snackbar(result.message);
+    }
+
+    function openDialog() {
+        const dialog = document.getElementById("productDetailDialog");
+        dialog.open = true;
+    }
+
+    function closeDialog() {
+        const dialog = document.getElementById("productDetailDialog");
+        dialog.open = false;
+        helpers.model.__side = true;
+    }
+
+    function openCart() {
+        const dialog = document.getElementById("cart");
+        dialog.open = true;
+    }
+
+    function closeCart() {
+        const dialog = document.getElementById("cart");
+        dialog.open = false;
+    }
+
+    function handleImageError(element, item) {
+        element.error = true;
+        item._hasError = true;
+    }
+
+    function initTree(model) {
+        if (model.params.sc_category) {
+            localStorage.setItem('active_category', model.params.sc_category);
+            model.breadcrumbs = findBreadcrumbPath(model.catalogs, model.params.sc_category);
+        }
+
+        model.catalogs = updateItemCount(model.catalogs);
+        initStateRecursive(model.catalogs)
+    }
+
+    function findBreadcrumbPath(data, categoryId, path = []) {
+        // Iterate through each item in the data
+        for (const item of data) {
+            // Create a new path entry with the current item's title and id
+            const newPath = [...path, { title: item.title, id: item.id, isLast: false }];
+
+            // Check if the current item is the one we're looking for
+            if (item.id === categoryId) {
+                // Mark the found item as isLast: true
+                newPath[newPath.length - 1].isLast = true;
+                return newPath;  // Return the path if the item is found
+            }
+
+            // If the item has children, recurse down
+            if (item.children && item.children.length) {
+                const result = findBreadcrumbPath(item.children, categoryId, newPath);
+                if (result) {
+                    return result;  // If the item is found in the subtree, return the result
+                }
+            }
+        }
+        // Return null if no item is found
+        return null;
+    }
+
+
+    function updateItemCount(nodes) {
+        // Recursive function to traverse and update item counts
+        function traverseAndUpdate(node) {
+            // Start with the node's own item_count, converted to an integer or initialized to 0
+            let currentCount = node.item_count ? parseInt(node.item_count) : 0;
+
+            // Sum up the item_count from all children
+            node.children?.forEach(child => {
+                currentCount += traverseAndUpdate(child); // Add the item_count from each child
+            });
+
+            // Update the node's item_count with the total sum
+            node.item_count = currentCount;
+
+            // Return the total count for this node, including all descendants
+            return currentCount;
+        }
+
+        // Iterate over each root node and update it
+        nodes.forEach(node => traverseAndUpdate(node));
+
+        return nodes;
+    }
+
+
+    function initStateRecursive(cats) {
+        cats.forEach(cat => {
+            if (localStorage.getItem('category_' + cat.id) === 'open' && cat.children && cat.children.length > 0) {
+                cat.showChildren = true;
+            } else {
+                cat.showChildren = false;
+            }
+
+            if (localStorage.getItem('active_category') == cat.id) {
+                cat._active = true;
+            } else {
+                cat._active = false;
+            }
+
+            if (cat.children && cat.children.length > 0) {
+                initStateRecursive(cat.children);
+            }
+        });
+    }
+
+    function lookupCategory(categoryId) {
+        localStorage.setItem('active_category', categoryId);
+        helpers.service.search({
+            sc_category: categoryId
+        });
+    }
+
+    function gotoUrl(url) {
+        helpers.service.navigate(url);
+    }
+
+    function addToCart(newItem) {
+        if (!localStorage.getItem('__cart')) {
+            localStorage.setItem('__cart', JSON.stringify('[]'));
+        }
+
+        let cart = Array.from(JSON.parse(localStorage.getItem('__cart')));
+
+        console.log(Array.isArray(cart));
+        let cartItem = cart.find(item => item.id == newItem.id);
+        if (cartItem) {
+            let currentCount = cartItem.count ? cartItem.count : 1;
+            cartItem.count = currentCount;
+        } else {
+            newItem.count = 1;
+            cart.push(newItem);
+        }
+        helpers.model.cart = cart;
+        localStorage.setItem('__cart', JSON.stringify(cart));
+        helpers.service.snackbar('Item added to cart.');
+    }
+
+    function removeFromCart(item) {
+        helpers.model.cart = helpers.model.cart.filter((cartItem) => cartItem.id != item.id);
+        helpers.service.snackbar('Item removed to cart.');
+    }
+
+    function renderCategory(child) {
+
+        var html = '';
+        if (child.children && child.children.length > 0) {
+            html += `<div class="d-flex align-items-center">
+                <mdui-button @click="$scope.lookupCategory('${child.id}')" :class="${child._active} ? 'active' : ''" full-width class="flex-grow-1 category-tree-button" variant="text">
+                    <span  class="text-truncate" style="max-width: 250px;">${child.title}</span>
+                    &nbsp;&nbsp;(<span>${child.item_count}</span>)
+                </mdui-button>
+                <button class="expand-collapse-btn" @click="$scope.toggleCategory(child)">
+                    <span x-show="!child.showChildren">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 12h6" />
+                            <path d="M12 9v6" />
+                            <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
+                        </svg>
+                    </span>
+                    <span x-show="child.showChildren">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-minus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 12h6" />
+                            <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                        </svg>
+                    </span>
+                </button>
+            </div>
+            <ul x-show="child.showChildren" x-transition>`; // Open the list here
+            child.children.forEach(subChild => {
+                html += `<li  x-show="${subChild.item_count > 0}">${this.renderCategory(subChild)}</li>`; // Recursive call
+            });
+            html += `</ul>`; // Close the list here
+        } else {
+            html += `<mdui-button @click="$scope.lookupCategory('${child.id}')" :class="${child._active} ? 'active' : ''" full-width class="flex-grow-1 category-tree-button" variant="text">
+                        <span class="text-truncate" style="max-width: 250px;">${child.title}</span>
+                        &nbsp;&nbsp;(<span>${child.item_count}</span>)
+                    </mdui-button>`;
+        }
+
+        return html;
+    }
+
+
+    function toggleCategory(category) {
+        category.showChildren = !category.showChildren;
+
+        // Save state to localStorage
+        if (category.showChildren) {
+            localStorage.setItem('category_' + category.id, 'open');
+        } else {
+            localStorage.removeItem('category_' + category.id);
+        }
+    }
+
+    function toggleAll(nodeList, shouldShow) {
+        nodeList.forEach(node => {
+            // Set the showChildren property based on shouldShow parameter
+            node.showChildren = shouldShow;
+            // Save state to localStorage
+            if (shouldShow) {
+                localStorage.setItem('category_' + node.id, 'open');
+            } else {
+                localStorage.removeItem('category_' + node.id);
+            }
+
+            // If this node has children, recurse into them
+            if (node.children && node.children.length > 0) {
+                toggleAll(node.children, shouldShow);
+            }
+        });
+    }
+
+    return {
+        initTree: initTree,
+        addToCart: addToCart,
+        removeFromCart: removeFromCart,
+        gotoUrl: gotoUrl,
+        renderCategory: renderCategory,
+        toggleCategory: toggleCategory,
+        lookupCategory: lookupCategory,
+        openDialog: openDialog,
+        closeDialog: closeDialog,
+        handleImageError: handleImageError,
+        toggleAll: toggleAll,
+        openCart: openCart,
+        closeCart: closeCart,
+        addToFavorite: addToFavorite
+    };
+}]]></client_scripts>
+        <css>.dark-theme .product-container{&#13;
+    height: 350px;&#13;
+    min-width: 300px;&#13;
+    background-color: var(--sys-background);&#13;
+    color: var(--sys-on-surface-container);&#13;
+}&#13;
+&#13;
+.light-theme .product-container{&#13;
+    height: 350px;&#13;
+    min-width: 300px;&#13;
+    background-color: var(--sys-surface-container-lowest);&#13;
+    color: var(--sys-on-surface-container);&#13;
+}&#13;
+.product-image-container{&#13;
+    max-height:200px;&#13;
+    max-width:100%;&#13;
+    overflow:hidden !important;&#13;
+    display: flex;&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    height: 100%;&#13;
+}&#13;
+&#13;
+#target_4sk6wp{&#13;
+    position: sticky !important;&#13;
+    top: -20px;&#13;
+    z-index: 2;&#13;
+    background-color: var(--sys-surface);&#13;
+}&#13;
+.expand-collapse-btn{&#13;
+    border: none;&#13;
+    cursor: pointer;&#13;
+    stroke: var(--sys-primary);&#13;
+    margin-right: 3px;&#13;
+    background: transparent;&#13;
+}&#13;
+.catalog-list-container{&#13;
+    min-width: 300px;&#13;
+    position: sticky;&#13;
+    height: 100%;&#13;
+    /* max-height: calc(100vh - 158px);&#13;
+    overflow: auto; */&#13;
+}&#13;
+.catalog-category-list, .catalog-category-list ul{&#13;
+    list-style: none;&#13;
+    padding-left: 25px;&#13;
+}&#13;
+&#13;
+.catalog-list-container mdui-button::part(button) {&#13;
+  justify-content: start;&#13;
+}&#13;
+&#13;
+.category-tree-button.active{&#13;
+    color: var(--sys-error) !important;&#13;
+}&#13;
+&#13;
+.breadcrumbs {&#13;
+    padding: 10px;&#13;
+    list-style: none;&#13;
+    display: flex;&#13;
+    stroke: var(--sys-on-surface-container);&#13;
+}&#13;
+.breadcrumbs li {&#13;
+    margin-right: 10px;&#13;
+}&#13;
+.breadcrumbs li:not(:last-child)::after {&#13;
+    margin-left: 10px;&#13;
+}&#13;
+&#13;
+.item-count-tick{&#13;
+        background-color: var(--sys-secondary-container);&#13;
+    padding: 2px 8px;&#13;
+    border-radius: 5px;&#13;
+    color: var(--sys-on-secondary-container);&#13;
+}&#13;
+#cart{&#13;
+    --shape-corner: 0px;&#13;
+}&#13;
+.cart-button{&#13;
+    border: 0;&#13;
+    background-color: transparent;&#13;
+    cursor: pointer;&#13;
+}&#13;
+&#13;
+.cart-button:hover span{&#13;
+        stroke: var(--sys-primary) !important;&#13;
+}&#13;
+&#13;
+.item-container{&#13;
+    min-height: 400px;&#13;
+}&#13;
+&#13;
+ul.catalog-category-list li {&#13;
+    background-color: var(--sys-secondary-container);&#13;
+    margin-bottom: 1px;&#13;
+    border-radius: 0;&#13;
+    padding: 5px;&#13;
+}&#13;
+&#13;
+.catalog-item-image{&#13;
+    width: 100%;&#13;
+    max-width: 100%;&#13;
+    max-height: 100%;&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>service_catalog</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>davidg</sys_created_by>
+        <sys_created_on>2024-08-26 00:31:10</sys_created_on>
+        <sys_id>421ec5fc83501610926492b6feaad324</sys_id>
+        <sys_mod_count>597</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_421ec5fc83501610926492b6feaad324</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-13 12:35:08</sys_updated_on>
+        <template>[{"id":"8bmr5f","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div&gt;\n\t&lt;mdui-navigation-drawer id=\"cart\" placement=\"right\" modal close-on-esc close-on-overlay-click contained&gt;\n\t\t&lt;mdui-button-icon icon=\"close\" class=\"m-2\" @click=\"$scope.closeCart()\"&gt;&lt;/mdui-button-icon&gt;\n\n\t\t&lt;div class=\"p-3\"&gt;\n\t\t\t&lt;h5&gt;Shopping Cart&lt;/h5&gt;\n\t\t\t&lt;span x-text=\"JSON.stringify($scope.model.cart)\"&gt;&lt;/span&gt;\n\t\t&lt;/div&gt;\n\t&lt;/mdui-navigation-drawer&gt;\n\t&lt;div class=\"d-flex breadcrumbs\"&gt;\n\t\t&lt;ul class=\" m-0 flex-grow-1 d-flex\"&gt;\n\t\t\t&lt;li class=\"d-flex align-items-center\"&gt;\n\t\t\t\t&lt;mdui-button variant=\"text\" @click=\"$scope.gotoUrl('?id=service_catalogs')\"&gt;\n\t\t\t\t\tCatalogs\n\t\t\t\t&lt;/mdui-button&gt;\n\t\t\t\t&lt;span class=\"d-flex align-items-center\" style=\"stroke:var(--sys-on-secondary-container);\"\"&gt;\n                    &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-arrow-narrow-right\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\n                        &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\n                        &lt;path d=\"M5 12l14 0\" /&gt;\n                        &lt;path d=\"M15 16l4 -4\" /&gt;\n                        &lt;path d=\"M15 8l4 4\" /&gt;\n                    &lt;/svg&gt;\n                &lt;/span&gt;\n\t\t\t&lt;/li&gt;\n\t\t\t&lt;template x-for=\"crumb in $scope.model.breadcrumbs\"&gt;\n\t\t\t\t&lt;li class=\"d-flex align-items-center\"&gt;\n\t\t\t\t\t&lt;mdui-button variant=\"text\" @click=\"$scope.lookupCategory(crumb.id)\"&gt;\n\t\t\t\t\t\t&lt;span x-text=\"crumb.title\"&gt;&lt;/span&gt;\n\t\t\t\t\t&lt;/mdui-button&gt;\n\n\t\t\t\t\t&lt;template x-if=\"!crumb.isLast\"&gt;\n\t\t\t\t\t\t&lt;span class=\"d-flex align-items-center\" style=\"stroke:var(--sys-on-secondary-container);\"\"&gt;\n                &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-arrow-narrow-right\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\n                    &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\n                    &lt;path d=\"M5 12l14 0\" /&gt;\n                    &lt;path d=\"M15 16l4 -4\" /&gt;\n                    &lt;path d=\"M15 8l4 4\" /&gt;\n                &lt;/svg&gt;\n            &lt;/span&gt;\n\t\t\t\t\t&lt;/template&gt;\n\n\t\t\t\t&lt;/li&gt;\n\n\t\t\t&lt;/template&gt;\n\t\t&lt;/ul&gt;\n\t&lt;/div&gt;\n&lt;/div&gt;\n&lt;div class=\"container catalog-container main-container mt-5\" style=\"position: relative; overflow: hidden\"&gt;\n\t&lt;div class=\"d-flex align-items-center\"&gt;\n\t\t&lt;div class=\"flex-grow-1 d-flex align-items-center\"&gt;\n\t\t\t&lt;fc-widget class=\"flex-grow-1\" widget-id=\"widget_page_header\" options='{\"title\":\"Catalog\"}'&gt;&lt;/fc-widget&gt;\n\t\t\t&lt;mdui-button @click=\"$scope.openDialog()\" variant=\"text\" icon=\"menu\" class=\"mt-5 d-block d-lg-none\"&gt;\n\t\t\t\tCatalogs\n\t\t\t&lt;/mdui-button&gt;\n\t\t&lt;/div&gt;\n\t&lt;/div&gt;\n\t&lt;div class=\"d-flex\"&gt;\n\t\t&lt;div id=\"originalLocation\" class=\"catalog-list-container scroll-container d-none d-lg-block\"&gt;\n\t\t\t&lt;div class=\"d-flex justify-content-end\"&gt;\n\t\t\t\t&lt;mdui-button variant=\"text\" @click=\"$scope.toggleAll($scope.model.catalogs, false)\"&gt;\n\t\t\t\t\t&lt;mdui-icon slot=\"icon\" name=\"remove\"&gt;&lt;/mdui-icon&gt; Collapse All\n\t\t\t\t&lt;/mdui-button&gt;\n\t\t\t\t&lt;mdui-button variant=\"text\" @click=\"$scope.toggleAll($scope.model.catalogs, true)\"&gt;\n\t\t\t\t\t&lt;mdui-icon slot=\"icon\" name=\"add_box\"&gt;&lt;/mdui-icon&gt; Expand All\n\t\t\t\t&lt;/mdui-button&gt;\n\t\t\t&lt;/div&gt;\n\t\t\t&lt;mdui-divider&gt;&lt;/mdui-divider&gt;\n\t\t\t&lt;ul class=\"catalog-category-list\" x-init=\"$scope.initTree($scope.model)\"&gt;\n\t\t\t\t&lt;template x-for=\"category in $scope.model.catalogs\"&gt;\n\t\t\t\t\t&lt;li x-show=\"category.item_count &gt; 0\"&gt;\n\t\t\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\n\t\t\t\t\t\t\t&lt;div class=\"flex-grow-1 fw-bold\"&gt;\n\t\t\t\t\t\t\t\t&lt;span x-text=\"category.item_count\" class=\"item-count-tick\"&gt;&lt;/span&gt;\n\t\t\t\t\t\t\t\t&lt;span x-text=\"category.title\"&gt;&lt;/span&gt;\n\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t&lt;button class=\"expand-collapse-btn\" x-show=\"category.children &amp;&amp; category.children.length &gt; 0\" @click=\"$scope.toggleCategory(category)\"&gt;\n                    &lt;span x-show=\"!category.showChildren\"&gt;\n                        &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-square-plus\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\n                            &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\n                            &lt;path d=\"M9 12h6\" /&gt;\n                            &lt;path d=\"M12 9v6\" /&gt;\n                            &lt;path d=\"M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z\" /&gt;\n                        &lt;/svg&gt;\n                    &lt;/span&gt;\n                    &lt;span x-show=\"category.showChildren\"&gt;\n                        &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-square-rounded-minus\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\n                            &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\n                            &lt;path d=\"M9 12h6\" /&gt;\n                            &lt;path d=\"M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z\" /&gt;\n                        &lt;/svg&gt;\n                    &lt;/span&gt;\n                &lt;/button&gt;\n\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t&lt;ul x-show=\"category.showChildren\" x-transition&gt;\n\t\t\t\t\t\t\t&lt;template x-for=\"child in category.children\"&gt;\n\t\t\t\t\t\t\t\t&lt;li x-show=\"child.item_count &gt; 0\" x-html=\"$scope.renderCategory(child)\"&gt;&lt;/li&gt;\n\t\t\t\t\t\t\t&lt;/template&gt;\n\t\t\t\t\t\t&lt;/ul&gt;\n\t\t\t\t\t&lt;/li&gt;\n\t\t\t\t&lt;/template&gt;\n\t\t\t&lt;/ul&gt;\n\n\t\t&lt;/div&gt;\n\t\t&lt;div class=\"flex-grow-1 item-container\"&gt;\n\t\t\t&lt;div class=\"container p-0\"&gt;\n\t\t\t\t&lt;div class=\"row\"&gt;\n\t\t\t\t\t&lt;template x-for=\"product in $scope.model.category_items\"&gt;\n\t\t\t\t\t\t&lt;div class=\"col\"&gt;\n\t\t\t\t\t\t\t&lt;div class=\"p-3\"&gt;\n\t\t\t\t\t\t\t\t&lt;mdui-card variant=\"filled\" class=\"p-3 w-100 product-container\"&gt;\n\t\t\t\t\t\t\t\t\t&lt;div class=\"d-flex flex-column h-100\"&gt;\n\t\t\t\t\t\t\t\t\t\t&lt;div class=\"d-flex mb-2\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t&lt;span class=\"flex-grow-1 text-truncate fw-bold\" x-text=\"product.name\"&gt;&lt;/span&gt;\n\t\t\t\t\t\t\t\t\t\t\t&lt;span x-show=\"product.has_price\" class=\"ms-2 fw-bold\" x-text=\"`${product.price.display_value}`\"&gt;&lt;/span&gt;\n\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t\t\t\t&lt;div class=\"flex-grow-1\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t&lt;div class=\"product-image-container\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;template x-if=\"product.image &amp;&amp; !product._hasError\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;img x-bind:src=\"product.image\" @error=\"$scope.handleImageError(this, product)\" class=\"catalog-item-image\"&gt;&lt;/img&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;/template&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;template x-if=\"!product.image || product._hasError\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;svg xmlns=\"http://www.w3.org/2000/svg\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tclass=\"icon icon-tabler icon-tabler-photo-off\" width=\"76\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\theight=\"76\" viewBox=\"0 0 24 24\" stroke-width=\"0.5\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tstroke=\"var(--sys-on-surface)\" fill=\"none\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tstroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\" /&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path d=\"M15 8h.01\" /&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\td=\"M7 3h11a3 3 0 0 1 3 3v11m-.856 3.099a2.991 2.991 0 0 1 -2.144 .901h-12a3 3 0 0 1 -3 -3v-12c0 -.845 .349 -1.608 .91 -2.153\" /&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path d=\"M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5\" /&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path d=\"M16.33 12.338c.574 -.054 1.155 .166 1.67 .662l3 3\" /&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;path d=\"M3 3l18 18\" /&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/svg&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;/template&gt;\n\t\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t\t\t\t&lt;div class=\"d-flex\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t&lt;div class=\"flex-grow-1\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;template x-if=\"product.favorite\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;mdui-tooltip content=\"Unfavorite\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;mdui-button-icon icon=\"favorite_filled\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tstyle=\"color: var(--sys-tertiary);\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t@click=\"$scope.addToFavorite(product)\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/mdui-button-icon&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/mdui-tooltip&gt;\n\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;/template&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;template x-if=\"!product.favorite\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;mdui-tooltip content=\"Favorite\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;mdui-button-icon icon=\"favorite_outlined\"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t@click=\"$scope.addToFavorite(product)\"&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/mdui-button-icon&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/mdui-tooltip&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;/template&gt;\n\n\n\t\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t\t\t\t\t&lt;div&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;mdui-button\n\t\t\t\t\t\t\t\t\t\t\t\t\tx-on:click=\"$scope.gotoUrl('?id=request&amp;catItemId=' + product.id + (product.form_id ? ('&amp;formId=' + product.form_id) : ''))\"\n\t\t\t\t\t\t\t\t\t\t\t\t\tvariant=\"outlined\"&gt;&lt;span x-text=\"product.request_method\"&gt;&lt;/span&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;/mdui-button&gt;\n\t\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t\t\t&lt;/mdui-card&gt;\n\t\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t&lt;/template&gt;\n\t\t\t\t&lt;/div&gt;\n\t\t\t&lt;/div&gt;\n\t\t&lt;/div&gt;\n\t&lt;/div&gt;\n&lt;/div&gt;\n\n\n\n&lt;mdui-dialog id=\"productDetailDialog\" fullscreen&gt;\n\t&lt;mdui-button @click=\"$scope.closeDialog()\" slot=\"action\"&gt;Close&lt;/mdui-button&gt;\n\t&lt;div id=\"newLocation\" class=\"h-100 overflow-auto scroll-container catalog-list-container\"&gt;\n\t\t&lt;ul class=\"catalog-category-list\"&gt;\n\t\t\t&lt;template x-for=\"category in $scope.model.catalogs\"&gt;\n\t\t\t\t&lt;li&gt;\n\t\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\n\t\t\t\t\t\t&lt;div class=\"flex-grow-1 fw-bold\"&gt;\n\t\t\t\t\t\t\t&lt;span x-text=\"category.title\"&gt;&lt;/span&gt;\n\t\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t\t&lt;button class=\"expand-collapse-btn\" x-show=\"category.children &amp;&amp; category.children.length &gt; 0\" @click=\"$scope.toggleCategory(category)\"&gt;\n                    &lt;span x-show=\"!category.showChildren\"&gt;\n                        &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-square-plus\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\n                            &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\n                            &lt;path d=\"M9 12h6\" /&gt;\n                            &lt;path d=\"M12 9v6\" /&gt;\n                            &lt;path d=\"M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z\" /&gt;\n                        &lt;/svg&gt;\n                    &lt;/span&gt;\n                    &lt;span x-show=\"category.showChildren\" style=\"stroke: var(--sys-error) !important;\"&gt;\n                        &lt;svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-square-rounded-minus\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"&gt;\n                            &lt;path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/&gt;\n                            &lt;path d=\"M9 12h6\" /&gt;\n                            &lt;path d=\"M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z\" /&gt;\n                        &lt;/svg&gt;\n                    &lt;/span&gt;\n                &lt;/button&gt;\n\t\t\t\t\t&lt;/div&gt;\n\t\t\t\t\t&lt;ul x-show=\"category.showChildren\" x-transition&gt;\n\t\t\t\t\t\t&lt;template x-for=\"child in category.children\"&gt;\n\t\t\t\t\t\t\t&lt;li x-html=\"$scope.renderCategory(child)\"&gt;&lt;/li&gt;\n\t\t\t\t\t\t&lt;/template&gt;\n\t\t\t\t\t&lt;/ul&gt;\n\t\t\t\t&lt;/li&gt;\n\t\t\t&lt;/template&gt;\n\t\t&lt;/ul&gt;\n\t&lt;/div&gt;\n\n&lt;/mdui-dialog&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}},{"id":"zvt8is","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Service Catalog</title>
+        <type>page</type>
+    </x_509925_fc_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>421ec5fc83501610926492b6feaad324</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 17:18:42</sys_created_on>
+        <sys_id>200b433783dc9210926492b6feaad364</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-04 17:18:42</sys_updated_on>
+        <table>x_509925_fc_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

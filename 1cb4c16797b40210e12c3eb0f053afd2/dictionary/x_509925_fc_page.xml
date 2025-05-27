@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="e822069a979b4ed0e12c3eb0f053afa0" extends="sys_metadata" label="Page" max_length="40" name="x_509925_fc_page" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Base" max_length="40" name="base" type="boolean"/>
+        <element label="Route" max_length="500" name="route" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Page" sequence="1" value="page"/>
+                <element inactive_on_update="false" label="Widget" sequence="2" value="widget"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Add To Menu" max_length="40" name="add_to_menu" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element default="[]" label="Template" max_length="8000" name="template" type="string_full_utf8"/>
+        <element default="{}" label="Settings" max_length="8000" name="settings" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true" default="(function (params) {&#13;&#10;&#13;&#10;    function initialize() {&#13;&#10;        var model = {&#13;&#10;            condition: true,&#13;&#10;            default_options: {&#13;&#10;                title: 'Number of Accounts'&#13;&#10;            },&#13;&#10;            options: params&#13;&#10;        };&#13;&#10;        return model;&#13;&#10;    }&#13;&#10;&#13;&#10;    return {&#13;&#10;        initialize: initialize,&#13;&#10;    };&#13;&#10;&#13;&#10;})(params);" label="Attributes" max_length="8000" name="attributes" type="script"/>
+        <element attributes="edge_encryption_enabled=true" default="function execute(helpers){&#13;&#10;    function myFunction(){&#13;&#10;        return 'Hello World!';&#13;&#10;    }&#13;&#10;&#13;&#10;    return {&#13;&#10;        myFunction: myFunction&#13;&#10;    };&#13;&#10;}" label="Client Scripts" max_length="8000" name="client_scripts" type="script"/>
+        <element attributes="edge_encryption_enabled=true" label="Is Page Template" max_length="40" name="is_page_template" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Is Homepage" max_length="40" name="is_homepage" type="boolean"/>
+        <element label="Title" max_length="255" name="title" type="string"/>
+        <element label="CSS" max_length="8000" name="css" type="string_full_utf8"/>
+    </element>
+</database>

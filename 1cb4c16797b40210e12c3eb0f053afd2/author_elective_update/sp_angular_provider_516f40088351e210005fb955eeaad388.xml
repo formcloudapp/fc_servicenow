@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
+    <sp_angular_provider action="DELETE">
+        <name>fcBarChart</name>
+        <script><![CDATA[function fcBarChart() {
+    return {
+        template: '',
+        restrict: 'E',
+        replace: true,
+        scope: {
+
+        },
+		link: function(scope){
+			
+		},
+        controller: function($scope) {
+
+        }
+    };
+}]]></script>
+        <sys_class_name>sp_angular_provider</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-29 01:19:08</sys_created_on>
+        <sys_id>516f40088351e210005fb955eeaad388</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>fcBarChart</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sp_angular_provider_516f40088351e210005fb955eeaad388</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-29 01:19:08</sys_updated_on>
+        <type>directive</type>
+    </sp_angular_provider>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>sp_angular_provider_516f40088351e210005fb955eeaad388</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_angular_provider"&gt;&lt;sp_angular_provider action="INSERT_OR_UPDATE"&gt;&lt;name&gt;fcBarChart&lt;/name&gt;&lt;script&gt;&lt;![CDATA[function fcBarChart() {
+    return {
+        template: '',
+        restrict: 'E',
+        replace: true,
+        scope: {
+
+        },
+		link: function(scope){
+			
+		},
+        controller: function($scope) {
+
+        }
+    };
+}]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sp_angular_provider&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-04-29 01:19:08&lt;/sys_created_on&gt;&lt;sys_id&gt;516f40088351e210005fb955eeaad388&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;fcBarChart&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_angular_provider_516f40088351e210005fb955eeaad388&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-04-29 01:19:08&lt;/sys_updated_on&gt;&lt;type&gt;directive&lt;/type&gt;&lt;/sp_angular_provider&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1384356568</payload_hash>
+        <record_name>fcBarChart</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-29 01:19:08</sys_created_on>
+        <sys_id>db2050088351e210005fb955eeaad390</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1967f2059370000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-29 01:19:08</sys_updated_on>
+        <type>Widget Angular Provider</type>
+        <update_guid>df2050086651e21014599c065a62958f</update_guid>
+        <update_guid_history>df2050086651e21014599c065a62958f:-1384356568</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="fcBarChart">9dd05cc48351e210005fb955eeaad3c2</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-29 01:22:01</sys_created_on>
+        <sys_db_object display_value="" name="sp_angular_provider">sp_angular_provider</sys_db_object>
+        <sys_id>257431aaa993451385917587355e9d99</sys_id>
+        <sys_metadata>516f40088351e210005fb955eeaad388</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>fcBarChart</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>sp_angular_provider_516f40088351e210005fb955eeaad388</sys_update_name>
+        <sys_update_version display_value="sp_angular_provider_516f40088351e210005fb955eeaad388">db2050088351e210005fb955eeaad390</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-29 01:22:01</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

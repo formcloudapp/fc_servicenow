@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>resource</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    var fileName = request.pathParams.file;
+    var attachmentGr = new GlideRecord('sys_attachment');
+    attachmentGr.addEncodedQuery('table_sys_id=ed18366c975746d0e12c3eb0f053afce^file_name=' + fileName);
+    attachmentGr.query();
+    if (attachmentGr.next()) {
+        try {
+
+            var attachment = new GlideSysAttachment();
+            var message = attachment.getContent(attachmentGr);
+            if (fileName.indexOf('.js') > 0){
+				response.setContentType('text/javascript');
+			}
+
+            else response.setContentType(('text/css'));
+
+            response.setStatus(200);
+            response.getStreamWriter().writeString(message);
+            return message;
+        } catch (err) {
+            response.setStatus(500);
+            response.setError(err);
+        }
+
+    } else {
+		return 'file not found'
+        //response.setStatus(404);
+    }
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_509925_fc/app/resource/{file}</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/resource/{file}</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>false</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-06 20:35:37</sys_created_on>
+        <sys_id>ed18366c975746d0e12c3eb0f053afce</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>resource</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_ws_operation_ed18366c975746d0e12c3eb0f053afce</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-12-29 07:25:55</sys_updated_on>
+        <web_service_definition display_value="App">32083a2c975746d0e12c3eb0f053afdc</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>ed18366c975746d0e12c3eb0f053afce</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-13 19:25:50</sys_created_on>
+        <sys_id>ee6ef57a83ac5a10926492b6feaad326</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-13 19:25:50</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

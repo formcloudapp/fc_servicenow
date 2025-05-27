@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCUserCriteriaUtil</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCUserCriteriaUtil</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Utility class for handling user criteria operations.
+ * @class
+ */
+var FCUserCriteriaUtil = Class.create();
+FCUserCriteriaUtil.prototype = {
+    /**
+     * Initializes a new instance of FCUserCriteriaUtil.
+     * @constructor
+     */
+    initialize: function() {
+    },
+
+    /**
+     * Gets all user criteria for the specified user.
+     * @param {string} userId - The sys_id of the user.
+     * @returns {Object} All user criteria for the specified user.
+     */
+    getAllUserCriteria: function(userId) {
+        return new sn_uc.UserCriteriaLoader.getAllUserCriteria(gs.getUserID());
+    },
+
+    /**
+     * Checks if a user matches the specified user criteria.
+     * @param {string} userId - The sys_id of the user to check.
+     * @param {Object} userCriterias - The user criteria to match against.
+     * @returns {boolean} True if the user matches the criteria, false otherwise.
+     */
+    userMatches: function(userId, userCriterias) {
+        return sn_uc.UserCriteriaLoader.userMatches(gs.getUserID(), userCriterias);
+    },
+
+    /**
+     * Gets the matching criteria for a specific user.
+     * @param {string} userId - The sys_id of the user.
+     * @param {Object} userCriterias - The user criteria to check.
+     * @returns {Object} The matching criteria for the user.
+     */
+    getMatchingCriteria: function(userId, userCriterias) {
+        return sn_uc.UserCriteriaLoader.getMatchingCriteria(gs.getUserID(), userCriterias);
+    },
+
+    /**
+     * Gets user criteria for a specific user and table.
+     * @param {string} userId - The sys_id of the user.
+     * @param {string} tableName - The name of the table to get criteria for.
+     * @returns {Object} The user criteria for the specified user and table.
+     */
+    getUserCriteria: function(userId, tableName) {
+        return new sn_uc.UserCriteriaLoader.getUserCriteria(gs.getUserID(), tableName);
+    },
+
+    /**
+     * The type name of the class.
+     * @type {string}
+     */
+    type: 'FCUserCriteriaUtil'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-08-24 01:31:00</sys_created_on>
+        <sys_id>31aef244839c1210926492b6feaad37f</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>FCUserCriteriaUtil</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_31aef244839c1210926492b6feaad37f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-23 02:54:13</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>31aef244839c1210926492b6feaad37f</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:02:48</sys_created_on>
+        <sys_id>10ae905383b1d610926492b6feaad3cf</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:02:48</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

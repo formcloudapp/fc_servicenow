@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_taxonomy">
+    <x_509925_fc_taxonomy action="INSERT_OR_UPDATE">
+        <advance><![CDATA[((current, params) => {
+    let tax = new FCTaxonomyRepository(true).getAttributes(current, params);
+    tax.url = 'fc_page_list';
+    tax.icon = 'auto_stories';
+    return tax;
+})(current, params);
+]]></advance>
+        <base>true</base>
+        <condition><![CDATA[((current, params) => {
+    return true;
+})(current, params);]]></condition>
+        <group/>
+        <icon/>
+        <name>Pages</name>
+        <order>40</order>
+        <parent display_value="Administrator">4a94cd0483338610926492b6feaad38b</parent>
+        <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-31 12:06:23</sys_created_on>
+        <sys_id>dce3f96c83bb0a10926492b6feaad39b</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Pages</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_taxonomy_dce3f96c83bb0a10926492b6feaad39b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-28 16:37:30</sys_updated_on>
+        <type>menu_item</type>
+        <url/>
+        <url_type>advance</url_type>
+    </x_509925_fc_taxonomy>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>dce3f96c83bb0a10926492b6feaad39b</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:21:47</sys_created_on>
+        <sys_id>9af2acd783b1d610926492b6feaad341</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:21:47</sys_updated_on>
+        <table>x_509925_fc_taxonomy</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

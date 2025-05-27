@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_graphql_query_broker">
+    <x_509925_fc_graphql_query_broker action="DELETE">
+        <ai_filter>false</ai_filter>
+        <allow_selection>false</allow_selection>
+        <base>false</base>
+        <columns_configs>[{"label":"ID","pin":false,"search":true,"search_name":"sys_id","search_default":false,"sorting":false,"sort_name":"sys_id","sort_default":false,"template":"&lt;span x-text=\"value.toString()\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","search_choices":[],"editable":false,"value":"sys_id","display_type":"value"},{"label":"number","pin":true,"search":true,"search_name":"number","search_default":false,"sorting":false,"sort_name":"number","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"number","search_choices":[],"editable":false,"display_type":"display"},{"label":"short_description","pin":true,"search":true,"search_name":"short_description","search_default":false,"sorting":false,"sort_name":"short_description","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"short_description","search_choices":[],"editable":false,"display_type":"display"}]</columns_configs>
+        <filter_builder><![CDATA[((current, params) => {
+
+    return '';
+
+})(current, params);]]></filter_builder>
+        <filters table="incident">^EQ<item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filters>
+        <gql><![CDATA[function execute(params, configs) {
+    let gql = '';
+    if (configs.schema == 'ootb') {
+        gql = `
+		{
+			GlideRecord_Query{
+				${configs.table}(queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} }) {
+					_rowCount
+					_results ${configs.gql}
+				}
+			}
+		}
+	`;
+    }else{
+		gql = `
+		{
+			${configs.namespace}{
+				${configs.gql_schema}{
+					getMultiple(tableName: "${configs.table}", queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} })
+					{
+						sys_id{
+							value
+						}
+						...on ${configs.namespace}_${configs.gql_schema}_${configs.table}  ${configs.gql}
+					}
+					getCount(tableName: "${configs.table}", queryConditions: "${configs.filters}")
+				}
+			}
+		}
+		`;
+	}
+
+    return gql;
+}]]></gql>
+        <gql_path/>
+        <graphql_schema display_value="Task">286bea0983e45210926492b6feaad396</graphql_schema>
+        <metadata>{}</metadata>
+        <name>active_incident</name>
+        <number>GQL0001017</number>
+        <record_details/>
+        <record_script><![CDATA[function execute(record, service) {
+
+    return {
+        record: record
+    }
+}]]></record_script>
+        <row_count_path/>
+        <schema>custom</schema>
+        <script><![CDATA[((current, params) => {
+	const namespace = gs.getProperty(current.sys_scope.scope + '.graphql_namespace');
+	const gqlSchemaGr = current.graphql_schema.getRefRecord();
+    let datatableConfig = {
+        table: current.getValue('table'),
+        filters: current.getValue('filters'),
+        allow_selection: current.getValue('allow_selection'),
+        gql: current.getValue('gql'),
+        details_template: current.getValue('record_details'),
+		gql_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._results') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getMultiple'),
+        row_count_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._rowCount') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getCount'),
+        data_columns: JSON.parse(current.getValue('columns_configs')),
+		schema: current.getValue('schema'),
+		gql_schema: gqlSchemaGr.getValue('namespace')
+    };
+
+    return datatableConfig;
+
+})(current, params);]]></script>
+        <sys_class_name>x_509925_fc_graphql_query_broker</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-05 12:50:16</sys_created_on>
+        <sys_id>69df3399835a5210926492b6feaad361</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>active_incident</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_graphql_query_broker_69df3399835a5210926492b6feaad361</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-21 17:41:08</sys_updated_on>
+        <table>incident</table>
+    </x_509925_fc_graphql_query_broker>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_graphql_query_broker_69df3399835a5210926492b6feaad361</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_graphql_query_broker"&gt;&lt;x_509925_fc_graphql_query_broker action="INSERT_OR_UPDATE"&gt;&lt;ai_filter&gt;false&lt;/ai_filter&gt;&lt;allow_selection&gt;false&lt;/allow_selection&gt;&lt;base&gt;false&lt;/base&gt;&lt;columns_configs&gt;[{"label":"ID","pin":false,"search":true,"search_name":"sys_id","search_default":false,"sorting":false,"sort_name":"sys_id","sort_default":false,"template":"&amp;lt;span x-text=\"value.toString()\"&amp;gt;&amp;lt;/span&amp;gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","search_choices":[],"editable":false,"value":"sys_id","display_type":"value"},{"label":"number","pin":true,"search":true,"search_name":"number","search_default":false,"sorting":false,"sort_name":"number","sort_default":false,"template":"&amp;lt;span x-text=\"value\"&amp;gt;&amp;lt;/span&amp;gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"number","search_choices":[],"editable":false,"display_type":"display"},{"label":"short_description","pin":true,"search":true,"search_name":"short_description","search_default":false,"sorting":false,"sort_name":"short_description","sort_default":false,"template":"&amp;lt;span x-text=\"value\"&amp;gt;&amp;lt;/span&amp;gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"short_description","search_choices":[],"editable":false,"display_type":"display"}]&lt;/columns_configs&gt;&lt;filter_builder&gt;&lt;![CDATA[((current, params) =&gt; {
+
+    return '';
+
+})(current, params);]]&gt;&lt;/filter_builder&gt;&lt;filters table="incident"&gt;^EQ&lt;item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/&gt;&lt;/filters&gt;&lt;gql&gt;&lt;![CDATA[function execute(params, configs) {
+    let gql = '';
+    if (configs.schema == 'ootb') {
+        gql = `
+		{
+			GlideRecord_Query{
+				${configs.table}(queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} }) {
+					_rowCount
+					_results ${configs.gql}
+				}
+			}
+		}
+	`;
+    }else{
+		gql = `
+		{
+			${configs.namespace}{
+				${configs.gql_schema}{
+					getMultiple(tableName: "${configs.table}", queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} })
+					{
+						sys_id{
+							value
+						}
+						...on ${configs.namespace}_${configs.gql_schema}_${configs.table}  ${configs.gql}
+					}
+					getCount(tableName: "${configs.table}", queryConditions: "${configs.filters}")
+				}
+			}
+		}
+		`;
+	}
+
+    return gql;
+}]]&gt;&lt;/gql&gt;&lt;gql_path/&gt;&lt;graphql_schema display_value="Task"&gt;286bea0983e45210926492b6feaad396&lt;/graphql_schema&gt;&lt;metadata&gt;{}&lt;/metadata&gt;&lt;name&gt;active_incident&lt;/name&gt;&lt;number&gt;GQL0001017&lt;/number&gt;&lt;record_details/&gt;&lt;record_script&gt;&lt;![CDATA[function execute(record, service) {
+
+    return {
+        record: record
+    }
+}]]&gt;&lt;/record_script&gt;&lt;row_count_path/&gt;&lt;schema&gt;custom&lt;/schema&gt;&lt;script&gt;&lt;![CDATA[((current, params) =&gt; {
+	const namespace = gs.getProperty(current.sys_scope.scope + '.graphql_namespace');
+	const gqlSchemaGr = current.graphql_schema.getRefRecord();
+    let datatableConfig = {
+        table: current.getValue('table'),
+        filters: current.getValue('filters'),
+        allow_selection: current.getValue('allow_selection'),
+        gql: current.getValue('gql'),
+        details_template: current.getValue('record_details'),
+		gql_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._results') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getMultiple'),
+        row_count_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._rowCount') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getCount'),
+        data_columns: JSON.parse(current.getValue('columns_configs')),
+		schema: current.getValue('schema'),
+		gql_schema: gqlSchemaGr.getValue('namespace')
+    };
+
+    return datatableConfig;
+
+})(current, params);]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;x_509925_fc_graphql_query_broker&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-12-05 12:50:16&lt;/sys_created_on&gt;&lt;sys_id&gt;69df3399835a5210926492b6feaad361&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;active_incident&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_graphql_query_broker_69df3399835a5210926492b6feaad361&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-01-21 17:41:08&lt;/sys_updated_on&gt;&lt;table&gt;incident&lt;/table&gt;&lt;/x_509925_fc_graphql_query_broker&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1961725610</payload_hash>
+        <record_name>active_incident</record_name>
+        <reverted_from/>
+        <source>8f49701083782210005fb955eeaad3cf</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-05 02:27:09</sys_created_on>
+        <sys_id>1599709083782210005fb955eeaad321</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19603c5fcb80000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-05 02:27:09</sys_updated_on>
+        <type>GraphQL Query Broker</type>
+        <update_guid>e4258be02c1712104a862c56055b2bde</update_guid>
+        <update_guid_history>e4258be02c1712104a862c56055b2bde:-1063957825,82555553d76212107ad0544d64c120c0:2110050005</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="active_incident">0272a9c9836d6250005fb955eeaad3e9</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-14 20:08:19</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_graphql_query_broker">x_509925_fc_graphql_query_broker</sys_db_object>
+        <sys_id>651d03afd3d2469eab41cd923250b1a4</sys_id>
+        <sys_metadata>69df3399835a5210926492b6feaad361</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>active_incident</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_graphql_query_broker_69df3399835a5210926492b6feaad361</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_graphql_query_broker_69df3399835a5210926492b6feaad361">1599709083782210005fb955eeaad321</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 20:08:19</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

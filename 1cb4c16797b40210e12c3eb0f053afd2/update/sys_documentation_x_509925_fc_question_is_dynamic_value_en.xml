@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="is_dynamic_value" label="Is Dynamic Value" language="en" table="x_509925_fc_question">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>is_dynamic_value</element>
+            <help/>
+            <hint/>
+            <label>Is Dynamic Value</label>
+            <language>en</language>
+            <name>x_509925_fc_question</name>
+            <plural>Is Dynamic Values</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2024-06-15 19:46:40</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Is Dynamic Value</sys_name>
+            <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+            <sys_update_name>sys_documentation_x_509925_fc_question_is_dynamic_value_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2024-06-15 19:46:40</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

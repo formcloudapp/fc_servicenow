@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+    function initialize() {
+        let model = {
+            condition: true,
+            incidents: [],
+            _incidents: {},
+            embeddings: [],
+            query: "",
+            result: "",
+            selected: [],
+            active_tab: 'list',
+            list_history: [],
+            readable_query: '',
+            meta_data: new FCDictionaryRepository(true).getMetaData('incident'),
+            params: params
+        };
+
+        var listPref = gs.getUser().getPreference('incident.list.history2');
+        if(listPref){
+            model.list_history = JSON.parse(listPref);
+        }
+
+        if(params.dt_search){
+            model.readable_query = new global.FCGlobalUtility().beautifyEncodedQuery('incident', params.dt_search)
+        }
+        return model;
+    }
+
+   
+
+    function getAllIncidents() {
+        return new FCRepository('incident', true).getMultiple(true);
+    }
+
+    function getAllKnowledges() {
+        return new FCRepository('kb_knowledge', true).addQuery('sys_id=b87334cc83b75210671591d6feaad3a6').getMultiple(true);
+    }
+
+    function getIncidentsById(ids) {
+        const incidents = new FCRepository('incident', true)
+            .addQuery('sys_idIN' + ids)
+            .getMultiple(true);
+        return incidents;
+    }
+
+    function getKnowledgeById(ids) {
+        const incidents = new FCRepository('kb_knowledge', true)
+            .addQuery('sys_idIN' + ids)
+            .getMultiple(true);
+        return incidents;
+    }
+
+    function getVectorSearchResult(searchText) {
+        return '';
+        try {
+            var r = new sn_ws.RESTMessageV2('x_509925_fc.FC AI', 'Search Vector');
+
+            const semanticSearchInput = {
+                prompt: searchText,
+                top_k: 5,
+            };
+            r.setRequestBody(JSON.stringify(semanticSearchInput));
+            r.setEccParameter('skip_sensor', true);
+
+            const response = r.execute();
+            const responseObj = JSON.parse(response.getBody());
+
+            // Safely extract search results. If results is undefined, default to an empty array.
+            const resultsArray = Array.isArray(responseObj) ? responseObj : [];
+            let knowledgePrompt = "";
+
+            if (resultsArray.length > 0) {
+                const knowledgeArticleIds = resultsArray.map((result) => result.document);
+
+                // Fetch corresponding knowledge articles.
+                const knowledgeArticles = knowledgeArticleIds.join(",");
+                const knowledgeGr = new FCRepository('kb_knowledge', true).addQuery('sys_idIN' + knowledgeArticles).getMultiple();
+
+                while (knowledgeGr.next()) {
+                    knowledgePrompt += gs.base64Encode(knowledgeGr.getValue('text'));
+                }
+            }
+
+            return knowledgePrompt;
+        } catch (err) {
+            return err.message;
+        }
+    }
+
+    function updateHistory(history){
+        gs.getUser().savePreference('incident.list.history2', history);
+        return history;
+    }
+
+    return {
+        initialize: initialize,
+        getIncidentsById: getIncidentsById,
+        getAllIncidents: getAllIncidents,
+        getAllKnowledges: getAllKnowledges,
+        getKnowledgeById: getKnowledgeById,
+        getVectorSearchResult: getVectorSearchResult,
+        updateHistory: updateHistory
+    };
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers) {
+
+    function initialize($scope) {
+        const datatableEl = document.querySelector('mdui-datatable');
+
+        datatableEl.addEventListener('selectionChanged', (event) => {
+            $scope.model.list_context = event.detail;
+        });
+
+    }
+
+    function openHistoryDialog(val) {
+        const dialog = document.querySelector(".query-dialog");
+        dialog.open = val;
+    }
+
+    function setQuery(query, prompt) {
+        helpers.service.search({ dt_search: query, prompt: prompt });
+    }
+
+    async function deleteQuery($scope, query, prompt) {
+        $scope.model.list_history = $scope.model.list_history.filter(e => e.query != query || e.prompt != prompt);
+        await helpers.service.call('updateHistory', [JSON.stringify($scope.model.list_history)]);
+    }
+
+    async function embedIncidents() {
+
+        const incidents = await helpers.service.call('getAllIncidents');
+
+        for (const incident of incidents) {
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(
+                    {
+                        text: helpers.service.jsonToNaturalText(incident),
+                        sys_id: incident.sys_id.value,
+                        sys_created_on: convertToUnix(incident.sys_created_on.value),
+                        sys_updated_on: convertToUnix(incident.sys_updated_on.value),
+                        opened_at: convertToUnix(incident.opened_at.value),
+                        resolved_at: convertToUnix(incident.resolved_at.value),
+                        closed_at: convertToUnix(incident.closed_at.value)
+                    }
+                )
+            }
+            await fetch('http://localhost:8001/embed_incident', requestOptions);
+        }
+    }
+
+    async function embedKnowledges() {
+
+        const incidents = await helpers.service.call('getAllKnowledges');
+
+        for (const incident of incidents) {
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(
+                    {
+                        text: helpers.service.jsonToNaturalText(incident),
+                        sys_id: incident.sys_id.value
+                    }
+                )
+            }
+            await fetch('http://localhost:8001/embed_knowledge', requestOptions);
+        }
+
+
+    }
+
+    async function updateHistory($scope, prompt, query) {
+
+        if ($scope.model.list_history.length == 0) {
+            $scope.model.list_history.push({
+                prompt: prompt,
+                query: query
+
+            })
+        } else {
+            if (!$scope.model.list_history.some(ele => ele.prompt.toLowerCase() == prompt.toLowerCase())) {
+                $scope.model.list_history.push({
+                    prompt: prompt,
+                    query: query
+
+                })
+            }
+        }
+
+
+
+        await helpers.service.call('updateHistory', [JSON.stringify($scope.model.list_history)]);
+    }
+
+    function closeTab(selection, $scope) {
+        
+        $scope.model.active_tab = '';
+        $scope.model.selected = $scope.model.selected.filter((element) => {
+            return element.sys_id.value != selection.sys_id.value
+        });
+
+        try {
+
+            setTimeout(() => {
+                if ($scope.model.selected[$scope.model.selected.length - 1]) {
+                    $scope.model.active_tab = $scope.model.selected[$scope.model.selected.length - 1].sys_id.value;
+                } else {
+                    $scope.model.active_tab = 'list';
+                }
+            }, 100);
+
+        } catch (err) {
+            setTimeout(() => {
+                $scope.model.active_tab = 'list';
+            }, 100);
+        }
+    }
+
+    function actionCallback(row) {
+        this.model.active_tab = '';
+        if (!this.model.selected.some(item => item.sys_id.value === row.sys_id.value)) {
+            this.model.selected.push(row);
+        }
+
+        setTimeout(() => {
+            this.model.active_tab = row.sys_id.value;
+        }, 100);
+
+    }
+
+    function convertToUnix(dateStr) {
+
+        if (dateStr == null || dateStr == '' || dateStr == undefined) return 0;
+
+        if (dateStr.includes(" ")) {
+            dateStr = dateStr.replace(" ", "T");
+        }
+
+        const dateObj = new Date(dateStr);
+
+        if (isNaN(dateObj.getTime())) {
+            throw new Error("Invalid date format");
+        }
+
+        return Math.floor(dateObj.getTime() / 1000);
+    }
+
+    /** Extracts incident IDs and the active incident ID from the $scope. */
+    function extractIncidentIds($scope) {
+        let incidentIds = [];
+        let activeIncidentId = null;
+
+        if ($scope.model.active_tab !== "list") {
+            activeIncidentId = $scope.model.active_tab;
+            incidentIds.push(activeIncidentId);
+        } else {
+            // Use an empty array if list_context is undefined.
+            const listContext = Array.isArray($scope.model.list_context)
+                ? $scope.model.list_context
+                : [];
+            incidentIds = listContext.map((context) => context.sys_id.value);
+        }
+        return { incidentIds, activeIncidentId };
+    }
+
+    /** Calls the helper service to fetch incidents by their IDs. */
+    async function fetchIncidentsByIds(incidentIds) {
+        return await helpers.service.call("getIncidentsById", [incidentIds.join(",")]);
+    }
+
+    /** Builds the prompt text for incident details. */
+    function buildIncidentPrompt($scope, incidents) {
+        let prompt = "";
+        if ($scope.model.active_tab != 'list') {
+            const incident = incidents.find(
+                (inc) => inc.sys_id.value === $scope.model.active_tab
+            );
+            if (incident) {
+                prompt += helpers.service.jsonToNaturalText(incident);
+            }
+        }
+        return prompt;
+    }
+
+    /** Performs semantic search to fetch knowledge articles and returns a prompt segment. */
+    async function buildKnowledgePrompt(activeIncidentId, incidents) {
+        // Find the active incident from the incidents array.
+        const activeIncident = incidents.find(
+            (inc) => inc.sys_id.value === activeIncidentId
+        );
+        if (!activeIncident) return "";
+
+        const activeIncidentText = helpers.service.jsonToNaturalText(activeIncident);
+        console.log(activeIncidentText);
+
+        return await helpers.service.call('getVectorSearchResult', [activeIncidentText])
+
+    }
+
+    /** Streams the chat response and updates the UI model accordingly. */
+    async function streamChatResponse(prompt, $scope) {
+        const chatPayload = {
+            input_value: JSON.stringify(prompt),
+            output_type: "chat",
+            input_type: "chat",
+            tweaks: {
+                "Prompt-u3nPb": {},
+                "OllamaModel-XahlT": {},
+                "ChatOutput-OenVA": {},
+                "ChatInput-wE1Gq": {},
+            },
+        };
+
+        const chatOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(chatPayload),
+        };
+        $scope.model.query = '';
+        const chatResponse = await fetch(
+            $scope.model.active_tab != 'list' ? "http://localhost:7860/api/v1/run/722b3a68-8fa5-476e-b0e9-80a72d64ddac?stream=true" : "http://localhost:7860/api/v1/run/f63514af-aa42-40c0-adaa-642994597ede?stream=true",
+            chatOptions
+        );
+
+
+        if (!chatResponse.body) {
+            console.error("ReadableStream not supported in this environment.");
+            await chatResponse.text();
+            return;
+        }
+
+        const reader = chatResponse.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let a = "";
+        let done = false;
+
+        while (!done) {
+            const { value, done: doneReading } = await reader.read();
+            done = doneReading;
+            if (value) {
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split("\n");
+                buffer = lines.pop() || "";
+
+                for (const line of lines) {
+                    if (line.trim() === "") continue;
+                    processStreamLine(line, $scope);
+                }
+
+                // Optionally, scroll the "thinking" element to the bottom.
+                const thinkingElement = document.querySelector(".thinking-wrapper");
+                if (thinkingElement) {
+                    thinkingElement.scrollTop = thinkingElement.scrollHeight;
+                }
+            }
+        }
+
+        // Process any remaining buffered text.
+        helpers.service.hideLoading();
+        buffer += decoder.decode();
+
+        if ($scope.model.active_tab == 'list') {
+
+            let resultQuery = $scope.model.result.replaceAll('<br/>', '');
+            await updateHistory($scope, prompt.question, resultQuery);
+            helpers.service.search({ dt_search: resultQuery, prompt: prompt.question });
+        }
+
+    }
+
+    /** Processes a single line of streaming response. */
+    function processStreamLine(line, $scope) {
+        try {
+            const parsed = JSON.parse(line);
+            if (parsed.event === "token") {
+                if ($scope.model.active_tab != 'list') {
+                    if (!$scope.model._incidents['_' + $scope.model.active_tab]) $scope.model._incidents['_' + $scope.model.active_tab] = '';
+
+
+                    $scope.model._incidents['_' + $scope.model.active_tab] += parsed.data.chunk;
+                    console.log(window.marked);
+                    document.getElementById($scope.model.active_tab).innerHTML = window.marked.parse($scope.model._incidents['_' + $scope.model.active_tab]);
+
+                } else {
+                    $scope.model.result += parsed.data.chunk
+                        .replaceAll("\n", "<br/>")
+                        .replaceAll("<think>", '<div class="thinking scroll-container" style="cursor-pointer;">')
+                        .replaceAll("</think>", "</div>");
+                }
+
+            } else if (parsed.event === "end") {
+                const finalResult = parsed.data.result;
+                if (finalResult && Array.isArray(finalResult.outputs)) {
+                    const knowledgeArticle = finalResult.outputs[0]?.inputs?.input_value;
+                    if (knowledgeArticle) {
+                        $scope.model.knowledgeArticle = knowledgeArticle;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("Error parsing JSON stream:", error);
+        }
+    }
+
+
+    async function search(query, $scope) {
+        if (!isValidQuery(query)) return;
+
+        // Update UI state.
+        $scope.model.show_chat = true;
+        $scope.model.result = "";
+
+        // 1. Extract incident IDs and the active incident (if any).
+        const { incidentIds, activeIncidentId } = extractIncidentIds($scope);
+
+        if ($scope.model.active_tab == 'list') {
+            helpers.service.showLoading();
+        } else {
+            if ($scope.model._incidents)
+                $scope.model._incidents['_show' + $scope.model.active_tab] = true;
+        }
+
+        // 2. Fetch incident details.
+        const incidents = await fetchIncidentsByIds(incidentIds);
+
+        // 3. Build the prompt with incident details.
+        let incidentContext = buildIncidentPrompt($scope, incidents);
+
+        // 4. If a single incident is active, add relevant knowledge articles via semantic search.
+        let knowledgeArticlesContext = btoa('No Related Articles');
+        if (activeIncidentId) {
+            knowledgeArticlesContext = await buildKnowledgePrompt(activeIncidentId, incidents);
+        }
+
+        const obj = {
+            "context": incidentContext ? btoa(incidentContext) : '',
+            "knowledge": knowledgeArticlesContext,
+            "question": query
+        };
+
+
+        await streamChatResponse(obj, $scope);
+
+    }
+
+    /** Validates that the query is a non-empty string. */
+    function isValidQuery(query) {
+        return typeof query === "string" && query.trim() !== "";
+    }
+
+    return {
+        initialize: initialize,
+        embedIncidents: embedIncidents,
+        embedKnowledges: embedKnowledges,
+        search: search,
+        closeTab: closeTab,
+        actionCallback: actionCallback,
+        updateHistory: updateHistory,
+        openHistoryDialog: openHistoryDialog,
+        setQuery: setQuery,
+        deleteQuery: deleteQuery
+    };
+}]]></client_scripts>
+        <css>.thinking{&#13;
+    font-style: italic;&#13;
+    background-color: var(--sys-background);&#13;
+    color: var(--sys-on-background);&#13;
+    padding: 10px;&#13;
+    border-radius: 10px;&#13;
+    cursor: pointer;&#13;
+    font-size: 0.8em;&#13;
+}&#13;
+.chat-wrapper{&#13;
+    align-items: center;&#13;
+    justify-content: center;&#13;
+    display: flex;&#13;
+}&#13;
+.chatbox{&#13;
+    border-radius: 0px;&#13;
+}&#13;
+.chat-button{&#13;
+    border-radius: 5px;&#13;
+    height: 54px;&#13;
+    margin-left: 3px;&#13;
+}&#13;
+.questionnaire-wrapper{&#13;
+    background-color: var(--sys-surface-container);&#13;
+    border-radius: 20px;&#13;
+    padding: 20px;&#13;
+    display: flex;&#13;
+}&#13;
+&#13;
+mdui-questionnaire{&#13;
+    flex-grow: 1;&#13;
+}</css>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>playground</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-08 13:47:41</sys_created_on>
+        <sys_id>db0a41b88331d210926492b6feaad3c9</sys_id>
+        <sys_mod_count>526</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_db0a41b88331d210926492b6feaad3c9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-26 03:16:00</sys_updated_on>
+        <template>[{"id":"44elis","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"container-fluid h-100\" style=\"background-color: var(--sys-surface);\"&gt;\r\n\t&lt;div class=\"row h-100\"&gt;\r\n\t\t&lt;div class=\"col-md-12 h-100\"&gt;\r\n\t\t\t&lt;div style=\"display: flex; flex-direction: column;height: calc(100vh - 64px);\"\"&gt;\r\n                 &lt;div&gt;\r\n                    &lt;div class=\" d-flex align-items-center m-3 \"&gt;\r\n                        &lt;div class=\" flex-grow-1\"&gt;\r\n\t\t\t\t&lt;mdui-text-field label=\"Ask AI\" class=\"chatbox\" variant=\"outlined\" x-bind:value=\"$scope.model.query\"\r\n\t\t\t\t\tx-on:change=\"$scope.model.query = $event.target.value\"&gt;\r\n\t\t\t\t&lt;/mdui-text-field&gt;\r\n\t\t\t&lt;/div&gt;\r\n\t\t\t&lt;div class=\"chat-wrapper\"&gt;\r\n\t\t\t\t&lt;mdui-button variant=\"filled\" class=\"chat-button\" @click=\"$scope.search($scope.model.query, $scope)\"&gt;\r\n\t\t\t\t\t&lt;mdui-icon&gt;send&lt;/mdui-icon&gt;\r\n\t\t\t\t&lt;/mdui-button&gt;\r\n\t\t\t\t&lt;mdui-button variant=\"outlined\" class=\"chat-button\" @click=\"$scope.openHistoryDialog(true)\"&gt;\r\n\t\t\t\t\t&lt;mdui-icon&gt;history&lt;/mdui-icon&gt;\r\n\t\t\t\t&lt;/mdui-button&gt;\r\n\t\t\t&lt;/div&gt;\r\n\t\t&lt;/div&gt;\r\n\t\t&lt;div class=\"col-md-12 text-center\"&gt;\r\n\t\t\t&lt;template x-if=\"$scope.model.readable_query\"&gt;\r\n\t\t\t\t&lt;span style=\"padding: 5px;\r\n                    margin-left: 20px;\r\n                    background-color: var(--sys-primary-container);\r\n                    border-radius: 10px;\" x-text=\"$scope.model.readable_query\"&gt;\r\n                &lt;/span&gt;\r\n\t\t\t&lt;/template&gt;\r\n\t\t&lt;/div&gt;\r\n\t&lt;/div&gt;\r\n\t&lt;div style=\"flex-grow: 1; display: flex; min-height: 0;\"&gt;\r\n\t\t&lt;div style=\"flex-grow: 1;\"&gt;\r\n\t\t\t&lt;mdui-tabs :value=\"$scope.model.active_tab\" class=\"h-100\"&gt;\r\n\t\t\t\t&lt;mdui-tab value=\"list\"&gt;\r\n\t\t\t\t\tIncident List\r\n\t\t\t\t&lt;/mdui-tab&gt;\r\n\t\t\t\t&lt;template x-for=\"selection in $scope.model.selected\"&gt;\r\n\t\t\t\t\t&lt;mdui-tab :value=\"selection.sys_id.value\"&gt;\r\n\t\t\t\t\t\t&lt;div class=\"d-flex align-items-center\"&gt;\r\n\t\t\t\t\t\t\t&lt;span x-text=\"selection.number.value\" class=\"me-2\"&gt;&lt;/span&gt;\r\n\t\t\t\t\t\t\t&lt;mdui-button variant=\"text\" @click=\"console.log($scope);$scope.closeTab(selection, $scope)\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;mdui-icon&gt;close&lt;/mdui-icon&gt;\r\n\t\t\t\t\t\t\t&lt;/mdui-button&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t&lt;/mdui-tab&gt;\r\n\t\t\t\t&lt;/template&gt;\r\n\r\n\t\t\t\t&lt;mdui-tab-panel slot=\"panel\" value=\"list\" class=\"scroll-container\"&gt;\r\n\t\t\t\t\t&lt;div style=\"height: 100%; overflow: auto;\" class=\"scroll-container\"&gt;\r\n\t\t\t\t\t\t&lt;div class=\"d-flex\"&gt;\r\n\t\t\t\t\t\t\t&lt;mdui-datatable class=\"flex-grow-1\" query-name=\"incidents\"\r\n\t\t\t\t\t\t\t\tx-init=\"$scope.initialize($scope); $nextTick(() =&gt; {console.log('Setting actionCallback:', $scope.actionCallback); $el.actionCallback = $scope.actionCallback.bind($scope);})\"\r\n\t\t\t\t\t\t\t\tquery-name=\"incidents\"&gt;&lt;/mdui-datatable&gt;\r\n\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t&lt;/mdui-tab-panel&gt;\r\n\r\n\t\t\t\t&lt;template x-for=\"selection in $scope.model.selected\" :key=\"selection.sys_id.value\"&gt;\r\n\t\t\t\t\t&lt;template x-if=\"selection.sys_id &amp;&amp; selection.sys_id.value\"&gt;\r\n\t\t\t\t\t\t&lt;mdui-tab-panel slot=\"panel\" class=\"h-100 scroll-container\" :value=\"selection.sys_id.value\"\r\n\t\t\t\t\t\t\tclass=\"scroll-container\"&gt;\r\n\t\t\t\t\t\t\t&lt;div class=\"questionnaire-wrapper m-2\" class=\"scroll-container\"&gt;\r\n\t\t\t\t\t\t\t\t&lt;div class=\"container-fluid\"&gt;\r\n\t\t\t\t\t\t\t\t\t&lt;div class=\"row\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t&lt;div class=\"col d-flex\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t&lt;mdui-questionnaire class=\"flex-grow-1\"\r\n\t\t\t\t\t\t\t\t\t\t\t\tform-id=\"503f42d9831b1210671591d6feaad3da\"\r\n\t\t\t\t\t\t\t\t\t\t\t\tx-init=\"$nextTick(() =&gt; { $el.targetId = selection.sys_id.value; })\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t&lt;/mdui-questionnaire&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t&lt;template\r\n\t\t\t\t\t\t\t\t\t\t\t\tx-if=\"$scope.model._incidents &amp;&amp; $scope.model._incidents['_show' + selection.sys_id.value]\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;div style=\"width: 550px;max-height: 500px;overflow:auto;background-color: var(--sys-background);margin-left: 20px;\"\r\n\t\t\t\t\t\t\t\t\t\t\t\t\tclass=\"questionnaire-wrapper thinking-wrapper scroll-container\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;div style=\"font-size: 0.85em;\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;template\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tx-if=\"$scope.model._incidents['_' + selection.sys_id.value]\"&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;p style=\"word-wrap: break-word;\" class=\"p-3\"\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t:id=\"selection.sys_id.value\"&gt;&lt;/p&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\r\n\t\t\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t\t\t&lt;/mdui-tab-panel&gt;\r\n\t\t\t\t\t&lt;/template&gt;\r\n\t\t\t\t&lt;/template&gt;\r\n\t\t\t&lt;/mdui-tabs&gt;\r\n\t\t&lt;/div&gt;\r\n\t&lt;/div&gt;\r\n&lt;/div&gt;\r\n\r\n&lt;mdui-dialog class=\"query-dialog\" headline=\"Search History\"&gt;\r\n\t&lt;table class=\"table table-striped\"&gt;\r\n\t\t&lt;template x-for=\"item in $scope.model.list_history\"&gt;\r\n\t\t\t&lt;tr&gt;\r\n\t\t\t\t&lt;td&gt;\r\n\t\t\t\t\t&lt;span x-text=\"item.prompt\"&gt;&lt;/span&gt;\r\n\t\t\t\t&lt;/td&gt;\r\n\t\t\t\t&lt;td&gt;\r\n\t\t\t\t\t&lt;div class=\"d-flex\"&gt;\r\n\t\t\t\t\t\t&lt;mdui-button-icon @click=\"$scope.setQuery(item.query, item.prompt)\" icon=\"search\"&gt;\r\n\t\t\t\t\t\t&lt;/mdui-button-icon&gt;\r\n\t\t\t\t\t\t&lt;mdui-button-icon class=\"ms-2\" @click=\"$scope.deleteQuery($scope, item.query, item.prompt)\"\r\n\t\t\t\t\t\t\ticon=\"delete_forever\"&gt;\r\n\t\t\t\t\t\t&lt;/mdui-button-icon&gt;\r\n\t\t\t\t\t&lt;/div&gt;\r\n\t\t\t\t&lt;/td&gt;\r\n\t\t\t&lt;/tr&gt;\r\n\t\t&lt;/template&gt;\r\n\t&lt;/table&gt;\r\n\t&lt;div class=\"mt-5 text-end\"&gt;\r\n\t\t&lt;mdui-button @click=\"$scope.openHistoryDialog(false)\"&gt;Close&lt;/mdui-button&gt;\r\n\t&lt;/div&gt;\r\n&lt;/mdui-dialog&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Playground</title>
+        <type>page</type>
+    </x_509925_fc_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>db0a41b88331d210926492b6feaad3c9</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-06 03:38:40</sys_created_on>
+        <sys_id>23bd162983631210671591d6feaad3df</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-06 03:38:40</sys_updated_on>
+        <table>x_509925_fc_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

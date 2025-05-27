@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_question">
+    <x_509925_fc_question action="DELETE">
+        <active>true</active>
+        <add_signature_to/>
+        <allow_comment>false</allow_comment>
+        <allow_worknote>false</allow_worknote>
+        <attributes><![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+    return attributes;
+    
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base_question/>
+        <css_classes/>
+        <css_styles/>
+        <default_value><![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]></default_value>
+        <display_name>QUE0001047 - caller_id</display_name>
+        <dynamic_list><![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]></dynamic_list>
+        <dynamic_value><![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]></dynamic_value>
+        <e_signature_type>pdf</e_signature_type>
+        <expression><![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+    return question;
+}]]></expression>
+        <flatten_document/>
+        <hidden>false</hidden>
+        <is_cascading_select>false</is_cascading_select>
+        <is_dynamic_value>false</is_dynamic_value>
+        <label>Name</label>
+        <liquid>{% comment %} Liquid Template {% endcomment %}</liquid>
+        <number>QUE0001047</number>
+        <order>10</order>
+        <pdf/>
+        <pdf_attachment/>
+        <pin>false</pin>
+        <placeholder/>
+        <property>caller_id</property>
+        <readonly>false</readonly>
+        <required_signature>false</required_signature>
+        <section display_value="New Tab">51f2705f8325e610005fb955eeaad3d2</section>
+        <signature_field_name/>
+        <signature_list>[]</signature_list>
+        <signatures/>
+        <sys_class_name>x_509925_fc_question</sys_class_name>
+        <sys_created_by>david.galagarza</sys_created_by>
+        <sys_created_on>2025-05-21 16:27:29</sys_created_on>
+        <sys_id>af033c138365e610005fb955eeaad308</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Name</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_question_af033c138365e610005fb955eeaad308</sys_update_name>
+        <sys_updated_by>david.galagarza</sys_updated_by>
+        <sys_updated_on>2025-05-21 16:27:29</sys_updated_on>
+        <table>incident</table>
+        <triggered_questions/>
+        <type>text</type>
+        <validate>false</validate>
+        <width>col-md-6</width>
+    </x_509925_fc_question>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_question_af033c138365e610005fb955eeaad308</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_question"&gt;&lt;x_509925_fc_question action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;add_signature_to/&gt;&lt;allow_comment&gt;false&lt;/allow_comment&gt;&lt;allow_worknote&gt;false&lt;/allow_worknote&gt;&lt;attributes&gt;&lt;![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+    return attributes;
+    
+})(current, table, target_id, task_id, params);]]&gt;&lt;/attributes&gt;&lt;base_question/&gt;&lt;css_classes/&gt;&lt;css_styles/&gt;&lt;default_value&gt;&lt;![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]&gt;&lt;/default_value&gt;&lt;display_name&gt;QUE0001047 - caller_id&lt;/display_name&gt;&lt;dynamic_list&gt;&lt;![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]&gt;&lt;/dynamic_list&gt;&lt;dynamic_value&gt;&lt;![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]&gt;&lt;/dynamic_value&gt;&lt;e_signature_type&gt;pdf&lt;/e_signature_type&gt;&lt;expression&gt;&lt;![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+    return question;
+}]]&gt;&lt;/expression&gt;&lt;flatten_document/&gt;&lt;hidden&gt;false&lt;/hidden&gt;&lt;is_cascading_select&gt;false&lt;/is_cascading_select&gt;&lt;is_dynamic_value&gt;false&lt;/is_dynamic_value&gt;&lt;label&gt;Name&lt;/label&gt;&lt;liquid&gt;{% comment %} Liquid Template {% endcomment %}&lt;/liquid&gt;&lt;number&gt;QUE0001047&lt;/number&gt;&lt;order&gt;10&lt;/order&gt;&lt;pdf/&gt;&lt;pdf_attachment/&gt;&lt;pin&gt;false&lt;/pin&gt;&lt;placeholder/&gt;&lt;property&gt;caller_id&lt;/property&gt;&lt;readonly&gt;false&lt;/readonly&gt;&lt;required_signature&gt;false&lt;/required_signature&gt;&lt;section display_value="New Tab"&gt;51f2705f8325e610005fb955eeaad3d2&lt;/section&gt;&lt;signature_field_name/&gt;&lt;signature_list&gt;[]&lt;/signature_list&gt;&lt;signatures/&gt;&lt;sys_class_name&gt;x_509925_fc_question&lt;/sys_class_name&gt;&lt;sys_created_by&gt;david.galagarza&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-05-21 16:27:29&lt;/sys_created_on&gt;&lt;sys_id&gt;af033c138365e610005fb955eeaad308&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Name&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_question_af033c138365e610005fb955eeaad308&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;david.galagarza&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-21 16:27:29&lt;/sys_updated_on&gt;&lt;table&gt;incident&lt;/table&gt;&lt;triggered_questions/&gt;&lt;type&gt;text&lt;/type&gt;&lt;validate&gt;false&lt;/validate&gt;&lt;width&gt;col-md-6&lt;/width&gt;&lt;/x_509925_fc_question&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1558975349</payload_hash>
+        <record_name>Name</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>david.galagarza</sys_created_by>
+        <sys_created_on>2025-05-21 16:27:30</sys_created_on>
+        <sys_id>e7033c138365e610005fb955eeaad30b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>196f3abe1ca0000001</sys_recorded_at>
+        <sys_updated_by>david.galagarza</sys_updated_by>
+        <sys_updated_on>2025-05-21 16:27:30</sys_updated_on>
+        <type>Question</type>
+        <update_guid>eb033c132b65e6101c132ae0bc8f170a</update_guid>
+        <update_guid_history>eb033c132b65e6101c132ae0bc8f170a:-1558975349</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Name">a0e4b4d38365e610005fb955eeaad389</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>david.galagarza</sys_created_by>
+        <sys_created_on>2025-05-21 16:35:29</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_question">x_509925_fc_question</sys_db_object>
+        <sys_id>1489066c0b6f4ba8822a7da19c9e2e90</sys_id>
+        <sys_metadata>af033c138365e610005fb955eeaad308</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Name</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_question_af033c138365e610005fb955eeaad308</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_question_af033c138365e610005fb955eeaad308">e7033c138365e610005fb955eeaad30b</sys_update_version>
+        <sys_updated_by>david.galagarza</sys_updated_by>
+        <sys_updated_on>2025-05-21 16:35:29</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

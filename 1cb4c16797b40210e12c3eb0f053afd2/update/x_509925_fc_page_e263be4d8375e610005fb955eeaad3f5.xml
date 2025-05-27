@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+    function initialize() {
+        var model = {
+            condition: true,
+            default_options: {
+                title: 'Number of Accounts',
+                value: 0,
+                table: 'sys_user',
+                query: 'active=true'
+            },
+            options: params
+        };
+
+        var aggr = new GlideAggregate(model.options.table || model.default_options.table);
+        aggr.addEncodedQuery(model.options.query || model.default_options.query);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+
+        model.options.value = aggr.getAggregate('COUNT');
+        
+        return model;
+    }
+
+    function refreshCount(table, query){
+        var aggr = new GlideAggregate(table);
+        aggr.addEncodedQuery(query);
+        aggr.addAggregate('COUNT');
+        aggr.query();
+        aggr.next();
+        return aggr.getAggregate('COUNT');
+    }
+
+    return {
+        initialize: initialize,
+        refreshCount: refreshCount
+    };
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers){
+    function initialize($scope){
+        helpers.service.reactToSignal('abc', async(message)=> {
+            const result = helpers.service.call('refreshCount', [
+                $scope.model.options.table,
+                message.query
+            ], 'e263be4d8375e610005fb955eeaad3f5');
+
+            $scope.model.options.value = result;
+        })
+    }
+
+    return {
+        initialize: initialize
+    };
+}]]></client_scripts>
+        <css/>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>single_score</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-27 12:17:39</sys_created_on>
+        <sys_id>e263be4d8375e610005fb955eeaad3f5</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_e263be4d8375e610005fb955eeaad3f5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-27 12:26:02</sys_updated_on>
+        <template>[{"id":"ulofj","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;mdui-card x-init=\"$scope.initialize($scope)\" variant=\"filled\" class=\"w-100 h-100 d-flex justify-content-center align-items-center flex-column\"&gt;\r\n    &lt;h1 x-text=\"$scope.model.options.value\"&gt;&lt;/h1&gt;\r\n    &lt;span class=\"fw-bold\" x-text=\"$scope.model.options.title\"&gt;&lt;/span&gt;\r\n&lt;/mdui-card&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Single Score</title>
+        <type>widget</type>
+    </x_509925_fc_page>
+</record_update>

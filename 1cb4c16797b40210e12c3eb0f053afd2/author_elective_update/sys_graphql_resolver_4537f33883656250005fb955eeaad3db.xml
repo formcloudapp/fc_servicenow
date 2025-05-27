@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver">
+    <sys_graphql_resolver action="DELETE">
+        <name>incident.contact_reference</name>
+        <schema display_value="Task">286bea0983e45210926492b6feaad396</schema>
+        <script><![CDATA[(function process(/*ResolverEnvironment*/ env) {
+
+    var user = new FCRepository('sys_user', true)
+        .getById(env.getSource()
+            .contact.value, true);
+    return user;
+
+})(env);
+]]></script>
+        <sys_class_name>sys_graphql_resolver</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-14 12:19:39</sys_created_on>
+        <sys_id>4537f33883656250005fb955eeaad3db</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>incident.contact_reference</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_resolver_4537f33883656250005fb955eeaad3db</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 12:19:39</sys_updated_on>
+    </sys_graphql_resolver>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>sys_graphql_resolver_4537f33883656250005fb955eeaad3db</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_graphql_resolver"&gt;&lt;sys_graphql_resolver action="INSERT_OR_UPDATE"&gt;&lt;name&gt;incident.contact_reference&lt;/name&gt;&lt;schema display_value="Task"&gt;286bea0983e45210926492b6feaad396&lt;/schema&gt;&lt;script&gt;&lt;![CDATA[(function process(/*ResolverEnvironment*/ env) {
+
+    var user = new FCRepository('sys_user', true)
+        .getById(env.getSource()
+            .contact.value, true);
+    return user;
+
+})(env);
+]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_graphql_resolver&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-05-14 12:19:39&lt;/sys_created_on&gt;&lt;sys_id&gt;4537f33883656250005fb955eeaad3db&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;incident.contact_reference&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_graphql_resolver_4537f33883656250005fb955eeaad3db&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-14 12:19:39&lt;/sys_updated_on&gt;&lt;/sys_graphql_resolver&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1402583193</payload_hash>
+        <record_name>incident.contact_reference</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-14 12:19:40</sys_created_on>
+        <sys_id>4137f33883656250005fb955eeaad3de</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>196cebc77b60000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 12:19:40</sys_updated_on>
+        <type>GraphQL Scripted Resolver</type>
+        <update_guid>4537f338b3656250bab1de6b87f538dd</update_guid>
+        <update_guid_history>4537f338b3656250bab1de6b87f538dd:1402583193</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-14 12:27:35</sys_created_on>
+        <sys_db_object display_value="" name="sys_graphql_resolver">sys_graphql_resolver</sys_db_object>
+        <sys_id>6fdece03feb14d7685ee469b2f5416b9</sys_id>
+        <sys_metadata>4537f33883656250005fb955eeaad3db</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>incident.contact_reference</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>sys_graphql_resolver_4537f33883656250005fb955eeaad3db</sys_update_name>
+        <sys_update_version display_value="sys_graphql_resolver_4537f33883656250005fb955eeaad3db">4137f33883656250005fb955eeaad3de</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 12:27:35</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

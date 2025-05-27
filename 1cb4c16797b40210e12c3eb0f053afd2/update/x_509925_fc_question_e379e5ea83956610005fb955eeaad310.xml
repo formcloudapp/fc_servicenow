@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_question">
+    <x_509925_fc_question action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_signature_to/>
+        <allow_comment>false</allow_comment>
+        <allow_worknote>true</allow_worknote>
+        <attributes><![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+    return attributes;
+    
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base_question/>
+        <css_classes/>
+        <css_styles/>
+        <default_value><![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]></default_value>
+        <display_name>QUE0001032 - work_notes</display_name>
+        <dynamic_list><![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]></dynamic_list>
+        <dynamic_value><![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]></dynamic_value>
+        <e_signature_type>pdf</e_signature_type>
+        <expression><![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+    return question;
+}]]></expression>
+        <flatten_document/>
+        <hidden>false</hidden>
+        <is_cascading_select>false</is_cascading_select>
+        <is_dynamic_value>false</is_dynamic_value>
+        <label>Work Notes</label>
+        <liquid>{% comment %} Liquid Template {% endcomment %}</liquid>
+        <number>QUE0001032</number>
+        <order>1000</order>
+        <pdf/>
+        <pdf_attachment/>
+        <pin>false</pin>
+        <placeholder/>
+        <property>work_notes</property>
+        <readonly>false</readonly>
+        <required_signature>false</required_signature>
+        <section display_value="Instructions">2a76212a83956610005fb955eeaad36f</section>
+        <signature_field_name/>
+        <signature_list>[]</signature_list>
+        <signatures/>
+        <sys_class_name>x_509925_fc_question</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-07 02:14:11</sys_created_on>
+        <sys_id>e379e5ea83956610005fb955eeaad310</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Work Notes</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_question_e379e5ea83956610005fb955eeaad310</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 19:38:28</sys_updated_on>
+        <table>x_509925_fc_recruitment_case</table>
+        <triggered_questions/>
+        <type>worknote</type>
+        <validate>false</validate>
+        <width>col-md-12</width>
+    </x_509925_fc_question>
+</record_update>

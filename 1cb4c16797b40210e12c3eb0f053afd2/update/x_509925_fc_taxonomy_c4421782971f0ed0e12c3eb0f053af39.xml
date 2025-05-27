@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_taxonomy">
+    <x_509925_fc_taxonomy action="INSERT_OR_UPDATE">
+        <advance><![CDATA[((current, params) => {
+    return new FCTaxonomyRepository(true).getAttributes(current, params);
+})(current, params);]]></advance>
+        <base>false</base>
+        <condition><![CDATA[((current, params) => {
+    return true;
+})(current, params);]]></condition>
+        <group/>
+        <icon>home</icon>
+        <name>Home</name>
+        <order>1</order>
+        <parent/>
+        <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-11 14:18:11</sys_created_on>
+        <sys_id>c4421782971f0ed0e12c3eb0f053af39</sys_id>
+        <sys_mod_count>24</sys_mod_count>
+        <sys_name>Home</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_taxonomy_c4421782971f0ed0e12c3eb0f053af39</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-28 16:38:13</sys_updated_on>
+        <type>menu_item</type>
+        <url>home</url>
+        <url_type>page</url_type>
+    </x_509925_fc_taxonomy>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c4421782971f0ed0e12c3eb0f053af39</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:22:58</sys_created_on>
+        <sys_id>7733281b83b1d610926492b6feaad336</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:22:58</sys_updated_on>
+        <table>x_509925_fc_taxonomy</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

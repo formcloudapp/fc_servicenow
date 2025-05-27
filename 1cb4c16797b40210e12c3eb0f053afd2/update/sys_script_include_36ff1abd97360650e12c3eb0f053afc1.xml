@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCQuestionRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCQuestionRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * @class
+ * Repository for interacting with the HR Case table in ServiceNow.
+ * @extends FCRepository
+ */
+var FCQuestionRepository = Class.create();
+FCQuestionRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initializes the FCQuestionRepository.
+	 * @param {boolean} [overrideACL=false] - Determines whether to use GlideRecord (true) or GlideRecordSecure (false).
+	 */
+	initialize: function (overrideACL) {
+		FCRepository.prototype.initialize.call(this, 'x_509925_fc_question', overrideACL);
+	},
+
+	getQuestions: function (formObj, sectionId, targetGr, params) {
+		this.addQuery('section=' + sectionId + '^ORDERBYorder');
+		var questionGr = this.getMultiple();
+		var result = [];
+
+		while (questionGr.next()) {
+			var questionObj = this._initializeQuestionObject(questionGr, formObj);
+			// Evaluate attributes
+			questionObj.attribute_obj = this._evaluateAttributes(questionGr, formObj);
+
+			questionObj.answer = this._evaluateDefaultValue(questionGr, questionObj, formObj, targetGr);
+
+			// Get the internal type for the property
+			questionObj.internal_type = this._getInternalType(questionGr, formObj, questionObj);
+
+			// Populate question answer
+			try {
+				if (gs.nil(questionObj.base_question)) {
+					if (formObj.is_new_record && questionObj.answer != null) {
+						//Do nothing
+					} else {
+						this._getQuestionAnswer(targetGr, questionObj, formObj, params);
+					}
+
+				} else {
+					this._getVariableAnswer(targetGr, questionObj, formObj);
+				}
+			} catch (err) {
+				if (!questionObj.attribute_obj._error) questionObj.attribute_obj._error = [];
+				questionObj.attribute_obj._error.push(err);
+			}
+
+			result.push(questionObj);
+		}
+
+		return result;
+	},
+
+	_initializeQuestionObject: function (questionGr, formObj) {
+
+
+		return {
+			add_signature_to: questionGr.getValue('add_signature_to'),
+			base_question: questionGr.getValue('base_question'),
+			dynamic_list: questionGr.getValue('dynamic_list'),
+			e_signature_type: questionGr.getValue('e_signature_type'),
+			expression: questionGr.getValue('expression'),
+			flatten_document: questionGr.getValue('flatten_document'),
+			is_calculated_field: questionGr.getDisplayValue('is_calculated_field') === 'true',
+			is_cascading_select: questionGr.getDisplayValue('is_cascading_select') === 'true',
+			is_dynamic_value: questionGr.getDisplayValue('is_dynamic_value') === 'true',
+			liquid: questionGr.getValue('liquid'),
+			number: questionGr.getValue('number'),
+			order: questionGr.getValue('order'),
+			pdf: questionGr.getValue('pdf'),
+			pdf_attachment: questionGr.getValue('pdf_attachment'),
+			property: questionGr.getValue('property'),
+			questionnaire_id: formObj.sys_id,
+			readonly_expression: questionGr.getValue('readonly_expression'),
+			required_signature: questionGr.getValue('required_signature') == 1,
+			section: questionGr.getValue('section'),
+			show: questionGr.getDisplayValue('hidden') != 'true',
+			readonly: questionGr.getDisplayValue('readonly') == 'true',
+			is_custom_validation: false,
+			message: '',
+			signature_date_field: questionGr.getValue('signature_date_field'),
+			signature_field_name: questionGr.getValue('signature_field_name'),
+			signature_list: JSON.parse(questionGr.getValue('signature_list') || '[]'),
+			sys_id: questionGr.getUniqueValue(),
+			table: formObj.table,
+			task_id: formObj.task_id,
+			target_id: formObj.target_id,
+			type: questionGr.getValue('type'),
+			validate: questionGr.getValue('validate') == 1,
+			validate_expression: questionGr.getValue('validate_expression'),
+			width: questionGr.getValue('width'),
+			questionnaire_subtype: formObj.subtype
+		};
+	},
+
+	_getShowValue: function (questionGr) {
+		var showValue = questionGr.getDisplayValue('hidden');
+		return showValue == 'true';
+	},
+
+	_evaluateAttributes: function (questionGr, formObj) {
+		var questionEvaluator = new GlideScopedEvaluator();
+
+		// Set variables for the evaluator
+		questionEvaluator.putVariable('current', questionGr);
+		questionEvaluator.putVariable('target_id', formObj.target_id);
+		questionEvaluator.putVariable('task_id', formObj.task_id);
+		questionEvaluator.putVariable('params', formObj.params);
+		questionEvaluator.putVariable('table', formObj.table);
+
+		try {
+			// Evaluate attributes script
+			var attributes = questionEvaluator.evaluateScript(questionGr, 'attributes');
+			if (!attributes) {
+				this.throwError(new Error(`An error occurred while evaluating question ${questionGr.getValue('number')} attributes`), questionGr.getValue('number'), 'attributes');
+			}
+			return attributes;
+		} catch (err) {
+			var tempGr = new GlideRecord(new FCConstantUtility().getTableName('question'));
+			tempGr.newRecord();
+
+			questionGr.setValue('attributes', tempGr.getValue('attributes'));
+
+			var questionEvaluator2 = new GlideScopedEvaluator();
+			questionEvaluator2.putVariable('current', questionGr);
+			questionEvaluator2.putVariable('target_id', formObj.target_id);
+			questionEvaluator2.putVariable('task_id', formObj.task_id);
+			questionEvaluator2.putVariable('params', formObj.params);
+			questionEvaluator2.putVariable('table', formObj.table);
+			var result = questionEvaluator2.evaluateScript(questionGr, 'attributes');
+			result.error = {
+				message: err.message,
+				errorCode: err.errorCode,
+				stack: err.stack
+			};
+			return result;
+		}
+	},
+
+	_handleEvaluationError: function (err, questionGr, formObj) {
+		var attributes = {
+			_error: [err.message + ': ' + err.stack]
+		};
+
+		try {
+			// Attempt to retrieve attributes manually as fallback
+			var fallbackAttributes = this.getAttributes(questionGr, formObj.table, formObj.target_id, formObj.task_id, formObj.params);
+			fallbackAttributes._error = attributes._error; // Merge initial error log
+			return fallbackAttributes;
+		} catch (err2) {
+			// If fallback also fails, add secondary error
+			attributes._error.push(err2.message + ': ' + err2.stack);
+			return attributes;
+		}
+	},
+
+
+	_evaluateDefaultValue: function (questionGr, questionObj, formObj, targetGr) {
+		if (!gs.nil(formObj.target_id) && !gs.nil(questionObj.answer)) {
+			return questionObj.answer;
+		}
+
+		//current, table, target_id, task_id, params
+
+		var questionEvaluator = new GlideScopedEvaluator();
+		questionEvaluator.putVariable('current', questionGr);
+		questionEvaluator.putVariable('table', formObj.table);
+		questionEvaluator.putVariable('target_id', formObj.target_id);
+		questionEvaluator.putVariable('task_id', formObj.task_id);
+		questionEvaluator.putVariable('params', formObj.params);
+
+		try {
+			gs.error(formObj.params[questionObj.property])
+			var answer = (questionObj.property && formObj.params && formObj.params[questionObj.property]) ?
+				formObj.params[questionObj.property] :
+				questionEvaluator.evaluateScript(questionGr, 'default_value');
+
+			if (gs.nil(answer)) {
+				return targetGr.getValue(questionObj.property);
+			} else {
+				return answer;
+			}
+		} catch (err) {
+			questionObj.attribute_obj._error.push(err);
+			return null;
+		}
+	},
+
+	_getInternalType: function (questionGr, formObj, questionObj) {
+		try {
+			return formObj.dictionaries[questionGr.getValue('property')]?.internal_type;
+		} catch (err) {
+			questionObj.attribute_obj._error.push(err);
+
+		}
+	},
+
+
+	_getQuestionAnswer: function (targetGr, questionObj, formObj, params) {
+		if (gs.nil(questionObj.base_question) && !gs.nil(formObj.target_id) && targetGr && targetGr.hasOwnProperty(questionObj.property)) {
+			const val = targetGr.getValue(questionObj.property);
+			const displayVal = targetGr.getDisplayValue(questionObj.property);
+			questionObj.answer_display_value = displayVal;
+			switch (questionObj.internal_type) {
+				case 'reference':
+					if (questionObj.type == 'autocomplete') {
+						questionObj.answer = {
+							label: displayVal,
+							value: val
+						};
+					}else{
+						questionObj.answer = val;
+					}
+					break;
+				case 'glide_list':
+					questionObj.answer = gs.nil(val) ? [] : val.split(',').map((value, index) => ({
+						label: displayVal.split(',')[index],
+						value: value
+					}));
+					break;
+				default:
+					questionObj.answer = val;
+					break;
+			}
+		}
+
+
+		if (gs.nil(questionObj.base_question) && gs.nil(formObj.target_id)) {
+
+			if (params[questionObj.property]) {
+				questionObj.answer = params[questionObj.property];
+			}
+		}
+	},
+
+	_getVariableAnswer: function (targetGr, questionObj) {
+		if (gs.nil(questionObj.base_question) || !targetGr) {
+			return;
+		}
+
+		var variableValue;
+		var labelsArray;
+
+		if (questionObj.questionnaire_subtype == 'catalog') {
+			var requestItemOptionGr = new FCRequestItemOptionRepository(true)
+				.addQuery('request_item=' + targetGr.getUniqueValue())
+				.getSingle();
+
+			if (requestItemOptionGr) {
+				var itemOptionGr = requestItemOptionGr.sc_item_option.getRefRecord();
+				var variableGr = itemOptionGr.item_option_new.getRefRecord();
+				variableValue = itemOptionGr.getValue('value');
+				questionObj.answer = this._processQuestionAnswer(variableGr, variableValue);
+			}
+		} else if (questionObj.questionnaire_subtype == 'request') {
+			var qaGr = new FCQuestionAnswerRepository(true)
+				.addQuery('table_sys_id=' + targetGr.getUniqueValue())
+				.getSingle();
+
+			if (qaGr) {
+				variableValue = qaGr.getValue('value');
+				var tableName = qaGr.getValue('table_name');
+				questionObj.answer = this._processQuestionAnswer(qaGr, variableValue, tableName);
+			}
+		}
+	},
+
+	_processQuestionAnswer: function (qaGr, qaValue, tableName) {
+		if (gs.nil(qaValue)) {
+			return null;
+		}
+
+		switch (qaGr.getValue('type')) {
+			case '21': // Multiple choice (list)
+				return this._getListCollectorAnswer(qaGr, qaValue, tableName);
+			case '8': // Reference
+				return this._getReferenceAnswer(qaGr, qaValue, tableName);
+			case '22': // Another case if needed
+				return this._getSelectBoxAnswer(qaGr, qaValue, tableName);
+			default: // Default case for other types
+				return {
+					answer: qaValue,
+					answer_display_value: qaValue
+				};
+		}
+	},
+
+	_getSelectBoxAnswer: function (variableGr, qaValue, tablename) {
+		//Check to see if question/variable choice table is set
+		var choiceTable = variableGr.getValue('choice_table');
+		var choiceField = variableGr.getValue('choice_field');
+
+		var choices;
+
+		//If choice table or choice field is not setup, lets look at the question_choice table
+		if (gs.nil(choiceTable) || gs.nil(choiceField)) {
+			choices = new FCChoiceRepository(true).getByTableField(choiceTable, choiceField);
+			return choices.find(choice => choice.value == qaValue) || null;
+		} else {
+			var questionChoiceGr = new FCQuestionChoiceRepository(true).addQuery('question=' + variableGr.getUniqueValue() + '^value=' + qaValue).getSingle()
+			if (questionChoiceGr) {
+				return {
+					label: questionChoiceGr.getValue('text'),
+					value: questionChoiceGr.getValue('value')
+				};
+			} else {
+				return null;
+			}
+		}
+	},
+
+	_getListCollectorAnswer: function (variableGr, value, tableName) {
+		var labelsArray = [];
+		var valueGr = new GlideRecord(tableName || variableGr.getValue('list_table'));
+		valueGr.addEncodedQuery('sys_idIN' + value);
+		valueGr.query();
+
+		while (valueGr.next()) {
+			labelsArray.push(valueGr.getDisplayValue());
+		}
+
+		return value.split(',').map((value, index) => ({
+			label: labelsArray[index],
+			value: value
+		}));
+	},
+
+	_getReferenceAnswer: function (variableGr, value, tableName) {
+		var valueGr = new GlideRecord(tableName || variableGr.getValue('reference'));
+		valueGr.addEncodedQuery('sys_id=' + value);
+		valueGr.query();
+
+		if (valueGr.next()) {
+			return {
+				label: valueGr.getDisplayValue(),
+				value: value
+			};
+		}
+
+		return null;
+	},
+
+	//---------------------------------------------------------------------
+
+
+	resolveAttributes: function (sysId, targetId, taskId, params) {
+		const questionGr = this.addQuery(`sys_id=${sysId}`).getSingle();
+		const sectionGr = questionGr.section.getRefRecord();
+		const questionnaireGr = sectionGr.questionnaire.getRefRecord();
+
+		let evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('current', questionGr);
+		evaluator.putVariable('table', questionnaireGr.getValue('table'));
+		evaluator.putVariable('target_id', targetId);
+		evaluator.putVariable('params', params || {});
+		evaluator.putVariable('task_id', taskId);
+		const attributeObj = evaluator.evaluateScript(questionGr, 'attributes');
+
+		return {
+			data: attributeObj
+		};
+	},
+
+	resolveDynamicList: function (sourceObj, targetObj, keyValue) {
+		this.addQuery('sys_id=' + targetObj.sys_id);
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('target', targetObj);
+		evaluator.putVariable('source', sourceObj);
+		evaluator.putVariable('keyValue', keyValue);
+		return evaluator.evaluateScript(this.getSingle(), 'dynamic_list');
+	},
+
+
+	resolveDynamicValue: function (sourceObj, targetObj, keyValue) {
+		this.addQuery('sys_id=' + targetObj.sys_id);
+		const targetGr = this.getSingle();
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.putVariable('target', targetObj);
+		evaluator.putVariable('source', sourceObj);
+		evaluator.putVariable('keyValue', keyValue);
+		return evaluator.evaluateScript(targetGr, 'dynamic_value');
+	},
+
+	getAttributes: function (questionGr, table, targetId, taskId, params) {
+		var questionType = questionGr.getValue('type');
+		var defaultAttributes = {
+			params: params || {},
+			table: table,
+			target_id: targetId || params.targetId,
+			task_id: taskId,
+			active: questionGr.getDisplayValue('active') == 'true',
+			options: {
+				width: questionGr.getValue('width'),
+				label: questionGr.getValue('label'),
+				placeholder: questionGr.getValue('placeholder'),
+				css_classes: questionGr.getValue('css_classes'),
+				css_styles: questionGr.getValue('css_styles'),
+				pin: questionGr.getDisplayValue('pin') == 'true'
+			}
+
+		};
+
+		var handlers = {
+			esignature: function () {
+				return {
+					triggered_questions: []
+				};
+				//return this.getESignatureAttributes(questionGr, table, targetId, taskId, params);
+			}.bind(this),
+			text: function () {
+				return {
+					triggered_questions: []
+				};
+			},
+			currency: function () {
+				return {
+					triggered_questions: []
+				};
+			},
+			ssn: function () {
+				return {
+					triggered_questions: []
+				};
+			},
+			email: function () {
+				return {
+					triggered_questions: [],
+					regex: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
+					regex_message: 'Invalid Email'
+				};
+			},
+			phone: function () {
+				return {
+					triggered_questions: []
+				};
+			},
+			textarea: function () {
+				return {
+					triggered_questions: [],
+					min_length: 0,
+					max_length: 500
+				};
+			},
+			date: function () {
+				return {
+					triggered_questions: [],
+					regex: '^(0[1-9]|1[012])[\\/](0[1-9]|[12][0-9]|3[01])[\\/]\\d{4}$'
+				};
+			},
+			datepicker: function () {
+				return {
+					triggered_questions: []
+				};
+			},
+			liquid: function () {
+				return {
+					triggered_questions: [],
+					data: {}
+				};
+			},
+			attachment: function () {
+				return {
+					triggered_questions: [],
+					table: taskId ? 'sn_hr_core_task' : table,
+					target_id: taskId || targetId,
+					show_delete: true
+				};
+			},
+			select: function () {
+
+				var result = {
+					triggered_questions: [],
+					select_options: [],
+					help: ''
+				};
+				var fieldName = questionGr.getValue('property');
+				if (!gs.nil(fieldName)) {
+					result.select_options = new FCChoiceRepository(true).getByTableField(table, fieldName);
+				}
+				return result;
+
+			},
+			radio: function () {
+				var result = {
+					triggered_questions: [],
+					select_options: [{
+						label: 'Yes',
+						value: 'Yes'
+					}, {
+						label: 'No',
+						value: 'No'
+					}],
+					vertical: true
+				};
+				var fieldName = questionGr.getValue('property');
+				if (!gs.nil(fieldName)) {
+					result.select_options = new FCChoiceRepository(true).getByTableField(table, fieldName);
+				}
+				return result;
+			},
+			autocomplete: function () {
+				var autocompleteObj = {
+					triggered_questions: [],
+					search_table: '',
+					search_query: '',
+					display_columns: [],
+					value_column: 'sys_id',
+					min_length: 3,
+					help: '',
+					error: null
+				};
+				try {
+					var targetFieldGr = new FCDictionaryRepository(true).getField(table, questionGr.getValue('property'));
+					if (targetFieldGr && targetFieldGr.getValue('internal_type') == 'reference') {
+						var displayColumnGr = new FCDictionaryRepository(true).getDisplayColumn(targetFieldGr.getValue('reference'));
+						if (displayColumnGr) {
+							var displayColumn = displayColumnGr.getValue('element');
+							autocompleteObj.display_columns.push(displayColumn);
+							autocompleteObj.search_table = targetFieldGr.getValue('reference');
+							autocompleteObj.search_query = `${displayColumn}LIKE{{query}}^ORDERBY${displayColumn}`;
+						}
+
+					}
+				} catch (err) {
+					autocompleteObj.error = err.message;
+				}
+
+				return autocompleteObj;
+			},
+			multiselect: function () {
+				return {
+					triggered_questions: [],
+					select_options: [{
+						label: 'Option 1',
+						value: 'Option 1'
+					}, {
+						label: 'Option 2',
+						value: 'Option 2'
+					}],
+					save_type: 'reference'
+				};
+			},
+			multiselect_list: function () {
+				var multiselectListObj = {
+					triggered_questions: [],
+					search_table: '',
+					search_query: '',
+					display_columns: [],
+					value_column: 'sys_id',
+					min_length: 3,
+					help: '',
+					required_count: 1,
+					select_options: []
+				};
+
+				try {
+					var targetFieldGr = new FCDictionaryRepository(true).getField(table, questionGr.getValue('property'));
+					if (targetFieldGr) {
+						var displayColumnGr = new FCDictionaryRepository(true).getDisplayColumn(targetFieldGr.getValue('reference'));
+						var displayColumn = displayColumnGr.getValue('element');
+						multiselectListObj.display_columns.push(displayColumn);
+						multiselectListObj.search_table = targetFieldGr.getValue('reference');
+						multiselectListObj.search_query = `titleLIKE{{query}}^ORDERBYtitle^NQ${displayColumn}LIKE{{query}}^ORDERBY${displayColumn}`;
+					}
+				} catch (err) {
+					multiselectListObj.err = err.message;
+				}
+
+				return multiselectListObj;
+
+			},
+			tree: function () {
+				return {
+					triggered_questions: [],
+					select_options: [{
+						id: 'option_1',
+						title: 'Option 1',
+						item_count: 0,
+						children: [],
+						selectable: true
+					}],
+					save_type: 'reference'
+				};
+			},
+			checkbox: function () {
+				return {
+					triggered_questions: [],
+					select_options: [{
+						label: 'Yes',
+						value: true
+					},
+					{
+						label: 'No',
+						value: false
+					}
+					]
+				};
+			},
+			dynamic_select: function () {
+				return {
+					triggered_questions: [],
+					select_options: []
+				};
+			},
+			dynamic_multiselect: function () {
+				return {
+					triggered_questions: [],
+					select_options: []
+				};
+			},
+			worknote: function () {
+				return {
+					triggered_questions: [],
+					additional_comments: [],
+					work_notes: [],
+					allow_comment: current.getDisplayValue('allow_comment') == 'true',
+					allow_worknote: current.getDisplayValue('allow_worknote') == 'true',
+				};
+			},
+			widget: function () {
+				return {
+					triggered_questions: [],
+					widget_id: ''
+				};
+			},
+			repeater: function () {
+				return {
+					triggered_questions: [],
+					columns: [{
+						field_label: 'Field Label',
+						field_name: 'Field Name',
+						field_type: 'string',
+						width: 'col-md-12',
+						required: true
+					}]
+				};
+			},
+			related_list: function () {
+				return {
+					triggered_questions: [],
+					data: [],
+					questionnaire_id: '',
+					page_id: 'hr_questionnaire',
+					columns: [{
+						label: '',
+						value: ''
+					}]
+				};
+			},
+			datatable: function () {
+				return {
+					triggered_questions: [],
+					data: [],
+					query_name: '',
+					page_size: 10,
+					show_pagination: true,
+					hide_details: true,
+					allow_selection: false,
+					show_search: true,
+					questionnaire_id: '' //Add questionnaire id to add new record
+				};
+			},
+			code: function () {
+				return {
+					triggered_questions: [],
+					language: 'javascript',
+					theme: 'vs-dark'
+				};
+			},
+			variables: function () {
+				return {
+					triggered_questions: [],
+					variables: []
+				};
+			}
+		};
+
+		var attrs = handlers[questionType]();
+		var triggeredQuestions = questionGr.getValue('triggered_questions');
+
+		if (!gs.nil(triggeredQuestions)) {
+			var tq = triggeredQuestions.split(',');
+			tq.forEach(function (t) {
+				if (attrs.triggered_questions.indexOf(t) == -1) {
+					attrs.triggered_questions.push(t);
+				}
+			});
+		}
+
+		if (questionType == 'esignature') {
+			//Get pdf document
+			if (questionGr.getValue('pdf')) {
+				var util = new global.GeneralPdfUtils();
+				attrs.pdf = JSON.parse(util.getFieldType(questionGr.getValue('pdf')));
+			}
+		}
+
+		if (questionType == 'variables' && targetId) {
+
+
+
+			var variablesGr = new FCServiceCatalogItemVariableRepository(true).getVariablesForItem(targetId);
+			while (variablesGr.next()) {
+				attrs.variables.push(this._convertVariableToQuestion(variablesGr));
+			}
+
+			var setIds = new FCServiceCatalogItemVariableSetRepository(true).getVariableSetsForItem(targetId);
+			var variablesFromSetsGr = new FCServiceCatalogItemVariableRepository(true)
+				.getVariablesForItemSets(setIds);
+			while (variablesFromSetsGr.next()) {
+				attrs.variables.push(this._convertVariableToQuestion(variablesFromSetsGr));
+			}
+		}
+
+		defaultAttributes[questionType] = attrs;
+		return defaultAttributes;
+	},
+
+	_convertVariableToQuestion: function (variableGr) {
+		var typeLookup = {
+			'8': 'autocomplete',
+			'3': 'radio',
+			'6': 'text',
+			'5': 'select',
+			'2': 'textarea'
+		};
+		var type = typeLookup[variableGr.getValue('type')];
+
+		var questionObj = {
+			order: variableGr.getValue('order'),
+			property: variableGr.getValue('name'),
+			show: true,
+			sys_id: variableGr.getUniqueValue(),
+			type: typeLookup[variableGr.getValue('type')],
+			validate: variableGr.getDisplayValue('mandatory') == 'true',
+			width: 'col-md-12',
+			attribute_obj: {},
+			expression_result: {
+				validate: variableGr.getDisplayValue('mandatory') == 'true'
+			}
+		};
+		switch (type) {
+			case 'autocomplete':
+				questionObj.label = 'Search';
+				var referenceTable = variableGr.getValue('reference');
+				var displayColumnGr = new FCDictionaryRepository(true).getDisplayColumn(referenceTable);
+				if (displayColumnGr) {
+					var displayColumn = displayColumnGr.getValue('element');
+					questionObj.attribute_obj.autocomplete = {
+						triggered_questions: [],
+						search_table: referenceTable,
+						search_query: `${displayColumn}LIKE{{query}}`,
+						display_columns: [displayColumn],
+						value_column: 'sys_id'
+					};
+				} else {
+					if (referenceTable == 'sys_user') {
+						questionObj.attribute_obj.autocomplete = {
+							triggered_questions: [],
+							search_table: 'sys_user',
+							search_query: `nameLIKE{{query}}^ORemailLIKE{{query}}`,
+							display_columns: ['name'],
+							value_column: 'sys_id'
+						};
+					} else {
+						questionObj.attribute_obj.autocomplete = {
+							triggered_questions: [],
+							search_table: referenceTable,
+							search_query: `nameLIKE{{query}}^ORnumberLIKE{{query}}`,
+							display_columns: ['name', 'number'],
+							value_column: 'sys_id'
+						};
+					}
+				}
+
+				break;
+			case 'select':
+				questionObj.label = 'Select';
+				questionObj.attribute_obj[type] = {
+					triggered_questions: [],
+					select_options: this._getVariableChoices(variableGr),
+					help: ''
+				};
+				break;
+			case 'radio':
+				questionObj.label = 'Select';
+				questionObj.attribute_obj[type] = {
+					triggered_questions: [],
+					select_options: this._getVariableChoices(variableGr),
+					help: '',
+					vertical: variableGr.getValue('choice_direction') == 'down' ? true : false
+				};
+				break;
+			case 'text':
+			case 'textarea':
+				questionObj.label = 'Enter';
+				questionObj.attribute_obj[type] = {
+					triggered_questions: [],
+				};
+				break;
+		}
+
+		questionObj.attribute_obj.options = {
+			width: 'col-md-12',
+			label: variableGr.getValue('question_text'),
+			placeholder: '',
+			css_classes: '',
+			css_styles: '',
+			hidden: false
+		};
+
+		return questionObj;
+	},
+
+	_getVariableChoices: function (variableGr) {
+		var choiceTable = variableGr.getValue('choice_table');
+		var choiceField = variableGr.getValue('choice_field');
+		if (!gs.nil(choiceTable) && !gs.nil(choiceField)) {
+			return new FCChoiceRepository(true)
+				.getByTableField(choiceTable, choiceField);
+		} else {
+			return new FCQuestionChoiceRepository(true)
+				.getChoicesForVariable(variableGr.getUniqueValue());
+		}
+	},
+
+	/** 
+	 * Type definition for easier identification of this script include.
+	 * @type {string}
+	 */
+	type: 'FCQuestionRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-15 19:35:21</sys_created_on>
+        <sys_id>36ff1abd97360650e12c3eb0f053afc1</sys_id>
+        <sys_mod_count>259</sys_mod_count>
+        <sys_name>FCQuestionRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_36ff1abd97360650e12c3eb0f053afc1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-30 17:58:31</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>36ff1abd97360650e12c3eb0f053afc1</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-13 14:40:49</sys_created_on>
+        <sys_id>972d747683685a10926492b6feaad39d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-13 14:40:49</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

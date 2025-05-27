@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_question">
+    <x_509925_fc_question action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_signature_to/>
+        <allow_comment>false</allow_comment>
+        <allow_worknote>false</allow_worknote>
+        <attributes><![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+    return attributes;
+    
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base_question/>
+        <css_classes/>
+        <css_styles/>
+        <default_value><![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]></default_value>
+        <display_name>QUE0001057 - assigned_to</display_name>
+        <dynamic_list><![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]></dynamic_list>
+        <dynamic_value><![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]></dynamic_value>
+        <e_signature_type>pdf</e_signature_type>
+        <expression><![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+
+    var result = {
+        validate: question.validate,
+		is_custom_validation: false,
+        custom_validation_result: true,
+        message: '',
+        show: true,
+        readonly: false
+    };
+
+    return result;
+
+}]]></expression>
+        <flatten_document/>
+        <hidden>false</hidden>
+        <is_cascading_select>false</is_cascading_select>
+        <is_dynamic_value>false</is_dynamic_value>
+        <label>Assigned To</label>
+        <liquid>{% comment %} Liquid Template {% endcomment %}</liquid>
+        <number>QUE0001057</number>
+        <order>1</order>
+        <pdf/>
+        <pdf_attachment/>
+        <pin>false</pin>
+        <placeholder>Search</placeholder>
+        <property>assigned_to</property>
+        <readonly>false</readonly>
+        <required_signature>false</required_signature>
+        <section display_value="Details">8d2d859083991210926492b6feaad3cf</section>
+        <signature_field_name/>
+        <signature_list>[]</signature_list>
+        <signatures/>
+        <sys_class_name>x_509925_fc_question</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-19 19:48:21</sys_created_on>
+        <sys_id>dfcc1b5683119210926492b6feaad378</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Assigned To</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_question_dfcc1b5683119210926492b6feaad378</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:28:31</sys_updated_on>
+        <table>task</table>
+        <triggered_questions/>
+        <type>autocomplete</type>
+        <validate>true</validate>
+        <width>col-md-6</width>
+    </x_509925_fc_question>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>dfcc1b5683119210926492b6feaad378</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-19 19:56:55</sys_created_on>
+        <sys_id>b0ce1bd683119210926492b6feaad3e6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-19 19:56:55</sys_updated_on>
+        <table>x_509925_fc_question</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

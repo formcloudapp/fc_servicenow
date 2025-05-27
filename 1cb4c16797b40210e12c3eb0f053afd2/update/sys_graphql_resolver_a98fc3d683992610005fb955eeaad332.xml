@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver">
+    <sys_graphql_resolver action="INSERT_OR_UPDATE">
+        <name>getClassName</name>
+        <schema display_value="Core">99574c8e973e0650e12c3eb0f053af40</schema>
+        <script><![CDATA[(function process(/*ResolverEnvironment*/ env) {
+
+    var gr = new GlideRecord(env.getArguments().tableName);
+	return {
+		value: gr.getRecordClassName(),
+		display_value: gr.getClassDisplayValue()
+	};
+
+})(env);]]></script>
+        <sys_class_name>sys_graphql_resolver</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-06 15:03:03</sys_created_on>
+        <sys_id>a98fc3d683992610005fb955eeaad332</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>getClassName</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_resolver_a98fc3d683992610005fb955eeaad332</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-06 15:04:29</sys_updated_on>
+    </sys_graphql_resolver>
+</record_update>

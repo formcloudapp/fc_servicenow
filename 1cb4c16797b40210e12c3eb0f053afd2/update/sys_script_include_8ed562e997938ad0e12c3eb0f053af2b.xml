@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCSectionRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCSectionRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Represents a repository for chocies table.
+ * @class
+ * @extends FCRepository
+ */
+var FCSectionRepository = Class.create();
+FCSectionRepository.prototype = Object.extendsObject(FCRepository, {
+
+	/**
+	 * Initialize a new instance of the FCSectionRepository.
+	 * @constructor
+	 * @param {boolean} overrideACL - Flag to override Access Control List.
+	 */
+	initialize: function (overrideACL) {
+		FCRepository.prototype.initialize.call(this, 'x_509925_fc_section', overrideACL);
+	},
+
+	getSections: function (formObj, targetGr, params) {
+		this.addQuery('questionnaire=' + formObj.sys_id + '^ORDERBYorder');
+		var sectionsGr = this.getMultiple();
+
+		
+		var result = [];
+		while (sectionsGr.next()) {
+			var sectionObj = {};
+			sectionObj.sys_id = sectionsGr.getUniqueValue();
+			sectionObj.name = sectionsGr.getValue('name');
+			sectionObj.target_id = formObj.target_id;
+			sectionObj.table = formObj.table;
+			sectionObj.task_id = formObj.task_id;
+			sectionObj.expression = sectionsGr.getValue('expression');
+			sectionObj.css_classes = sectionsGr.getValue('css_classes');
+
+			var sectionEvaluator = new GlideScopedEvaluator();
+			sectionEvaluator.putVariable('current', sectionsGr);
+			sectionEvaluator.putVariable('target_id', formObj.target_id);
+			sectionEvaluator.putVariable('task_id', formObj.task_id);
+			sectionEvaluator.putVariable('params', formObj.params);
+			sectionEvaluator.putVariable('table', formObj.table);
+			sectionObj.attribute_obj = sectionEvaluator.evaluateScript(sectionsGr, 'attributes');
+
+			
+			//If the result of section attribute "show" is true, get all associated questions
+			if(sectionObj.attribute_obj.show){
+				sectionObj.questions = new FCQuestionRepository(true).getQuestions(formObj, sectionObj.sys_id, targetGr, params);
+			}
+
+			result.push(sectionObj);
+		}
+
+		return result;
+	},
+
+
+	/** @type {string} The type of the repository. */
+	type: 'FCSectionRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-09 21:47:45</sys_created_on>
+        <sys_id>8ed562e997938ad0e12c3eb0f053af2b</sys_id>
+        <sys_mod_count>24</sys_mod_count>
+        <sys_name>FCSectionRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_8ed562e997938ad0e12c3eb0f053af2b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:45</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>8ed562e997938ad0e12c3eb0f053af2b</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-30 12:02:39</sys_created_on>
+        <sys_id>7cbb1a7d836d9a10926492b6feaad35a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-30 12:02:39</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

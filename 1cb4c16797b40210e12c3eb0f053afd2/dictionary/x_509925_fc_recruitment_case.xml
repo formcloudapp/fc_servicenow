@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="e767c85e8399e210005fb955eeaad307" extends="x_509925_fc_case" label="Recruitment Case" max_length="40" name="x_509925_fc_recruitment_case" type="collection">
+        <element label="Work Schedule" max_length="40" name="work_schedule" type="string"/>
+        <element label="PD Received Date" max_length="40" name="pd_received_date" type="glide_date"/>
+        <element choice="1" label="PD Completeness Check" max_length="40" name="pd_completeness_check" type="string">
+            <choice>
+                <element inactive_on_update="false" label="PD is complete" value="PD is complete"/>
+                <element inactive_on_update="false" label="PD requires revision" value="PD requires revision"/>
+            </choice>
+        </element>
+        <element label="Position Sensitivity/Risk Level" max_length="40" name="position_sensitivity_risk_level" type="string"/>
+        <element label="Department/Office" max_length="32" name="department_office" reference="cmn_department" type="reference"/>
+        <element label="Position Title" max_length="255" name="position_title" type="string"/>
+        <element label="Other Reason For Request" max_length="5000" name="other_reason_for_request" type="string_full_utf8"/>
+        <element label="Pay Plan" max_length="10" name="pay_plan" type="string"/>
+        <element label="Impact of Not Classifying/Reclassifying" max_length="5000" name="impact_of_not_classifying_reclassifying" type="string_full_utf8"/>
+        <element label="Request Type" max_length="40" name="request_type" type="string"/>
+        <element label="Telework Eligibility" max_length="40" name="telework_eligibility" type="string"/>
+        <element label="FLSA Category" max_length="40" name="flsa_category" type="string"/>
+        <element label="Occupational Series" max_length="10" name="occupational_series" type="string"/>
+        <element label="Hiring Manager" max_length="32" name="hiring_manager" reference="sys_user" type="reference"/>
+        <element label="Compliance" max_length="40" name="compliance" type="string"/>
+        <element label="Major Duties Align with Series" max_length="40" name="major_duties_align_with_series" type="string"/>
+        <element label="Supervisory Controls" max_length="1000" name="supervisory_controls" type="string_full_utf8"/>
+        <element label="Grade" max_length="40" name="grade" type="integer"/>
+        <element label="Reason for Request" max_length="40" name="reason_for_request" type="string"/>
+        <element label="Supervisory Status" max_length="40" name="supervisory_status" type="string"/>
+        <element label="Major Duties" max_length="5000" name="major_duties" type="string_full_utf8"/>
+    </element>
+</database>

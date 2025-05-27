@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_question">
+    <x_509925_fc_question action="DELETE">
+        <active>true</active>
+        <add_signature_to/>
+        <allow_comment>false</allow_comment>
+        <allow_worknote>false</allow_worknote>
+        <attributes><![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+    return attributes;
+    
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base_question/>
+        <css_classes/>
+        <css_styles/>
+        <default_value><![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]></default_value>
+        <display_name>QUE0001191 - _middle_name</display_name>
+        <dynamic_list><![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]></dynamic_list>
+        <dynamic_value><![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]></dynamic_value>
+        <e_signature_type>pdf</e_signature_type>
+        <expression><![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+    return question;
+}]]></expression>
+        <flatten_document/>
+        <hidden>false</hidden>
+        <is_cascading_select>false</is_cascading_select>
+        <is_dynamic_value>false</is_dynamic_value>
+        <label>Middle Name</label>
+        <liquid>{% comment %} Liquid Template {% endcomment %}</liquid>
+        <number>QUE0001191</number>
+        <order>20</order>
+        <pdf/>
+        <pdf_attachment/>
+        <placeholder/>
+        <property>_middle_name</property>
+        <readonly>false</readonly>
+        <required_signature>false</required_signature>
+        <section display_value="Request Details">1e3b84f783869210926492b6feaad3fc</section>
+        <signature_field_name/>
+        <signature_list>[]</signature_list>
+        <signatures/>
+        <sys_class_name>x_509925_fc_question</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-30 03:11:48</sys_created_on>
+        <sys_id>877b443783869210926492b6feaad361</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Middle Name</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_question_877b443783869210926492b6feaad361</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-30 03:12:01</sys_updated_on>
+        <table>sn_hr_core_case</table>
+        <triggered_questions/>
+        <type>text</type>
+        <validate>false</validate>
+        <width>col-md-4</width>
+    </x_509925_fc_question>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_question_877b443783869210926492b6feaad361</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_question"&gt;&lt;x_509925_fc_question action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;add_signature_to/&gt;&lt;allow_comment&gt;false&lt;/allow_comment&gt;&lt;allow_worknote&gt;false&lt;/allow_worknote&gt;&lt;attributes&gt;&lt;![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+    return attributes;
+    
+})(current, table, target_id, task_id, params);]]&gt;&lt;/attributes&gt;&lt;base_question/&gt;&lt;css_classes/&gt;&lt;css_styles/&gt;&lt;default_value&gt;&lt;![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]&gt;&lt;/default_value&gt;&lt;display_name&gt;QUE0001191 - _middle_name&lt;/display_name&gt;&lt;dynamic_list&gt;&lt;![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]&gt;&lt;/dynamic_list&gt;&lt;dynamic_value&gt;&lt;![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]&gt;&lt;/dynamic_value&gt;&lt;e_signature_type&gt;pdf&lt;/e_signature_type&gt;&lt;expression&gt;&lt;![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+    return question;
+}]]&gt;&lt;/expression&gt;&lt;flatten_document/&gt;&lt;hidden&gt;false&lt;/hidden&gt;&lt;is_cascading_select&gt;false&lt;/is_cascading_select&gt;&lt;is_dynamic_value&gt;false&lt;/is_dynamic_value&gt;&lt;label&gt;Middle Name&lt;/label&gt;&lt;liquid&gt;{% comment %} Liquid Template {% endcomment %}&lt;/liquid&gt;&lt;number&gt;QUE0001191&lt;/number&gt;&lt;order&gt;20&lt;/order&gt;&lt;pdf/&gt;&lt;pdf_attachment/&gt;&lt;placeholder/&gt;&lt;property&gt;_middle_name&lt;/property&gt;&lt;readonly&gt;false&lt;/readonly&gt;&lt;required_signature&gt;false&lt;/required_signature&gt;&lt;section display_value="Request Details"&gt;1e3b84f783869210926492b6feaad3fc&lt;/section&gt;&lt;signature_field_name/&gt;&lt;signature_list&gt;[]&lt;/signature_list&gt;&lt;signatures/&gt;&lt;sys_class_name&gt;x_509925_fc_question&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2024-11-30 03:11:48&lt;/sys_created_on&gt;&lt;sys_id&gt;877b443783869210926492b6feaad361&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Middle Name&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_question_877b443783869210926492b6feaad361&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2024-11-30 03:12:01&lt;/sys_updated_on&gt;&lt;table&gt;sn_hr_core_case&lt;/table&gt;&lt;triggered_questions/&gt;&lt;type&gt;text&lt;/type&gt;&lt;validate&gt;false&lt;/validate&gt;&lt;width&gt;col-md-4&lt;/width&gt;&lt;/x_509925_fc_question&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-102537706</payload_hash>
+        <record_name>Middle Name</record_name>
+        <reverted_from/>
+        <source>8f49701083782210005fb955eeaad3cf</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-05 02:27:10</sys_created_on>
+        <sys_id>f599b09083782210005fb955eeaad3be</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19603c602730000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-05 02:27:10</sys_updated_on>
+        <type>Question</type>
+        <update_guid>ab5519535d6212106a1fbfb5b59b99cd</update_guid>
+        <update_guid_history>ab5519535d6212106a1fbfb5b59b99cd:-102537706</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Middle Name">f6ecc4f183156210005fb955eeaad384</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 11:34:17</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_question">x_509925_fc_question</sys_db_object>
+        <sys_id>1acdfbca6f5146bfb59e35c0298f2589</sys_id>
+        <sys_metadata>877b443783869210926492b6feaad361</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Middle Name</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_question_877b443783869210926492b6feaad361</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_question_877b443783869210926492b6feaad361">f599b09083782210005fb955eeaad3be</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-04 11:34:17</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

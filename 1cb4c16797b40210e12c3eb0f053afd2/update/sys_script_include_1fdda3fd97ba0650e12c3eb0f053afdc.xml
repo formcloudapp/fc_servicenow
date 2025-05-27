@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCJournalRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCJournalRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * Repository for interacting with journal entries in the 'sys_journal_field' table.
+ * Extends the Repository class.
+ * @class
+ * @extends FCRepository
+ */
+var FCJournalRepository = Class.create();
+
+FCJournalRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initializes a new instance of FCJournalRepository.
+     * @constructor
+     * @param {boolean} overrideACL - Flag to indicate whether to override the Access Control List (ACL).
+     */
+    initialize: function(overrideACL) {
+        this.moduleName = this.moduleName || 'FCJournalRepository';
+        FCRepository.prototype.initialize.call(this, 'sys_journal_field', overrideACL);
+    },
+
+	test: function(){
+		try{
+			throw new Error('Test');
+		}catch(err){
+			this.throwError(err, this.moduleName, arguments.callee.name);
+		}
+	},
+
+    /**
+     * Retrieves journal entries for a specified record and type.
+     * @param {string} recordId - The unique identifier of the record to retrieve journal entries for.
+     * @param {string} type - The type of journal entries to retrieve (e.g., 'comments', 'work_notes').
+     * @returns {Array<Object>} An array of journal entry objects containing the creation date, user information, and entry content.
+     */
+    getJournals: function(recordId, type) {
+        try {
+            this.addQuery('element=' + type + '^element_id=' + recordId + '^ORDERBYDESCsys_created_on');
+            var gr = this.getMultiple();
+            var result = [];
+            var userList = [];
+
+            while (gr.next()) {
+                result.push({
+                    sys_created_on: gr.getDisplayValue('sys_created_on'),
+                    user_name: gr.getValue('sys_created_by'),
+                    value: this._extractCodeContent(gr.getValue('value'))
+                });
+
+                if (userList.indexOf(gr.getValue('sys_created_by')) == -1) {
+                    userList.push(gr.getValue('sys_created_by'));
+                }
+            }
+
+            var userGr = new FCUserRepository(true).addQuery('user_nameIN' + userList.join(',')).getMultiple();
+            while (userGr.next()) {
+                result.forEach(item => {
+                    if (item.user_name == userGr.getValue('user_name')) {
+                        item.avatar = gs.getProperty('glide.servlet.uri') + userGr.getValue('avatar') + '.iix?t=small';
+                        item.name = userGr.getValue('name');
+                    }
+                });
+            }
+            return result;
+        } catch (err) {
+            this.throwError(err, this.moduleName, arguments.callee.name);
+        }
+    },
+
+    /**
+     * Extracts code content wrapped in [code] tags from a given text.
+     * @param {string} text - The text to extract code content from.
+     * @returns {string} The extracted code content if found, otherwise returns the original text.
+     * @private
+     */
+    _extractCodeContent: function(text) {
+        const regex = /\[code\](.*?)\[\/code\]/s;
+        const match = text.match(regex);
+        if (match && match[1]) {
+            return match[1];
+        } else {
+            return text;
+        }
+    },
+
+    /**
+     * The type name of the repository.
+     * @type {string}
+     */
+    type: 'FCJournalRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-16 01:09:05</sys_created_on>
+        <sys_id>1fdda3fd97ba0650e12c3eb0f053afdc</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>FCJournalRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_1fdda3fd97ba0650e12c3eb0f053afdc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:44</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>1fdda3fd97ba0650e12c3eb0f053afdc</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-21 02:24:07</sys_created_on>
+        <sys_id>d6f04e7283511610926492b6feaad399</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-21 02:24:07</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

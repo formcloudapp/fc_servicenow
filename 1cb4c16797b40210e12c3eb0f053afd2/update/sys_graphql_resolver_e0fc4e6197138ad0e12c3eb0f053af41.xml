@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver">
+    <sys_graphql_resolver action="INSERT_OR_UPDATE">
+        <name>x_509925_fc_questionnaire.question_types</name>
+        <schema display_value="Core">99574c8e973e0650e12c3eb0f053af40</schema>
+        <script><![CDATA[(function process( /*ResolverEnvironment*/ env) {
+
+    return new FCChoiceRepository(true).getByTableField('x_509925_fc_question', 'type');
+})(env);
+]]></script>
+        <sys_class_name>sys_graphql_resolver</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-09 19:58:25</sys_created_on>
+        <sys_id>e0fc4e6197138ad0e12c3eb0f053af41</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>x_509925_fc_questionnaire.question_types</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_resolver_e0fc4e6197138ad0e12c3eb0f053af41</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:30:12</sys_updated_on>
+    </sys_graphql_resolver>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>e0fc4e6197138ad0e12c3eb0f053af41</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 05:30:12</sys_created_on>
+        <sys_id>3de4209b83b1d610926492b6feaad390</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:30:12</sys_updated_on>
+        <table>sys_graphql_resolver</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

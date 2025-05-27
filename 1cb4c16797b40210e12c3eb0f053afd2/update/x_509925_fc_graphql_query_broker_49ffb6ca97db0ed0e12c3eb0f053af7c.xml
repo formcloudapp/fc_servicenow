@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_graphql_query_broker">
+    <x_509925_fc_graphql_query_broker action="INSERT_OR_UPDATE">
+        <ai_filter>false</ai_filter>
+        <allow_selection>false</allow_selection>
+        <base>true</base>
+        <columns_configs>[{"label":"ID","pin":false,"search":false,"search_name":"sys_id","search_default":false,"sorting":false,"sort_name":"sys_id","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\r\n\r\n    return {\r\n        value: value,\r\n        record: record\r\n    }\r\n}","search_choices":[],"value":"sys_id","display_type":"value"},{"label":"Name","pin":true,"search":true,"search_name":"name","search_default":true,"sorting":true,"sort_name":"name","sort_default":false,"template":"&lt;mdui-button variant=\"text\" @click=\"navigate()\"&gt;\r\n    &lt;span x-text=\"value\"&gt;&lt;/span&gt;\r\n&lt;/mdui-button&gt;\r\n","transform":"function execute(value, record, service) {\n    function navigate() {\n        service.navigate(`/${window.FC.base}?id=fc_menu&amp;targetId=${record.sys_id.value}`);\n    }\n    return {\n        navigate: navigate,\n        value: value,\n        record: record\n    }\n}","value":"name","search_choices":[],"display_type":"display"},{"label":"Condition","pin":false,"search":false,"search_name":"condition","search_default":false,"sorting":false,"sort_name":"condition","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}\n","value":"condition","search_choices":[],"display_type":"display"},{"label":"Parent","pin":true,"search":true,"search_name":"parent","search_default":false,"sorting":false,"sort_name":"parent","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"parent","search_choices":[],"display_type":"display"},{"label":"URL","pin":true,"search":true,"search_name":"url","search_default":false,"sorting":false,"sort_name":"url","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;\r\n","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}\n\n","value":"url","search_choices":[],"display_type":"display"},{"label":"URL Type","pin":true,"search":true,"search_name":"url_type","search_default":false,"sorting":false,"sort_name":"url_type","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;\r\n","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}\n\n","value":"url_type","search_choices":[],"display_type":"display"},{"label":"Order","pin":true,"search":true,"search_name":"order","search_default":false,"sorting":true,"sort_name":"order","sort_default":true,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;\r\n","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}\n\n","value":"order","search_choices":[],"editable":true,"display_type":"value"}]</columns_configs>
+        <filter_builder><![CDATA[((current, params) => {
+
+    return 'type=menu_item^ORDERBYDESCsys_created_on';
+
+})(current, params);]]></filter_builder>
+        <filters table="x_509925_fc_taxonomy">^EQ<item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filters>
+        <gql><![CDATA[function execute(params, configs) {
+    let gql = '';
+    if (configs.schema == 'ootb') {
+        gql = `
+		{
+			GlideRecord_Query{
+				${configs.table}(queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} }) {
+					_rowCount
+					_results ${configs.gql}
+				}
+			}
+		}
+	`;
+    }else{
+		gql = `
+		{
+			${configs.namespace}{
+				${configs.gql_schema}{
+					getMultiple(tableName: "${configs.table}", queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} })
+					{
+						sys_id{
+							value
+						}
+						...on ${configs.namespace}_${configs.gql_schema}_${configs.table}  ${configs.gql}
+					}
+					getCount(tableName: "${configs.table}", queryConditions: "${configs.filters}")
+				}
+			}
+		}
+		`;
+	}
+
+    return gql;
+}]]></gql>
+        <gql_path/>
+        <graphql_schema display_value="Core">99574c8e973e0650e12c3eb0f053af40</graphql_schema>
+        <metadata>{"table":"x_509925_fc_taxonomy","fields":[{"column_name":null,"column_label":null,"max_length":"40","type":"collection","mandatory":"0","is_choice":true,"choices":[]},{"column_name":null,"column_label":null,"max_length":"40","type":"collection","mandatory":"0","is_choice":false},{"column_name":"advance","column_label":"Advance","max_length":"8000","type":"script","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"base","column_label":"Base","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"condition","column_label":"Condition","max_length":"8000","type":"script","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"group","column_label":"Group","max_length":"32","type":"reference","mandatory":"0","is_choice":true,"choices":[],"reference":"#/definitions/sys_user_group"},{"column_name":"icon","column_label":"icon","max_length":"1000","type":"string_full_utf8","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"name","column_label":"Name","max_length":"100","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"order","column_label":"Order","max_length":"40","type":"integer","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"parent","column_label":"Parent","max_length":"32","type":"reference","mandatory":"0","is_choice":true,"choices":[],"reference":"#/definitions/x_509925_fc_taxonomy"},{"column_name":"sys_class_name","column_label":"Class","max_length":"80","type":"sys_class_name","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"sys_created_by","column_label":"Created by","max_length":"40","type":"string","mandatory":"0","is_choice":false},{"column_name":"sys_created_on","column_label":"Created","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"sys_id","column_label":"Sys ID","max_length":"32","type":"GUID","mandatory":"0","is_choice":false},{"column_name":"sys_id","column_label":"Sys ID","max_length":"32","type":"GUID","mandatory":"1","is_choice":false},{"column_name":"sys_mod_count","column_label":"Updates","max_length":"40","type":"integer","mandatory":"0","is_choice":false},{"column_name":"sys_name","column_label":"Display name","max_length":"255","type":"string","mandatory":"0","is_choice":false},{"column_name":"sys_package","column_label":"Package","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sys_package"},{"column_name":"sys_policy","column_label":"Protection policy","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[{"label":"Protected","value":"protected"},{"label":"Read-only","value":"read"}]},{"column_name":"sys_scope","column_label":"Application","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sys_scope"},{"column_name":"sys_updated_by","column_label":"Updated by","max_length":"40","type":"string","mandatory":"0","is_choice":false},{"column_name":"sys_updated_on","column_label":"Updated","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"sys_update_name","column_label":"Update name","max_length":"250","type":"string","mandatory":"0","is_choice":false},{"column_name":"type","column_label":"Type","max_length":"40","type":"choice","mandatory":"0","is_choice":true,"choices":[{"label":"Folder","value":"folder"},{"label":"Menu Item","value":"menu_item"},{"label":"Page","value":"page"},{"label":"Persona","value":"persona"},{"label":"Service","value":"service"},{"label":"Snippet","value":"snippet"},{"label":"Template","value":"template"}]},{"column_name":"url","column_label":"Url","max_length":"1000","type":"string_full_utf8","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"url_type","column_label":"Url Type","max_length":"40","type":"choice","mandatory":"0","is_choice":true,"choices":[{"label":"Advance","value":"advance"},{"label":"External URL","value":"external_url"},{"label":"Page","value":"page"}]}]}</metadata>
+        <name>menus</name>
+        <number>GQL0001021</number>
+        <record_details/>
+        <record_script><![CDATA[function execute(record, service) {
+
+    return {
+        record: record
+    }
+}]]></record_script>
+        <row_count_path/>
+        <schema>custom</schema>
+        <script><![CDATA[((current, params) => {
+	const namespace = gs.getProperty(current.sys_scope.scope + '.graphql_namespace');
+	const gqlSchemaGr = current.graphql_schema.getRefRecord();
+    let datatableConfig = {
+        table: current.getValue('table'),
+        filters: current.getValue('filters'),
+        allow_selection: current.getValue('allow_selection'),
+        gql: current.getValue('gql'),
+        details_template: current.getValue('record_details'),
+		gql_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._results') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getMultiple'),
+        row_count_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._rowCount') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getCount'),
+        data_columns: JSON.parse(current.getValue('columns_configs')),
+		schema: current.getValue('schema'),
+		gql_schema: gqlSchemaGr.getValue('namespace')
+    };
+
+    return datatableConfig;
+
+})(current, params);]]></script>
+        <sys_class_name>x_509925_fc_graphql_query_broker</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-07-11 12:58:15</sys_created_on>
+        <sys_id>49ffb6ca97db0ed0e12c3eb0f053af7c</sys_id>
+        <sys_mod_count>44</sys_mod_count>
+        <sys_name>menus</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_graphql_query_broker_49ffb6ca97db0ed0e12c3eb0f053af7c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 12:28:45</sys_updated_on>
+        <table>x_509925_fc_taxonomy</table>
+    </x_509925_fc_graphql_query_broker>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>49ffb6ca97db0ed0e12c3eb0f053af7c</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 13:32:02</sys_created_on>
+        <sys_id>3b23dad783f9d610926492b6feaad3dc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 13:32:02</sys_updated_on>
+        <table>x_509925_fc_graphql_query_broker</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

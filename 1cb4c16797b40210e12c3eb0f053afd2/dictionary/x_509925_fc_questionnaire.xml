@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="164d49af97b40210e12c3eb0f053af22" extends="sys_metadata" label="Questionnaire" max_length="40" name="x_509925_fc_questionnaire" type="collection">
+        <element default="Cancel" label="Cancel Label" max_length="50" name="cancel_label" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Show Cancel" max_length="40" name="show_cancel" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Reassignable" max_length="40" name="reassignable" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(form) {&#13;&#10;    //First we want to check if there's a task_id&#13;&#10;&#9;if(!gs.nil(form._task_id)){&#13;&#10;&#9;&#9;var calceledTaskResult = new HRTaskRepository().cancelTask(form._task_id);&#13;&#10;&#9;}&#13;&#10;})(form);" label="Cancel Callback" max_length="8000" name="cancel_callback" type="script"/>
+        <element attributes="edge_encryption_enabled=true" default="true" label="Show Submit" max_length="40" name="show_submit" type="boolean"/>
+        <element display="true" label="Name" mandatory="true" max_length="255" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Require ESignature" max_length="40" name="require_esignature" type="boolean"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true,no_sort=true,slushbucket_ref_no_expand=true" label="Related Knowledge" max_length="4000" name="related_knowledge" reference="kb_knowledge" type="glide_list"/>
+        <element attributes="edge_encryption_enabled=true" label="Base" max_length="40" name="base" type="boolean"/>
+        <element default="[]" label="Signature List" max_length="2000" name="signature_list" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(form) {&#13;&#10;&#13;&#10;})(form);" label="Submit Callback" max_length="8000" name="submit_callback" type="script"/>
+        <element default="Delete" label="Delete Label" max_length="50" name="delete_label" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Show Save" max_length="40" name="show_save" type="boolean"/>
+        <element default="I'm confirming that all information provided is true and correct to the best of my knowledge." label="Submit Confirmation Message" mandatory="true" max_length="1000" name="submit_confirmation_message" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(form) {&#13;&#10;    &#13;&#10;    return form;&#13;&#10;    &#13;&#10;})(form);" label="On-Submit" max_length="8000" name="on_submit" type="script"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Subtype" max_length="40" name="subtype" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Task" value="task"/>
+                <element inactive_on_update="false" label="Record" value="record"/>
+                <element inactive_on_update="false" label="Request" value="request"/>
+            </choice>
+        </element>
+        <element default="Submit" label="Submit Label" mandatory="true" max_length="50" name="submit_label" type="string"/>
+        <element default="function execute(helper, form, params){&#13;&#10;&#9;helper.service.navigate('?id=home');&#13;&#10;}" label="Client Submit Callback" max_length="8000" name="client_submit_callback" type="script"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(current, table, target_id, task_id, params){&#13;&#10;&#9;&#13;&#10;&#9;var attributes = new FCQuestionnaireRepository().getDefaultAttributes(current, table, target_id, task_id, params);&#13;&#10;&#9;return attributes;&#13;&#10;&#9;&#13;&#10;})(current, table, target_id, task_id, params);" label="Attributes" mandatory="true" max_length="8000" name="attributes" type="script"/>
+        <element label="Table" mandatory="true" max_length="100" name="table" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="true" label="Close Task On Submit" max_length="40" name="close_task_on_submit" type="boolean"/>
+        <element default="Save Draft" label="Save Label" max_length="50" name="save_label" type="string"/>
+        <element label="Route" max_length="100" name="route" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="true" label="Show Title" max_length="40" name="show_title" type="boolean"/>
+        <element label="CSS Classes" max_length="255" name="css_classes" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Record Producer" sequence="1" value="record_producer"/>
+                <element inactive_on_update="false" label="History Record Producer" sequence="2" value="history_record_producer"/>
+                <element inactive_on_update="false" label="JSON" sequence="3" value="json"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="PDF" max_length="32" name="pdf" reference="sys_attachment" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Draftable" max_length="40" name="draftable" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Deleteable" max_length="40" name="deleteable" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Delete Draft On Load" max_length="40" name="delete_draft_on_load" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Readonly" max_length="40" name="readonly" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(form) {&#13;&#10;    var result = {&#13;&#10;        validation: true,&#13;&#10;        message: ''&#13;&#10;    };&#13;&#10;&#13;&#10;    return result;&#13;&#10;})(form);" label="Validation" mandatory="true" max_length="8000" name="validation" type="script"/>
+        <element attributes="edge_encryption_enabled=true" label="Show Signature" max_length="40" name="show_signature" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(form){&#13;&#10;&#9;throw new Error('Non Implementation Error.');&#13;&#10;})(form);" label="Delete Callback" max_length="8000" name="delete_callback" type="script"/>
+        <element label="What's Next" max_length="2000" name="whats_next" type="string_full_utf8"/>
+        <index name="index">
+            <element name="pdf"/>
+        </index>
+    </element>
+</database>

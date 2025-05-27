@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="DELETE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+    function initialize() {
+        var model = {
+            condition: true,
+            default_options: {
+                title: 'Number of Accounts'
+            },
+            options: params
+        };
+        return model;
+    }
+
+    return {
+        initialize: initialize,
+    };
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers){
+    function myFunction(){
+        return 'Hello World!';
+    }
+
+    return {
+        myFunction: myFunction
+    };
+}]]></client_scripts>
+        <css/>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>single_score</route>
+        <settings>{}</settings>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-27 12:13:43</sys_created_on>
+        <sys_id>f8827e4d8375e610005fb955eeaad31a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_f8827e4d8375e610005fb955eeaad31a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-27 12:13:43</sys_updated_on>
+        <template>[]</template>
+        <title>Single Score</title>
+        <type>widget</type>
+    </x_509925_fc_page>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_page_f8827e4d8375e610005fb955eeaad31a</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_page"&gt;&lt;x_509925_fc_page action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;add_to_menu&gt;false&lt;/add_to_menu&gt;&lt;attributes&gt;&lt;![CDATA[(function (params) {
+
+    function initialize() {
+        var model = {
+            condition: true,
+            default_options: {
+                title: 'Number of Accounts'
+            },
+            options: params
+        };
+        return model;
+    }
+
+    return {
+        initialize: initialize,
+    };
+
+})(params);]]&gt;&lt;/attributes&gt;&lt;base&gt;false&lt;/base&gt;&lt;client_scripts&gt;&lt;![CDATA[function execute(helpers){
+    function myFunction(){
+        return 'Hello World!';
+    }
+
+    return {
+        myFunction: myFunction
+    };
+}]]&gt;&lt;/client_scripts&gt;&lt;css/&gt;&lt;is_homepage&gt;false&lt;/is_homepage&gt;&lt;is_page_template&gt;false&lt;/is_page_template&gt;&lt;route&gt;single_score&lt;/route&gt;&lt;settings&gt;{}&lt;/settings&gt;&lt;sys_class_name&gt;x_509925_fc_page&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-05-27 12:13:43&lt;/sys_created_on&gt;&lt;sys_id&gt;f8827e4d8375e610005fb955eeaad31a&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name/&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_page_f8827e4d8375e610005fb955eeaad31a&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-27 12:13:43&lt;/sys_updated_on&gt;&lt;template&gt;[]&lt;/template&gt;&lt;title&gt;Single Score&lt;/title&gt;&lt;type&gt;widget&lt;/type&gt;&lt;/x_509925_fc_page&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-508270154</payload_hash>
+        <record_name/>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-27 12:13:43</sys_created_on>
+        <sys_id>74827e4d8375e610005fb955eeaad31d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19711a9b3420000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-27 12:13:43</sys_updated_on>
+        <type>Page</type>
+        <update_guid>78827e4d0f75e61011f828935522541c</update_guid>
+        <update_guid_history>78827e4d0f75e61011f828935522541c:-508270154</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">c0b2fe4d8375e610005fb955eeaad34a</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-27 12:14:29</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_page">x_509925_fc_page</sys_db_object>
+        <sys_id>3d9956d8f4f44c3697be4f05e0d59101</sys_id>
+        <sys_metadata>f8827e4d8375e610005fb955eeaad31a</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_page_f8827e4d8375e610005fb955eeaad31a</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_page_f8827e4d8375e610005fb955eeaad31a">74827e4d8375e610005fb955eeaad31d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-27 12:14:29</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>execute</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+	var data = request.body.data;
+	if (data.id && data.method) {
+		var pageGr = new FCPageRepository(true).getById(data.id);
+		if (pageGr) {
+			var evaluator = new GlideScopedEvaluator();
+			evaluator.putVariable('params', data.params || {});
+			var attributes = evaluator.evaluateScript(pageGr, 'attributes');
+			return attributes[data.method](...data.parameters);
+		}
+	}
+	response.setStatus(404);
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_509925_fc/page/execute</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/execute</relative_path>
+        <request_example/>
+        <requires_acl_authorization>false</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 14:46:00</sys_created_on>
+        <sys_id>8e94a63b831c9210926492b6feaad307</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>execute</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_ws_operation_8e94a63b831c9210926492b6feaad307</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 04:55:40</sys_updated_on>
+        <web_service_definition display_value="Page">db6bb80f97874e90e12c3eb0f053af7b</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>8e94a63b831c9210926492b6feaad307</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-04 14:46:00</sys_created_on>
+        <sys_id>e708a63b831c9210926492b6feaad377</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-04 14:46:00</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

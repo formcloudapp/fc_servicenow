@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_graphql_query_broker">
+    <x_509925_fc_graphql_query_broker action="INSERT_OR_UPDATE">
+        <ai_filter>false</ai_filter>
+        <allow_selection>false</allow_selection>
+        <base>true</base>
+        <columns_configs>[{"label":"Action","pin":false,"search":false,"search_name":"sys_id","search_default":false,"sorting":false,"sort_name":"sys_id","sort_default":false,"template":"&lt;mdui-button-icon @click=\"openPlaybook('test')\" icon=\"smart_toy\"&gt;&lt;/mdui-button-icon&gt;","transform":"function execute(value, record, service){\n\n    function openPlaybook(message){\n        alert(message);\n    }\n\n    return {\n        value: value,\n        record: record,\n        openPlaybook: openPlaybook\n    }\n}\n\n","search_choices":[],"value":"sys_id","display_type":"value"},{"pin":true,"label":"Number","value":"number","sorting":true,"sort_name":"number","search":true,"search_name":"number","transform":"function execute(value, record, service){\r\n\r\n    return {\r\n        url: `/${window.FC.base}?id=fc_editor&amp;formId=${record.sys_id.value}&amp;editorType=form`,\r\n        value: value,\r\n        record: record\r\n    }\r\n}\r\n\r\n","template":"&lt;mdui-button variant=\"text\" @click=\"window.open(url, '_blank').focus()\"&gt;\r\n    &lt;span x-text=\"value\"&gt;&lt;/span&gt;\r\n&lt;/mdui-button&gt;\r\n","display_type":"value","editable":false},{"pin":true,"label":"Name","value":"name","sorting":true,"sort_name":"name","search":true,"search_name":"name","template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;\r\n","display_type":"value","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","search_default":false},{"pin":true,"label":"Type","value":"type","sorting":true,"sort_name":"type","search":true,"search_name":"type","search_choices":[{"label":"Record Producer","value":"record_producer"},{"label":"Questionnaire","value":"questionnaire"}],"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;\r\n","display_type":"display","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}"},{"label":"Table","pin":false,"search":true,"search_name":"table","search_default":false,"sorting":false,"sort_name":"table","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;\r\n","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"table","search_choices":[],"display_type":"value"},{"label":"Subtype","pin":true,"search":true,"search_name":"subtype","search_default":false,"sorting":false,"sort_name":"subtype","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"subtype","search_choices":[],"editable":false,"display_type":"display"},{"label":"Created On","pin":true,"search":false,"search_name":"sys_created_on","search_default":false,"sorting":true,"sort_name":"sys_created_on","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"sys_created_on","search_choices":[],"editable":false,"display_type":"display"},{"label":"Created By","pin":true,"search":true,"search_name":"sys_created_by","search_default":false,"sorting":true,"sort_name":"sys_created_by","sort_default":false,"template":"&lt;span x-text=\"value\"&gt;&lt;/span&gt;","transform":"function execute(value, record, service){\n\n    return {\n        value: value,\n        record: record\n    }\n}","value":"sys_created_by","search_choices":[],"editable":false,"display_type":"display"}]</columns_configs>
+        <filter_builder><![CDATA[((current, params) => {
+
+    return 'sys_idISNOTEMPTY^ORDERBYDESCsys_created_on^EQ';
+
+})(current, params);]]></filter_builder>
+        <filters table="x_509925_fc_questionnaire">^EQ<item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filters>
+        <gql><![CDATA[function execute(params, configs) {
+    let gql = '';
+    if (configs.schema == 'ootb') {
+        gql = `
+		{
+			GlideRecord_Query{
+				${configs.table}(queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} }) {
+					_rowCount
+					_results ${configs.gql}
+				}
+			}
+		}
+	`;
+    }else{
+		gql = `
+		{
+			${configs.namespace}{
+				${configs.gql_schema}{
+					getMultiple(tableName: "${configs.table}", queryConditions: "${configs.filters}", pagination: { offset: ${configs.offset}, limit: ${configs.limit} })
+					{
+						sys_id{
+							value
+						}
+						...on ${configs.namespace}_${configs.gql_schema}_${configs.table}  ${configs.gql}
+					}
+					getCount(tableName: "${configs.table}", queryConditions: "${configs.filters}")
+				}
+			}
+		}
+		`;
+	}
+
+    return gql;
+}]]></gql>
+        <gql_path/>
+        <graphql_schema display_value="Core">99574c8e973e0650e12c3eb0f053af40</graphql_schema>
+        <metadata>{"table":"x_509925_fc_questionnaire","fields":[{"column_name":null,"column_label":null,"max_length":"40","type":"collection","mandatory":"0","is_choice":true,"choices":[]},{"column_name":null,"column_label":null,"max_length":"40","type":"collection","mandatory":"0","is_choice":false},{"column_name":"attributes","column_label":"Attributes","max_length":"8000","type":"script","mandatory":"1","is_choice":true,"choices":[]},{"column_name":"base","column_label":"Base","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"cancel_callback","column_label":"Cancel Callback","max_length":"8000","type":"script","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"cancel_label","column_label":"Cancel Label","max_length":"50","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"client_submit_callback","column_label":"Client Submit Callback","max_length":"8000","type":"script","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"close_task_on_submit","column_label":"Close Task On Submit","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"css_classes","column_label":"CSS Classes","max_length":"255","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"deleteable","column_label":"Deleteable","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"delete_callback","column_label":"Delete Callback","max_length":"8000","type":"script","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"delete_draft_on_load","column_label":"Delete Draft On Load","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"delete_label","column_label":"Delete Label","max_length":"50","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"draftable","column_label":"Draftable","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"name","column_label":"Name","max_length":"255","type":"string","mandatory":"1","is_choice":true,"choices":[]},{"column_name":"number","column_label":"Number","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"on_submit","column_label":"On-Submit","max_length":"8000","type":"script","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"pdf","column_label":"PDF","max_length":"32","type":"reference","mandatory":"0","is_choice":true,"choices":[],"reference":"#/definitions/sys_attachment"},{"column_name":"readonly","column_label":"Readonly","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"reassignable","column_label":"Reassignable","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"related_knowledge","column_label":"Related Knowledge","max_length":"4000","type":"glide_list","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"require_esignature","column_label":"Require ESignature","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"route","column_label":"Route","max_length":"100","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"save_label","column_label":"Save Label","max_length":"50","type":"string","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"show_cancel","column_label":"Show Cancel","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"show_save","column_label":"Show Save","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"show_signature","column_label":"Show Signature","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"show_submit","column_label":"Show Submit","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"show_title","column_label":"Show Title","max_length":"40","type":"boolean","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"signature_list","column_label":"Signature List","max_length":"2000","type":"string_full_utf8","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"submit_callback","column_label":"Submit Callback","max_length":"8000","type":"script","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"submit_confirmation_message","column_label":"Submit Confirmation Message","max_length":"1000","type":"string","mandatory":"1","is_choice":true,"choices":[]},{"column_name":"submit_label","column_label":"Submit Label","max_length":"50","type":"string","mandatory":"1","is_choice":true,"choices":[]},{"column_name":"subtype","column_label":"Subtype","max_length":"40","type":"choice","mandatory":"0","is_choice":true,"choices":[{"label":"Record","value":"record"},{"label":"Request","value":"request"},{"label":"Task","value":"task"}]},{"column_name":"sys_class_name","column_label":"Class","max_length":"80","type":"sys_class_name","mandatory":"0","is_choice":true,"choices":[]},{"column_name":"sys_created_by","column_label":"Created by","max_length":"40","type":"string","mandatory":"0","is_choice":false},{"column_name":"sys_created_on","column_label":"Created","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"sys_id","column_label":"Sys ID","max_length":"32","type":"GUID","mandatory":"0","is_choice":false},{"column_name":"sys_id","column_label":"Sys ID","max_length":"32","type":"GUID","mandatory":"1","is_choice":false},{"column_name":"sys_mod_count","column_label":"Updates","max_length":"40","type":"integer","mandatory":"0","is_choice":false},{"column_name":"sys_name","column_label":"Display name","max_length":"255","type":"string","mandatory":"0","is_choice":false},{"column_name":"sys_package","column_label":"Package","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sys_package"},{"column_name":"sys_policy","column_label":"Protection policy","max_length":"40","type":"string","mandatory":"0","is_choice":true,"choices":[{"label":"Protected","value":"protected"},{"label":"Read-only","value":"read"}]},{"column_name":"sys_scope","column_label":"Application","max_length":"32","type":"reference","mandatory":"0","is_choice":false,"reference":"#/definitions/sys_scope"},{"column_name":"sys_updated_by","column_label":"Updated by","max_length":"40","type":"string","mandatory":"0","is_choice":false},{"column_name":"sys_updated_on","column_label":"Updated","max_length":"40","type":"glide_date_time","mandatory":"0","is_choice":false},{"column_name":"sys_update_name","column_label":"Update name","max_length":"250","type":"string","mandatory":"0","is_choice":false},{"column_name":"table","column_label":"Table","max_length":"100","type":"string","mandatory":"1","is_choice":true,"choices":[]},{"column_name":"type","column_label":"Type","max_length":"40","type":"choice","mandatory":"0","is_choice":true,"choices":[{"label":"History Record Producer","value":"history_record_producer"},{"label":"JSON","value":"json"},{"label":"Record Producer","value":"record_producer"}]},{"column_name":"validation","column_label":"Validation","max_length":"8000","type":"script","mandatory":"1","is_choice":true,"choices":[]},{"column_name":"whats_next","column_label":"What's Next","max_length":"2000","type":"string_full_utf8","mandatory":"0","is_choice":true,"choices":[]}]}</metadata>
+        <name>questionnaires</name>
+        <number>GQL0001005</number>
+        <record_details/>
+        <record_script><![CDATA[function execute(record, service) {
+
+    return {
+        record: record
+    }
+}]]></record_script>
+        <row_count_path/>
+        <schema>custom</schema>
+        <script><![CDATA[((current, params) => {
+	const namespace = gs.getProperty(current.sys_scope.scope + '.graphql_namespace');
+	const gqlSchemaGr = current.graphql_schema.getRefRecord();
+    let datatableConfig = {
+        table: current.getValue('table'),
+        filters: current.getValue('filters'),
+        allow_selection: current.getValue('allow_selection'),
+        gql: current.getValue('gql'),
+        details_template: current.getValue('record_details'),
+		gql_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._results') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getMultiple'),
+        row_count_path: current.getValue('schema') == 'ootb' ? ('GlideRecord_Query.' + current.getValue('table') + '._rowCount') : (namespace + '.' + gqlSchemaGr.getValue('namespace')+ '.getCount'),
+        data_columns: JSON.parse(current.getValue('columns_configs')),
+		schema: current.getValue('schema'),
+		gql_schema: gqlSchemaGr.getValue('namespace')
+    };
+
+    return datatableConfig;
+
+})(current, params);]]></script>
+        <sys_class_name>x_509925_fc_graphql_query_broker</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-20 01:22:34</sys_created_on>
+        <sys_id>7fc61c1b97fe8a50e12c3eb0f053af7e</sys_id>
+        <sys_mod_count>121</sys_mod_count>
+        <sys_name>questionnaires</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_graphql_query_broker_7fc61c1b97fe8a50e12c3eb0f053af7e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 19:26:01</sys_updated_on>
+        <table>x_509925_fc_questionnaire</table>
+    </x_509925_fc_graphql_query_broker>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>7fc61c1b97fe8a50e12c3eb0f053af7e</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 13:25:00</sys_created_on>
+        <sys_id>b091125783f9d610926492b6feaad31c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 13:25:00</sys_updated_on>
+        <table>x_509925_fc_graphql_query_broker</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

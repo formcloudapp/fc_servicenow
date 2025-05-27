@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="a598297997320650e12c3eb0f053affc" extends="sys_metadata" label="Question" max_length="40" name="x_509925_fc_question" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Checkbox" value="checkbox"/>
+                <element inactive_on_update="false" label="Review" value="review"/>
+                <element inactive_on_update="false" label="Date" value="date"/>
+                <element inactive_on_update="false" label="Time Input" value="timeinput"/>
+                <element inactive_on_update="false" label="E-Signature" value="esignature"/>
+                <element inactive_on_update="false" label="Worknote" value="worknote"/>
+                <element inactive_on_update="false" label="Number" value="number"/>
+                <element inactive_on_update="false" label="Template" value="liquid"/>
+                <element inactive_on_update="false" label="Phone" value="phone"/>
+                <element inactive_on_update="false" label="Radio" value="radio"/>
+                <element inactive_on_update="false" label="Code" value="code"/>
+                <element inactive_on_update="false" label="Select" value="select"/>
+                <element inactive_on_update="false" label="Datepicker" value="datepicker"/>
+                <element inactive_on_update="false" label="Tree" value="tree"/>
+                <element inactive_on_update="false" label="Currency" value="currency"/>
+                <element inactive_on_update="false" label="SSN" value="ssn"/>
+                <element inactive_on_update="false" label="Dynamic Select" value="dynamic_select"/>
+                <element inactive_on_update="false" label="Multiselect" value="multiselect"/>
+                <element inactive_on_update="false" label="Attachment" value="attachment"/>
+                <element inactive_on_update="false" label="Related List" value="related_list"/>
+                <element inactive_on_update="false" label="Multiselect List" value="multiselect_list"/>
+                <element inactive_on_update="false" label="Autocomplete" value="autocomplete"/>
+                <element inactive_on_update="false" label="Repeater" value="repeater"/>
+                <element inactive_on_update="false" label="Datatable" value="datatable"/>
+                <element inactive_on_update="false" label="Text" value="text"/>
+                <element inactive_on_update="false" label="Textarea" value="textarea"/>
+                <element inactive_on_update="false" label="Email" value="email"/>
+                <element inactive_on_update="false" label="Widget" value="widget"/>
+            </choice>
+        </element>
+        <element label="Table" max_length="100" name="table" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="0" label="Order" mandatory="true" max_length="40" name="order" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" default="(function (target, source, keyValue) {&#13;&#10;&#13;&#10;    var result = [];&#13;&#10;&#13;&#10;    return result;&#13;&#10;&#13;&#10;})(target, source, keyValue);" label="Dynamic List" mandatory="true" max_length="4000" name="dynamic_list" type="script"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="PDF Attachment" max_length="32" name="pdf_attachment" reference="sn_hr_core_pdf_template" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Section" mandatory="true" max_length="32" name="section" reference="x_509925_fc_section" reference_cascade_rule="cascade" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Flatten Document" max_length="40" name="flatten_document" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="No" value="No"/>
+                <element inactive_on_update="false" label="Yes" value="Yes"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Readonly" max_length="40" name="readonly" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire&#13;&#10;function execute(keyValue, question) {&#13;&#10;    return question;&#13;&#10;}" label="Expression" max_length="8000" name="expression" type="script"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Add Signature To" max_length="32" name="add_signature_to" reference="x_509925_fc_questionnaire" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" default="col-md-12" label="Width" mandatory="true" max_length="40" name="width" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="4" sequence="40" value="col-md-4"/>
+                <element inactive_on_update="false" label="12" sequence="10" value="col-md-12"/>
+                <element inactive_on_update="false" label="3" sequence="50" value="col-md-3"/>
+                <element inactive_on_update="false" label="8" sequence="20" value="col-md-8"/>
+                <element inactive_on_update="false" label="6" sequence="30" value="col-md-6"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Hidden" max_length="40" name="hidden" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="//Use this field to calculate the default value&#13;&#10;(function (current, table, target_id, task_id, params) {&#13;&#10;    return null;&#13;&#10;})(current, table, target_id, task_id, params);" label="Default Value" max_length="8000" name="default_value" type="script"/>
+        <element attributes="edge_encryption_enabled=true,no_sort=true,slushbucket_ref_no_expand=true" label="Triggered Questions" max_length="4000" name="triggered_questions" reference="x_509925_fc_question" type="glide_list"/>
+        <element display="true" label="Label" max_length="255" name="label" type="string"/>
+        <element label="CSS Classes" max_length="255" name="css_classes" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Is Dynamic Value" max_length="40" name="is_dynamic_value" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Validate" max_length="40" name="validate" type="boolean"/>
+        <element label="Placeholder" max_length="100" name="placeholder" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(target, source, keyValue) {&#13;&#10;    return '';&#13;&#10;})(target, source, keyValue);" label="Dynamic Value" max_length="8000" name="dynamic_value" type="script"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element label="CSS Styles" max_length="255" name="css_styles" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Allow Worknote" max_length="40" name="allow_worknote" type="boolean"/>
+        <element label="Pin" max_length="40" name="pin" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="(function (current, table, target_id, task_id, params) {&#13;&#10;&#13;&#10;    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);&#13;&#10;    return attributes;&#13;&#10;    &#13;&#10;})(current, table, target_id, task_id, params);" label="Attributes" mandatory="true" max_length="8000" name="attributes" type="script"/>
+        <element attributes="edge_encryption_enabled=true" label="Is Cascading Select" max_length="40" name="is_cascading_select" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" default="pdf" label="E-Signature Type" mandatory="true" max_length="40" name="e_signature_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="LIQUID" value="liquid"/>
+                <element inactive_on_update="false" label="PDF" value="pdf"/>
+            </choice>
+        </element>
+        <element label="PDF" max_length="200" name="pdf" type="string"/>
+        <element calculation="(function calculatedFieldValue(current) {&#10;&#10;&#9;var property = gs.nil(current.getValue('property')) ? '' : (' - ' + current.getValue('property'));&#10;&#9;return current.getValue('number') + property;&#10;&#10;})(current);" label="Display Name" max_length="255" name="display_name" read_only="true" type="string" virtual="true"/>
+        <element label="Signature Field Name" max_length="100" name="signature_field_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" dynamic_ref_qual="21c6a9f597320650e12c3eb0f053afb5" label="Signatures" max_length="32" name="signatures" reference="sn_hr_core_pdf_template_mapping" reference_qual="javascript:'document_field_type=signature^document=' + current.pdf_attachment" type="reference" use_reference_qualifier="dynamic"/>
+        <element attributes="edge_encryption_enabled=true" default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Property" max_length="100" name="property" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Required Signature" max_length="40" name="required_signature" type="boolean"/>
+        <element default="[]" label="Signature List" max_length="2000" name="signature_list" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Base Question" max_length="32" name="base_question" reference="question" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Allow Comment" max_length="40" name="allow_comment" type="boolean"/>
+        <element default="{% comment %} Liquid Template {% endcomment %}" label="Liquid" max_length="4000" name="liquid" type="string"/>
+        <index name="index">
+            <element name="add_signature_to"/>
+        </index>
+        <index name="index2">
+            <element name="base_question"/>
+        </index>
+        <index name="index3">
+            <element name="pdf_attachment"/>
+        </index>
+        <index name="index4">
+            <element name="section"/>
+        </index>
+        <index name="index5">
+            <element name="signatures"/>
+        </index>
+    </element>
+</database>

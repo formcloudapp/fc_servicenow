@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_typeresolver">
+    <sys_graphql_typeresolver action="INSERT_OR_UPDATE">
+        <schema display_value="Task">286bea0983e45210926492b6feaad396</schema>
+        <script><![CDATA[(function process(/*TypeResolutionEnvironment*/ env) {
+
+    return env.getArguments().tableName;
+
+})(env);]]></script>
+        <sys_class_name>sys_graphql_typeresolver</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-08 17:18:38</sys_created_on>
+        <sys_id>15513b8d832c5210926492b6feaad3c6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_typeresolver_15513b8d832c5210926492b6feaad3c6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-08 17:18:38</sys_updated_on>
+        <type_name>base</type_name>
+    </sys_graphql_typeresolver>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>15513b8d832c5210926492b6feaad3c6</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-09-08 17:18:38</sys_created_on>
+        <sys_id>ea51b3cd832c5210926492b6feaad3a8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-09-08 17:18:38</sys_updated_on>
+        <table>sys_graphql_typeresolver</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

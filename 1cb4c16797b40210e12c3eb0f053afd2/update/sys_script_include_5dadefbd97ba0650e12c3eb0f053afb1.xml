@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.FCPublicDataDefinition</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FCPublicDataDefinition</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[/**
+ * @class
+ * Represents a public data definition for a set of tables.
+ */
+var FCPublicDataDefinition = Class.create();
+
+FCPublicDataDefinition.prototype = {
+
+    /**
+     * Initializes a new instance of the FCPublicDataDefinition class.
+     */
+    initialize: function() {},
+
+    /**
+     * Retrieves the definition for the specified table. This will return only column data that is deem available across organization for everyone.
+     *
+     * @param {string} tableName - The name of the table to get the definition for.
+     * @returns {(string[]|undefined)} An array of field names for the specified table, or undefined if the table is not found.
+     */
+    get: function(tableName) {
+        var definition = {
+            sys_user: ['sys_id', 'name', 'email','avatar'],
+			cmn_department: ['sys_id', 'name'],
+			sn_hr_core_position: ['sys_id', 'position'],
+			sn_hr_core_service: ['sys_id', 'name'],
+			sys_user_grmember: ['user', 'group'],
+			sn_hr_core_contact: ['sys_id', 'first_name'],
+			sn_fedtables_education_level: ['sys_id', 'code', 'explanation'],
+			sn_fedtables_ethnicity_and_race_identification: ['sys_id',  'code', 'explanation'],
+			sn_fedtables_citizenship_country_code: ['sys_id',  'code', 'explanation'],
+			sn_fedtables_sex: ['sys_id', 'explanation'],
+			sys_user_group: ['sys_id', 'name'],
+			sys_db_object: ['label', 'name'],
+			sc_catalog: ['sys_id','title'],
+			x_509925_fc_questionnaire: ['sys_id','name']
+        };
+
+        return definition[tableName];
+    },
+
+    /** 
+     * The type of this class.
+     * @type {string}
+     */
+    type: 'FCPublicDataDefinition'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-06-16 01:08:28</sys_created_on>
+        <sys_id>5dadefbd97ba0650e12c3eb0f053afb1</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>FCPublicDataDefinition</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_5dadefbd97ba0650e12c3eb0f053afb1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-16 05:34:44</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>5dadefbd97ba0650e12c3eb0f053afb1</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-26 15:31:01</sys_created_on>
+        <sys_id>d2056aec83a91610926492b6feaad310</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-26 15:31:01</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope) {
+  var c = this;
+	
+	c.buildStageObj = function(){
+		var stages = c.options.stages ? c.options.stages.split(',') : [];
+		var statuses = c.options.statuses ? c.options.statuses.split(','): [];
+		
+		if(stages.length == statuses.length && stages.length > 0){
+			var stageResult = [];
+			for(var i = 0; i < stages.length; i++){
+				stageResult.push({
+					name: stages[i],
+					status: statuses[i]
+				})
+			}
+			return stageResult;
+		}else{
+			return [
+				{
+					name: 'Default', status: 'pending'
+				}
+			]
+		}
+	}
+
+  // use passed-in data.input or fallback to your defaults
+  c.input = {
+    stages: c.buildStageObj(),
+    states: [
+      { name: 'pending', bgColor: c.options.pending_color || '#94a3b8', arwColor: '#f9fafc',  txtColor: c.options.pending_text_color || '#ffffff', icon: '' },
+      { name: 'current', bgColor: c.options.current_color || '#1c61b3', arwColor: '#f9fafc', txtColor: c.options.current_text_color || '#f9fafc', icon: '' },
+      { name: 'done',    bgColor: '#17a34a', arwColor: '#f9fafc', txtColor: '#f9fafc', icon: 'glyphicon glyphicon-ok' }
+    ]
+  };
+	
+	
+
+  c.getState = function(status) {
+    return c.input.states.find(function(s){ return s.name===status }) || c.input.states[0];
+  };
+
+  c.getStageStyle = function(status) {
+    var s = c.getState(status);
+    return { 'background-color': s.bgColor, color: s.txtColor };
+  };
+
+  c.getArrowStyle = function(status) {
+    return { 'background-color': c.getState(status).bgColor };
+  };
+
+  c.getStageIcon = function(status) {
+    return c.getState(status).icon || '';
+  };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.flow-formatter-wrapper {
+  border-radius: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  width: 100%;
+}
+
+.flow-formatter-stage {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  padding: 12px 16px;
+  min-width: 0;
+  justify-content: center;
+  text-align: center;
+}
+
+.flow-formatter-text {
+  display: inline-block;
+  margin-left: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.1em;
+}
+
+.flow-formatter-arrow-base,
+.flow-formatter-arrow-overlay {
+  position: absolute;
+  top: 0;
+  width: 14px;
+  height: 100%;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.flow-formatter-arrow-base {
+  right: -14px;
+  background-color: inherit;
+  z-index: 3;
+}
+
+.flow-formatter-arrow-overlay {
+  right: -11px;
+  width: 12px;
+  z-index: 4;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>pie_chart</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>Pie Chart</name>
+        <option_schema>[{"name":"stages","section":"Data","label":"Stages","type":"string"},{"name":"statuses","section":"other","label":"Statuses","type":"string"},{"name":"pending_color","section":"Presentation","default_value":"#94a3b8","label":"Pending Color","type":"string"},{"name":"pending_text_color","section":"Presentation","default_value":"#ffffff","label":"Pending Text Color","type":"string"},{"name":"current_color","section":"Presentation","default_value":"#1c61b3","label":"Current Color","type":"string"},{"name":"current_text_color","section":"Presentation","default_value":"#f9fafc","label":"Current Text Color","type":"string"}]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+//ready,in_progress,complete
+//pending,current,done
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-29 01:22:51</sys_created_on>
+        <sys_id>f8e010888351e210005fb955eeaad31e</sys_id>
+        <sys_mod_count>49</sys_mod_count>
+        <sys_name>Pie Chart</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sp_widget_f8e010888351e210005fb955eeaad31e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-01 02:07:48</sys_updated_on>
+        <template><![CDATA[<div class="flow-formatter-wrapper"
+     ng-style="{'background-color': c.input.states[0].arwColor}"
+     ng-controller="!$ctrl && FlowFormatterCtrl as c">
+  <div class="flow-formatter-stage"
+       ng-repeat="stage in c.input.stages track by $index"
+       ng-style="c.getStageStyle(stage.status)">
+
+    <span ng-if="stage.status==='done'"
+          class="{{c.getStageIcon(stage.status)}}"></span>
+
+    <span class="flow-formatter-text">{{stage.name}}</span>
+
+    <div ng-if="!$last"
+         class="flow-formatter-arrow-base"></div>
+    <div ng-if="!$last"
+         class="flow-formatter-arrow-overlay"
+         ng-style="c.getArrowStyle(stage.status)"></div>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

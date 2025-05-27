@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_question">
+    <x_509925_fc_question action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <add_signature_to/>
+        <allow_comment>false</allow_comment>
+        <allow_worknote>false</allow_worknote>
+        <attributes><![CDATA[(function (current, table, target_id, task_id, params) {
+
+    var attributes = new FCQuestionRepository().getAttributes(current, table, target_id, task_id, params);
+
+    attributes.liquid.data.is_on_watchlist = params.fc_form.data.on_watch_list;
+    attributes.liquid.data.existing_incident = params.fc_form.data.existing_incident;
+    attributes.liquid.data.user_id = params.fc_form.data.user_id;
+    attributes.liquid.data.is_caller = params.fc_form.data.is_caller;
+
+    return attributes;
+
+})(current, table, target_id, task_id, params);]]></attributes>
+        <base_question/>
+        <css_classes/>
+        <css_styles/>
+        <default_value><![CDATA[//Use this field to calculate the default value
+(function (current, table, target_id, task_id, params) {
+    return null;
+})(current, table, target_id, task_id, params);]]></default_value>
+        <display_name>QUE0001099 - _incident_existed</display_name>
+        <dynamic_list><![CDATA[(function (target, source, keyValue) {
+
+    var result = [];
+
+    return result;
+
+})(target, source, keyValue);]]></dynamic_list>
+        <dynamic_value><![CDATA[(function(target, source, keyValue) {
+    return '';
+})(target, source, keyValue);]]></dynamic_value>
+        <e_signature_type>pdf</e_signature_type>
+        <expression><![CDATA[//Use this field to evaluate whether to show/hide. [keyValue] parameter is of all the current question and answer on the questionnnaire
+function execute(keyValue, question) {
+    return question;
+}]]></expression>
+        <flatten_document/>
+        <hidden>false</hidden>
+        <is_cascading_select>false</is_cascading_select>
+        <is_dynamic_value>false</is_dynamic_value>
+        <label>Incident Existed</label>
+        <liquid>&lt;div style="color: var(--sys-tertiary);"&gt;&#13;
+	&lt;template x-if="is_caller == true"&gt;&#13;
+		&lt;div class="my-3"&gt;&#13;
+			&lt;span class="fw-bold"&gt;Incident reported: &lt;/span&gt; This incident is currently being resolved. Please stand by&#13;
+			for status updates.&#13;
+		&lt;/div&gt;&#13;
+	&lt;/template&gt;&#13;
+	&lt;template x-if="!is_caller &amp;&amp; !is_on_watchlist"&gt;&#13;
+		&lt;div class="my-3"&gt;&#13;
+			&lt;span class="fw-bold"&gt;Incident reported: &lt;/span&gt; An outstanding ticket for this incident has been submitted.&#13;
+			Please submit this form if you would like to be added to the watchlist to get status updates.&#13;
+		&lt;/div&gt;&#13;
+	&lt;/template&gt;&#13;
+	&lt;template x-if="is_on_watchlist"&gt;&#13;
+		&lt;div class="my-3 fw-bold"&gt;&#13;
+			You are currently on the watchlist for this incident.&#13;
+		&lt;/div&gt;&#13;
+	&lt;/template&gt;&#13;
+&lt;/div&gt;</liquid>
+        <number>QUE0001099</number>
+        <order>0</order>
+        <pdf/>
+        <pdf_attachment/>
+        <pin>false</pin>
+        <placeholder/>
+        <property>_incident_existed</property>
+        <readonly>false</readonly>
+        <required_signature>false</required_signature>
+        <section display_value="Incident Details">49fe7d2683821210926492b6feaad3e3</section>
+        <signature_field_name/>
+        <signature_list>[]</signature_list>
+        <signatures/>
+        <sys_class_name>x_509925_fc_question</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 19:40:43</sys_created_on>
+        <sys_id>f9778b26830a1210926492b6feaad324</sys_id>
+        <sys_mod_count>42</sys_mod_count>
+        <sys_name>Incident Existed</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_question_f9778b26830a1210926492b6feaad324</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-27 02:36:59</sys_updated_on>
+        <table>incident</table>
+        <triggered_questions/>
+        <type>liquid</type>
+        <validate>false</validate>
+        <width>col-md-12</width>
+    </x_509925_fc_question>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>f9778b26830a1210926492b6feaad324</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-26 20:53:36</sys_created_on>
+        <sys_id>6d285be6834a1210926492b6feaad319</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-11-26 20:53:36</sys_updated_on>
+        <table>x_509925_fc_question</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>
