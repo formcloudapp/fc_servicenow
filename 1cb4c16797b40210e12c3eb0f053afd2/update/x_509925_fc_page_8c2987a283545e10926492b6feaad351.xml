@@ -130,6 +130,7 @@
         <is_homepage>false</is_homepage>
         <is_page_template>false</is_page_template>
         <route>request</route>
+        <settings>{}</settings>
         <sys_class_name>x_509925_fc_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-08-31 19:58:04</sys_created_on>

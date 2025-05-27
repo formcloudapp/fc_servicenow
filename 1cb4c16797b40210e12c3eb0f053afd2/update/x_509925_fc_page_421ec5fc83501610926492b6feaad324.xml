@@ -430,6 +430,7 @@ ul.catalog-category-list li {&#13;
         <is_homepage>false</is_homepage>
         <is_page_template>false</is_page_template>
         <route>service_catalog</route>
+        <settings>{}</settings>
         <sys_class_name>x_509925_fc_page</sys_class_name>
         <sys_created_by>davidg</sys_created_by>
         <sys_created_on>2024-08-26 00:31:10</sys_created_on>

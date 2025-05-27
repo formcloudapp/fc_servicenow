@@ -32,6 +32,7 @@
         <is_homepage>false</is_homepage>
         <is_page_template>false</is_page_template>
         <route>datatable_user_reference</route>
+        <settings>{}</settings>
         <sys_class_name>x_509925_fc_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-03-01 23:11:55</sys_created_on>

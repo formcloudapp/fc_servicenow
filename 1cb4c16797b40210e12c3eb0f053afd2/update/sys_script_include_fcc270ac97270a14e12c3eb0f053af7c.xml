@@ -689,6 +689,16 @@ FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
 </mdui-tabs>`,
 					documentation: 'Tabs are used to group different content or datasets.'
 				}, {
+					label: 'FC Menu',
+					snippet: `<mdui-dropdown>
+  <mdui-button slot="trigger">open dropdown</mdui-button>
+  <mdui-menu>
+    <mdui-menu-item>Item 1</mdui-menu-item>
+    <mdui-menu-item>Item 2</mdui-menu-item>
+  </mdui-menu>
+</mdui-dropdown>`,
+					documentation: ''
+				}, {
 					label: 'FC Datatable',
 					snippet: `<mdui-datatable query-name="DATATABLE"></mdui-datatable>`,
 					documentation: 'Replace DATATABLE with name of a datatable record.'
@@ -801,14 +811,14 @@ FCWebAppRepository.prototype = Object.extendsObject(FCRepository, {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-07-18 21:09:24</sys_created_on>
         <sys_id>fcc270ac97270a14e12c3eb0f053af7c</sys_id>
-        <sys_mod_count>147</sys_mod_count>
+        <sys_mod_count>148</sys_mod_count>
         <sys_name>FCWebAppRepository</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy>protected</sys_policy>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
         <sys_update_name>sys_script_include_fcc270ac97270a14e12c3eb0f053af7c</sys_update_name>
-        <sys_updated_by>david.galagarza</sys_updated_by>
-        <sys_updated_on>2025-05-21 02:54:11</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-24 13:16:29</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>fcc270ac97270a14e12c3eb0f053af7c</id>

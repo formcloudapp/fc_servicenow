@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="attributes" table="x_509925_fc_page">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="settings" table="x_509925_fc_page">
         <active>true</active>
         <array>false</array>
-        <attributes>edge_encryption_enabled=true</attributes>
+        <attributes/>
         <audit>false</audit>
         <calculation><![CDATA[(function calculatedFieldValue(current) {
 
@@ -13,27 +13,10 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>Attributes</column_label>
+        <column_label>Settings</column_label>
         <comments/>
         <create_roles/>
-        <default_value>(function (params) {&#13;
-&#13;
-    function initialize() {&#13;
-        var model = {&#13;
-            condition: true,&#13;
-            default_options: {&#13;
-                title: 'Number of Accounts'&#13;
-            },&#13;
-            options: params&#13;
-        };&#13;
-        return model;&#13;
-    }&#13;
-&#13;
-    return {&#13;
-        initialize: initialize,&#13;
-    };&#13;
-&#13;
-})(params);</default_value>
+        <default_value>{}</default_value>
         <defaultsort/>
         <delete_roles/>
         <dependent/>
@@ -43,13 +26,13 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>attributes</element>
+        <element>settings</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <formula/>
         <function_definition/>
         <function_field>false</function_field>
-        <internal_type display_value="Script">script</internal_type>
+        <internal_type display_value="">string_full_utf8</internal_type>
         <mandatory>false</mandatory>
         <max_length>8000</max_length>
         <name>x_509925_fc_page</name>
@@ -68,15 +51,15 @@
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-07-12 03:10:25</sys_created_on>
-        <sys_id>91a0e55ec31a12105214f90ed401314f</sys_id>
-        <sys_name>Attributes</sys_name>
+        <sys_created_on>2025-05-26 17:32:37</sys_created_on>
+        <sys_id>61d1b6788371a610005fb955eeaad358</sys_id>
+        <sys_name>Settings</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy/>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
-        <sys_update_name>sys_dictionary_x_509925_fc_page_attributes</sys_update_name>
+        <sys_update_name>sys_dictionary_x_509925_fc_page_settings</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-27 12:11:34</sys_updated_on>
+        <sys_updated_on>2025-05-27 00:04:18</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

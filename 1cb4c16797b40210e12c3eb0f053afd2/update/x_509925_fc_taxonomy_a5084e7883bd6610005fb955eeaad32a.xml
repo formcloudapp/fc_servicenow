@@ -2,36 +2,33 @@
     <x_509925_fc_taxonomy action="INSERT_OR_UPDATE">
         <advance><![CDATA[((current, params) => {
     let attributes = new FCTaxonomyRepository(true).getAttributes(current, params);
+    attributes.icon = 'person_search';
     return attributes;
-})(current, params);]]></advance>
+})(current, params);
+]]></advance>
         <base>false</base>
         <condition><![CDATA[((current, params) => {
-    var gr = new GlideAggregate('sys_user_grmember');
-    gr.addEncodedQuery('group=cdff95b583596210005fb955eeaad376user=' + gs.getUserID());
-    gr.addAggregate('COUNT');
-    gr.query();
-    gr.next();
-    return gr.getAggregate('COUNT') > 0;
+    return true;
 })(current, params);]]></condition>
-        <group display_value="HR Specialist" name="HR Specialist">cdff95b583596210005fb955eeaad376</group>
+        <group/>
         <icon/>
-        <name>hr_specialist</name>
-        <order>0</order>
+        <name>Directory</name>
+        <order>80</order>
         <parent/>
         <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2025-05-04 17:42:38</sys_created_on>
-        <sys_id>6e31e1f983996210005fb955eeaad33d</sys_id>
+        <sys_created_on>2025-05-26 14:29:36</sys_created_on>
+        <sys_id>a5084e7883bd6610005fb955eeaad32a</sys_id>
         <sys_mod_count>3</sys_mod_count>
-        <sys_name>hr_specialist</sys_name>
+        <sys_name>Directory</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy/>
         <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
-        <sys_update_name>x_509925_fc_taxonomy_6e31e1f983996210005fb955eeaad33d</sys_update_name>
+        <sys_update_name>x_509925_fc_taxonomy_a5084e7883bd6610005fb955eeaad32a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-05-24 13:12:48</sys_updated_on>
-        <type>persona</type>
-        <url/>
-        <url_type/>
+        <sys_updated_on>2025-05-26 14:31:02</sys_updated_on>
+        <type>menu_item</type>
+        <url>directory</url>
+        <url_type>page</url_type>
     </x_509925_fc_taxonomy>
 </record_update>

@@ -44,6 +44,7 @@
         <is_homepage>false</is_homepage>
         <is_page_template>false</is_page_template>
         <route>request_summary</route>
+        <settings>{}</settings>
         <sys_class_name>x_509925_fc_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-09-05 14:04:48</sys_created_on>

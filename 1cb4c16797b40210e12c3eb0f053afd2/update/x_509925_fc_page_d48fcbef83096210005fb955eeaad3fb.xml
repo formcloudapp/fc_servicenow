@@ -124,6 +124,7 @@ mdui-questionnaire{&#13;
         <is_homepage>false</is_homepage>
         <is_page_template>false</is_page_template>
         <route>recruit</route>
+        <settings>{}</settings>
         <sys_class_name>x_509925_fc_page</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2025-04-28 01:58:06</sys_created_on>
