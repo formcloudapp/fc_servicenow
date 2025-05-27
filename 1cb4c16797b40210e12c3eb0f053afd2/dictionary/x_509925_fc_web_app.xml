@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="43c6c11897af8614e12c3eb0f053af1b" extends="sys_metadata" label="Web App" max_length="40" name="x_509925_fc_web_app" type="collection">
+        <element label="Application Namespace" mandatory="true" max_length="100" name="application_namespace" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="((current) =&gt; {&#13;&#10;&#13;&#10;  return new FCWebAppRepository(true).getAttributes(current);&#13;&#10;&#13;&#10;})(current);" label="Attributes" max_length="8000" name="attributes" type="script"/>
+        <element label="Template" max_length="8000" name="template" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" default="classic" label="Shell" max_length="40" name="shell" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Classic" value="classic"/>
+                <element inactive_on_update="false" label="Enterprise" value="enterprise"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" default="((current, params) =&gt; {&#13;&#10;  return {};&#13;&#10;})(current, params);" label="Shared Data" max_length="8000" name="shared_data" type="script"/>
+        <element label="Brand Font" max_length="255" name="brand_font" type="string"/>
+        <element label="Embed fonts" max_length="1000" name="embed_fonts" type="string_full_utf8"/>
+        <element label="GraphQL Namespace" mandatory="true" max_length="100" name="graphql_namespace" type="string"/>
+        <element label="Primary Color" max_length="10" name="primary_color" type="string"/>
+        <element label="Prefix" mandatory="true" max_length="100" name="prefix" type="string"/>
+        <element label="Tertiary Color" max_length="10" name="tertiary_color" type="string"/>
+        <element label="Plain Font" max_length="255" name="plain_font" type="string"/>
+    </element>
+</database>

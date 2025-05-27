@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="DELETE">
+        <sc_cat_item display_value="New Change Request">b4e3522d83992210005fb955eeaad37f</sc_cat_item>
+        <sc_category display_value="Services">d67c446ec0a80165000335aa37eafbc1</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 02:48:49</sys_created_on>
+        <sys_id>e9a4566d83992210005fb955eeaad391</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Services.New Change Request</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sc_cat_item_category_e9a4566d83992210005fb955eeaad391</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-04 02:48:49</sys_updated_on>
+    </sc_cat_item_category>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>sc_cat_item_category_e9a4566d83992210005fb955eeaad391</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category"><sc_cat_item_category action="INSERT_OR_UPDATE"><sc_cat_item display_value="New Change Request">b4e3522d83992210005fb955eeaad37f</sc_cat_item><sc_category display_value="Services">d67c446ec0a80165000335aa37eafbc1</sc_category><sys_class_name>sc_cat_item_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-05-04 02:48:49</sys_created_on><sys_id>e9a4566d83992210005fb955eeaad391</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Services.New Change Request</sys_name><sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package><sys_policy/><sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope><sys_update_name>sc_cat_item_category_e9a4566d83992210005fb955eeaad391</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-05-04 02:48:49</sys_updated_on></sc_cat_item_category></record_update>]]></payload>
+        <payload_hash>-1340157743</payload_hash>
+        <record_name>Services.New Change Request</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 02:48:49</sys_created_on>
+        <sys_id>61a4566d83992210005fb955eeaad396</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1969932417b0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-04 02:48:49</sys_updated_on>
+        <type>Catalog Item Category</type>
+        <update_guid>65a4566d7599221044f7145367740295</update_guid>
+        <update_guid_history>65a4566d7599221044f7145367740295:-1340157743</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Services.New Change Request">76ec08f183156210005fb955eeaad300</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-04 11:34:18</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_category">sc_cat_item_category</sys_db_object>
+        <sys_id>096a1771cd9949b28bed69d63e4237c9</sys_id>
+        <sys_metadata>e9a4566d83992210005fb955eeaad391</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Services.New Change Request</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>sc_cat_item_category_e9a4566d83992210005fb955eeaad391</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_category_e9a4566d83992210005fb955eeaad391">61a4566d83992210005fb955eeaad396</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-04 11:34:18</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

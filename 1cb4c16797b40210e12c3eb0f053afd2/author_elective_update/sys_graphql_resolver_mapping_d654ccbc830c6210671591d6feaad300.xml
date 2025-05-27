@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver_mapping">
+    <sys_graphql_resolver_mapping action="DELETE">
+        <path>incident:assigned_to__reference</path>
+        <resolver display_value="_getReference">45440cbc830c6210671591d6feaad35f</resolver>
+        <schema display_value="Task">286bea0983e45210926492b6feaad396</schema>
+        <sys_class_name>sys_graphql_resolver_mapping</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 05:04:44</sys_created_on>
+        <sys_id>d654ccbc830c6210671591d6feaad300</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_graphql_resolver_mapping_d654ccbc830c6210671591d6feaad300</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-28 05:04:44</sys_updated_on>
+    </sys_graphql_resolver_mapping>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>sys_graphql_resolver_mapping_d654ccbc830c6210671591d6feaad300</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_graphql_resolver_mapping"><sys_graphql_resolver_mapping action="INSERT_OR_UPDATE"><path>incident:assigned_to__reference</path><resolver display_value="_getReference">45440cbc830c6210671591d6feaad35f</resolver><schema display_value="Task">286bea0983e45210926492b6feaad396</schema><sys_class_name>sys_graphql_resolver_mapping</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-02-28 05:04:44</sys_created_on><sys_id>d654ccbc830c6210671591d6feaad300</sys_id><sys_mod_count>0</sys_mod_count><sys_name/><sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package><sys_policy/><sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope><sys_update_name>sys_graphql_resolver_mapping_d654ccbc830c6210671591d6feaad300</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-02-28 05:04:44</sys_updated_on></sys_graphql_resolver_mapping></record_update>]]></payload>
+        <payload_hash>-421839914</payload_hash>
+        <record_name/>
+        <reverted_from/>
+        <source>8f49701083782210005fb955eeaad3cf</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-05 02:26:49</sys_created_on>
+        <sys_id>2089b45083782210005fb955eeaad3c9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19603c5b0c00000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-05 02:26:49</sys_updated_on>
+        <type>GraphQL Resolver Mapping</type>
+        <update_guid>7a6400fc560c62103b6bbf33c1a04d1c</update_guid>
+        <update_guid_history>7a6400fc560c62103b6bbf33c1a04d1c:-421839914</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-10 21:56:00</sys_created_on>
+        <sys_db_object display_value="" name="sys_graphql_resolver_mapping">sys_graphql_resolver_mapping</sys_db_object>
+        <sys_id>589cb49a6537444296abae98d4ee1191</sys_id>
+        <sys_metadata>d654ccbc830c6210671591d6feaad300</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>sys_graphql_resolver_mapping_d654ccbc830c6210671591d6feaad300</sys_update_name>
+        <sys_update_version display_value="sys_graphql_resolver_mapping_d654ccbc830c6210671591d6feaad300">2089b45083782210005fb955eeaad3c9</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-10 21:56:00</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

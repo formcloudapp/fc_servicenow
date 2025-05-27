@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_taxonomy">
+    <x_509925_fc_taxonomy action="DELETE">
+        <advance><![CDATA[((current, params) => {
+    let attributes = new FCTaxonomyRepository(true).getAttributes(current, params);
+    attributes.icon = 'warning';
+    return attributes;
+})(current, params);
+]]></advance>
+        <base>false</base>
+        <condition><![CDATA[((current, params) => {
+    return true;
+})(current, params);]]></condition>
+        <group/>
+        <icon/>
+        <name>Incidents</name>
+        <order>30</order>
+        <parent display_value="My Work">1da5169f83012210005fb955eeaad3e5</parent>
+        <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-14 12:17:35</sys_created_on>
+        <sys_id>22b6b3f483656250005fb955eeaad35d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Incidents</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_taxonomy_22b6b3f483656250005fb955eeaad35d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 12:17:35</sys_updated_on>
+        <type>menu_item</type>
+        <url>incidents</url>
+        <url_type>page</url_type>
+    </x_509925_fc_taxonomy>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_taxonomy_22b6b3f483656250005fb955eeaad35d</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_taxonomy"&gt;&lt;x_509925_fc_taxonomy action="INSERT_OR_UPDATE"&gt;&lt;advance&gt;&lt;![CDATA[((current, params) =&gt; {
+    let attributes = new FCTaxonomyRepository(true).getAttributes(current, params);
+    attributes.icon = 'warning';
+    return attributes;
+})(current, params);
+]]&gt;&lt;/advance&gt;&lt;base&gt;false&lt;/base&gt;&lt;condition&gt;&lt;![CDATA[((current, params) =&gt; {
+    return true;
+})(current, params);]]&gt;&lt;/condition&gt;&lt;group/&gt;&lt;icon/&gt;&lt;name&gt;Incidents&lt;/name&gt;&lt;order&gt;30&lt;/order&gt;&lt;parent display_value="My Work"&gt;1da5169f83012210005fb955eeaad3e5&lt;/parent&gt;&lt;sys_class_name&gt;x_509925_fc_taxonomy&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-05-14 12:17:35&lt;/sys_created_on&gt;&lt;sys_id&gt;22b6b3f483656250005fb955eeaad35d&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Incidents&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_taxonomy_22b6b3f483656250005fb955eeaad35d&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-14 12:17:35&lt;/sys_updated_on&gt;&lt;type&gt;menu_item&lt;/type&gt;&lt;url&gt;incidents&lt;/url&gt;&lt;url_type&gt;page&lt;/url_type&gt;&lt;/x_509925_fc_taxonomy&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1184387078</payload_hash>
+        <record_name>Incidents</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-14 12:17:35</sys_created_on>
+        <sys_id>a2b6b3f483656250005fb955eeaad35f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>196ceba91650000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 12:17:35</sys_updated_on>
+        <type>Taxonomy</type>
+        <update_guid>a6b6b3f4a86562503ca35c5484c41d5e</update_guid>
+        <update_guid_history>a6b6b3f4a86562503ca35c5484c41d5e:1184387078</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Incidents">2159bfb883656250005fb955eeaad334</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-14 12:28:59</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_taxonomy">x_509925_fc_taxonomy</sys_db_object>
+        <sys_id>5cb6af7d51624c75a4bd6bbf2d7fdb61</sys_id>
+        <sys_metadata>22b6b3f483656250005fb955eeaad35d</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Incidents</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_taxonomy_22b6b3f483656250005fb955eeaad35d</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_taxonomy_22b6b3f483656250005fb955eeaad35d">a2b6b3f483656250005fb955eeaad35f</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-14 12:28:59</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

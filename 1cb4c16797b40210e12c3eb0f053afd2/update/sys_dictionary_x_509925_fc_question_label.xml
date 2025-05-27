@@ -52,7 +52,6 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-06-15 19:50:17</sys_created_on>
-        <sys_id>74a0a55ec31a12105214f90ed401316d</sys_id>
         <sys_name>Label</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy/>

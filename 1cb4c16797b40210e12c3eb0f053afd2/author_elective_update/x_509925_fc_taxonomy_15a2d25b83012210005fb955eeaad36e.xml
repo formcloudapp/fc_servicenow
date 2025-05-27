@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_taxonomy">
+    <x_509925_fc_taxonomy action="DELETE">
+        <advance><![CDATA[((current, params) => {
+    return new TaxonomyRepository(true).getAttributes(current, params);
+})(current, params);
+]]></advance>
+        <base>false</base>
+        <condition><![CDATA[((current, params) => {
+    return true;
+})(current, params);]]></condition>
+        <icon/>
+        <name>Recruit</name>
+        <order>0</order>
+        <parent/>
+        <sys_class_name>x_509925_fc_taxonomy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-27 02:53:44</sys_created_on>
+        <sys_id>15a2d25b83012210005fb955eeaad36e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Recruit</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_taxonomy_15a2d25b83012210005fb955eeaad36e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-27 02:53:44</sys_updated_on>
+        <type>menu_item</type>
+        <url>request_summary</url>
+        <url_type>work_module</url_type>
+    </x_509925_fc_taxonomy>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_taxonomy_15a2d25b83012210005fb955eeaad36e</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_taxonomy"&gt;&lt;x_509925_fc_taxonomy action="INSERT_OR_UPDATE"&gt;&lt;advance&gt;&lt;![CDATA[((current, params) =&gt; {
+    return new TaxonomyRepository(true).getAttributes(current, params);
+})(current, params);
+]]&gt;&lt;/advance&gt;&lt;base&gt;false&lt;/base&gt;&lt;condition&gt;&lt;![CDATA[((current, params) =&gt; {
+    return true;
+})(current, params);]]&gt;&lt;/condition&gt;&lt;icon/&gt;&lt;name&gt;Recruit&lt;/name&gt;&lt;order&gt;0&lt;/order&gt;&lt;parent/&gt;&lt;sys_class_name&gt;x_509925_fc_taxonomy&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-04-27 02:53:44&lt;/sys_created_on&gt;&lt;sys_id&gt;15a2d25b83012210005fb955eeaad36e&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Recruit&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_taxonomy_15a2d25b83012210005fb955eeaad36e&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-04-27 02:53:44&lt;/sys_updated_on&gt;&lt;type&gt;menu_item&lt;/type&gt;&lt;url&gt;request_summary&lt;/url&gt;&lt;url_type&gt;work_module&lt;/url_type&gt;&lt;/x_509925_fc_taxonomy&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-889572586</payload_hash>
+        <record_name>Recruit</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-27 02:53:44</sys_created_on>
+        <sys_id>29a2d25b83012210005fb955eeaad371</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>196752a3e290000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-27 02:53:44</sys_updated_on>
+        <type>Taxonomy</type>
+        <update_guid>2da2d25bbb012210cd536eccb2dc5470</update_guid>
+        <update_guid_history>2da2d25bbb012210cd536eccb2dc5470:-889572586</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Recruit">e2d25adb83012210005fb955eeaad376</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-27 02:54:39</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_taxonomy">x_509925_fc_taxonomy</sys_db_object>
+        <sys_id>006d195174f043789cd78b760ad76690</sys_id>
+        <sys_metadata>15a2d25b83012210005fb955eeaad36e</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Recruit</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_taxonomy_15a2d25b83012210005fb955eeaad36e</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_taxonomy_15a2d25b83012210005fb955eeaad36e">29a2d25b83012210005fb955eeaad371</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-27 02:54:39</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

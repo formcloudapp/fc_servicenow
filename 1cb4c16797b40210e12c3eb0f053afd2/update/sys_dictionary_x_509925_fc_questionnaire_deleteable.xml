@@ -52,7 +52,6 @@
         <sys_class_name>sys_dictionary</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-07-09 16:06:59</sys_created_on>
-        <sys_id>89a0a55ec31a12105214f90ed40131d9</sys_id>
         <sys_name>Deleteable</sys_name>
         <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
         <sys_policy/>

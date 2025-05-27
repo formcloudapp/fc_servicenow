@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="9eed8def97b40210e12c3eb0f053afd2" extends="sys_metadata" label="Section" max_length="40" name="x_509925_fc_section" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Questionnaire" mandatory="true" max_length="32" name="questionnaire" reference="x_509925_fc_questionnaire" reference_cascade_rule="cascade" type="reference"/>
+        <element label="CSS Classes" max_length="255" name="css_classes" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="function execute(keyValue) {&#13;&#10;&#9;return true;&#13;&#10;}" label="Expression" max_length="8000" name="expression" type="script"/>
+        <element label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="10" label="Order" max_length="40" name="order" type="integer"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="(function(current, table, target_id, task_id, params){&#13;&#10;&#9;return {&#13;&#10;&#9;&#9;show: true&#13;&#10;&#9;};&#13;&#10;})(current, table, target_id, task_id, params);" label="Attributes" max_length="8000" name="attributes" type="script"/>
+        <index name="index">
+            <element name="questionnaire"/>
+        </index>
+    </element>
+</database>

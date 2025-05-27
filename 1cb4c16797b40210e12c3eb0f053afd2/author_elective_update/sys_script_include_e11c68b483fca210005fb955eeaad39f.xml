@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="DELETE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_509925_fc.TaskRepository</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>TaskRepository</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[// @ts-nocheck
+
+/**
+ * Repository class for interacting with the task table.
+ * Extends the FCRepository class.
+ * @class
+ * @extends FCRepository
+ */
+var TaskRepository = Class.create();
+
+TaskRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initializes a new instance of TaskRepository.
+     * @param {boolean} overrideACL - Whether to override ACL checks.
+     * @throws Will throw an error if initialization fails.
+     */
+    initialize: function (overrideACL) {
+		this.moduleName = 'TaskRepository';
+        TaskRepository.prototype.initialize.call(this, 'task', overrideACL);
+    },
+
+    /**
+     * The type name of the class.
+     * @type {string}
+     */
+    type: 'TaskRepository'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-06 14:45:08</sys_created_on>
+        <sys_id>e11c68b483fca210005fb955eeaad39f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>TaskRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>sys_script_include_e11c68b483fca210005fb955eeaad39f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-06 14:45:08</sys_updated_on>
+    </sys_script_include>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>sys_script_include_e11c68b483fca210005fb955eeaad39f</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;x_509925_fc.TaskRepository&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description/&gt;&lt;mobile_callable&gt;false&lt;/mobile_callable&gt;&lt;name&gt;TaskRepository&lt;/name&gt;&lt;sandbox_callable&gt;false&lt;/sandbox_callable&gt;&lt;script&gt;&lt;![CDATA[// @ts-nocheck
+
+/**
+ * Repository class for interacting with the task table.
+ * Extends the FCRepository class.
+ * @class
+ * @extends FCRepository
+ */
+var TaskRepository = Class.create();
+
+TaskRepository.prototype = Object.extendsObject(FCRepository, {
+
+    /**
+     * Initializes a new instance of TaskRepository.
+     * @param {boolean} overrideACL - Whether to override ACL checks.
+     * @throws Will throw an error if initialization fails.
+     */
+    initialize: function (overrideACL) {
+		this.moduleName = 'TaskRepository';
+        TaskRepository.prototype.initialize.call(this, 'task', overrideACL);
+    },
+
+    /**
+     * The type name of the class.
+     * @type {string}
+     */
+    type: 'TaskRepository'
+});]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-04-06 14:45:08&lt;/sys_created_on&gt;&lt;sys_id&gt;e11c68b483fca210005fb955eeaad39f&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;TaskRepository&lt;/sys_name&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_e11c68b483fca210005fb955eeaad39f&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-04-06 14:45:08&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1766744950</payload_hash>
+        <record_name>TaskRepository</record_name>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-06 14:45:08</sys_created_on>
+        <sys_id>691c68b483fca210005fb955eeaad3a1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1960b8ffe210000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-06 14:45:08</sys_updated_on>
+        <type>Script Include</type>
+        <update_guid>6d1c68b42bfca21072a60b3afdad50a0</update_guid>
+        <update_guid_history>6d1c68b42bfca21072a60b3afdad50a0:-1766744950</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-06 14:46:10</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_include">sys_script_include</sys_db_object>
+        <sys_id>33ee1875c1ca483899e8e3d28fa1dba4</sys_id>
+        <sys_metadata>e11c68b483fca210005fb955eeaad39f</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>TaskRepository</sys_name>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>sys_script_include_e11c68b483fca210005fb955eeaad39f</sys_update_name>
+        <sys_update_version display_value="sys_script_include_e11c68b483fca210005fb955eeaad39f">691c68b483fca210005fb955eeaad3a1</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-06 14:46:10</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

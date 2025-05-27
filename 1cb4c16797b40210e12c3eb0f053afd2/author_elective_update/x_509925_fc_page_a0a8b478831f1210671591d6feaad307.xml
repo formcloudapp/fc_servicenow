@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_509925_fc_page">
+    <x_509925_fc_page action="DELETE">
+        <active>true</active>
+        <add_to_menu>false</add_to_menu>
+        <attributes><![CDATA[(function (params) {
+
+	function initialize() {
+		var model = {
+			condition: true
+		};
+
+        var incidentGr = new GlideRecord('incident');
+        incidentGr.addEncodedQuery('active=true');
+        incidentGr.setLimit(1);
+        incidentGr.query();
+        incidentGr.next();
+
+        model.incident = {
+            sys_id: incidentGr.getUniqueValue(),
+            number: incidentGr.getValue('number'),
+            short_description: incidentGr.getValue('short_description'),
+        }
+
+		return model;
+	}
+
+    function closeIncident(incidentId){
+        var incidentGr = new GlideRecord('incident');
+        incidentGr.get(incidentId)
+
+        incidentGr.setValue('state',8);
+        incidentGr.update();
+    }
+
+
+	return {
+		initialize: initialize,
+        closeIncident: closeIncident
+	};
+
+})(params);]]></attributes>
+        <base>false</base>
+        <client_scripts><![CDATA[function execute(helpers){
+    async function closeIncident(incidentId){
+        
+        await helpers.service.call('closeIncident', [incidentId]);
+        helpers.service.snackbar("Incident closed successfully!");
+    
+    }
+
+    function getPageSize(){
+        return 15;
+    }
+
+    return {
+        closeIncident: closeIncident,
+        getPageSize: getPageSize
+    };
+}]]></client_scripts>
+        <css/>
+        <is_homepage>false</is_homepage>
+        <is_page_template>false</is_page_template>
+        <route>active_incidents</route>
+        <sys_class_name>x_509925_fc_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-22 02:05:46</sys_created_on>
+        <sys_id>a0a8b478831f1210671591d6feaad307</sys_id>
+        <sys_mod_count>41</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_update_name>x_509925_fc_page_a0a8b478831f1210671591d6feaad307</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-06 00:13:24</sys_updated_on>
+        <template>[{"id":"vpf1ii","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&lt;div class=\"container main-container mt-5\"&gt;\r\n\t&lt;div class=\"row\"&gt;\r\n\t\t&lt;div class=\"col p-3\"&gt;\r\n\t\t\t&lt;div&gt;\r\n\t\t\t\t&lt;span x-text=\"$scope.model.incident.number\"&gt;&lt;/span&gt;\r\n\t\t\t&lt;/div&gt;\r\n\t\t\t&lt;div&gt;\r\n\t\t\t\t&lt;span x-text=\"$scope.model.incident.short_description\"&gt;&lt;/span&gt;\r\n\t\t\t&lt;/div&gt;\r\n\t\t\t&lt;div&gt;\r\n\t\t\t\t&lt;mdui-button @click=\"$scope.closeIncident($scope.model.incident.sys_id)\" variant=\"filled\"&gt;\r\n                    Close Incident\r\n\t\t\t\t&lt;/mdui-button&gt;\r\n\t\t\t&lt;/div&gt;\r\n\t\t&lt;/div&gt;\r\n\t&lt;/div&gt;\r\n\t&lt;div class=\"row\"&gt;\r\n\t\t&lt;div class=\"col\"&gt;\r\n\t\t\t&lt;fc-widget widget-id=\"priority_incident_widget\" :has-options=\"true\"\r\n\t\t\t\t:options='JSON.stringify({ page_size: $scope.getPageSize()})'&gt;\r\n\t\t\t&lt;/fc-widget&gt;\r\n\t\t&lt;/div&gt;\r\n\t&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;!--\r\nABC\r\n--&gt;\r\n&lt;h1&gt;Test3&lt;/h1&gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]</template>
+        <title>Active Incidents</title>
+        <type>page</type>
+    </x_509925_fc_page>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</application>
+        <file_path/>
+        <instance_id>db3d538893f86ad0d9f6ddd548373c41</instance_id>
+        <instance_name>dev316600</instance_name>
+        <name>x_509925_fc_page_a0a8b478831f1210671591d6feaad307</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_509925_fc_page"&gt;&lt;x_509925_fc_page action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;add_to_menu&gt;false&lt;/add_to_menu&gt;&lt;attributes&gt;&lt;![CDATA[(function (params) {
+
+	function initialize() {
+		var model = {
+			condition: true
+		};
+
+        var incidentGr = new GlideRecord('incident');
+        incidentGr.addEncodedQuery('active=true');
+        incidentGr.setLimit(1);
+        incidentGr.query();
+        incidentGr.next();
+
+        model.incident = {
+            sys_id: incidentGr.getUniqueValue(),
+            number: incidentGr.getValue('number'),
+            short_description: incidentGr.getValue('short_description'),
+        }
+
+		return model;
+	}
+
+    function closeIncident(incidentId){
+        var incidentGr = new GlideRecord('incident');
+        incidentGr.get(incidentId)
+
+        incidentGr.setValue('state',8);
+        incidentGr.update();
+    }
+
+
+	return {
+		initialize: initialize,
+        closeIncident: closeIncident
+	};
+
+})(params);]]&gt;&lt;/attributes&gt;&lt;base&gt;false&lt;/base&gt;&lt;client_scripts&gt;&lt;![CDATA[function execute(helpers){
+    async function closeIncident(incidentId){
+        
+        await helpers.service.call('closeIncident', [incidentId]);
+        helpers.service.snackbar("Incident closed successfully!");
+    
+    }
+
+    function getPageSize(){
+        return 15;
+    }
+
+    return {
+        closeIncident: closeIncident,
+        getPageSize: getPageSize
+    };
+}]]&gt;&lt;/client_scripts&gt;&lt;css/&gt;&lt;is_homepage&gt;false&lt;/is_homepage&gt;&lt;is_page_template&gt;false&lt;/is_page_template&gt;&lt;route&gt;active_incidents&lt;/route&gt;&lt;sys_class_name&gt;x_509925_fc_page&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-01-22 02:05:46&lt;/sys_created_on&gt;&lt;sys_id&gt;a0a8b478831f1210671591d6feaad307&lt;/sys_id&gt;&lt;sys_mod_count&gt;41&lt;/sys_mod_count&gt;&lt;sys_name/&gt;&lt;sys_package display_value="FC" source="x_509925_fc"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="FC"&gt;1cb4c16797b40210e12c3eb0f053afd2&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_509925_fc_page_a0a8b478831f1210671591d6feaad307&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-04-06 00:13:24&lt;/sys_updated_on&gt;&lt;template&gt;[{"id":"vpf1ii","title":"Liquid","description":"Liquid","type":"liquid","css_classes":{"value":[],"options":[]},"css_styles":{"value":[]},"allowable_children":[],"children":[],"content":"","parent_id":"","config":{"content":"&amp;lt;div class=\"container main-container mt-5\"&amp;gt;\r\n\t&amp;lt;div class=\"row\"&amp;gt;\r\n\t\t&amp;lt;div class=\"col p-3\"&amp;gt;\r\n\t\t\t&amp;lt;div&amp;gt;\r\n\t\t\t\t&amp;lt;span x-text=\"$scope.model.incident.number\"&amp;gt;&amp;lt;/span&amp;gt;\r\n\t\t\t&amp;lt;/div&amp;gt;\r\n\t\t\t&amp;lt;div&amp;gt;\r\n\t\t\t\t&amp;lt;span x-text=\"$scope.model.incident.short_description\"&amp;gt;&amp;lt;/span&amp;gt;\r\n\t\t\t&amp;lt;/div&amp;gt;\r\n\t\t\t&amp;lt;div&amp;gt;\r\n\t\t\t\t&amp;lt;mdui-button @click=\"$scope.closeIncident($scope.model.incident.sys_id)\" variant=\"filled\"&amp;gt;\r\n                    Close Incident\r\n\t\t\t\t&amp;lt;/mdui-button&amp;gt;\r\n\t\t\t&amp;lt;/div&amp;gt;\r\n\t\t&amp;lt;/div&amp;gt;\r\n\t&amp;lt;/div&amp;gt;\r\n\t&amp;lt;div class=\"row\"&amp;gt;\r\n\t\t&amp;lt;div class=\"col\"&amp;gt;\r\n\t\t\t&amp;lt;fc-widget widget-id=\"priority_incident_widget\" :has-options=\"true\"\r\n\t\t\t\t:options='JSON.stringify({ page_size: $scope.getPageSize()})'&amp;gt;\r\n\t\t\t&amp;lt;/fc-widget&amp;gt;\r\n\t\t&amp;lt;/div&amp;gt;\r\n\t&amp;lt;/div&amp;gt;\r\n&amp;lt;/div&amp;gt;\r\n&amp;lt;!--\r\nABC\r\n--&amp;gt;\r\n&amp;lt;h1&amp;gt;Test3&amp;lt;/h1&amp;gt;","css_classes":"","css_styles":"","form_id":"","task_id":"","target_id":"","type":"static","name":"","grid_xs":"","grid_sm":"","grid_md":"","grid_lg":"","grid_xl":"","header_tag":"h2","img_src":"","img_width":"","img_height":"","widget_id":"","options":"{}","container":""},"config_options":{}}]&lt;/template&gt;&lt;title&gt;Active Incidents&lt;/title&gt;&lt;type&gt;page&lt;/type&gt;&lt;/x_509925_fc_page&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>910884986</payload_hash>
+        <record_name/>
+        <reverted_from/>
+        <source>986abfdc83f46210005fb955eeaad39b</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-06 00:13:24</sys_created_on>
+        <sys_id>8c9461a08330a210005fb955eeaad395</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1960871e62a0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-06 00:13:24</sys_updated_on>
+        <type>Page</type>
+        <update_guid>449461a06d30a21066fc1b79985d3295</update_guid>
+        <update_guid_history>449461a06d30a21066fc1b79985d3295:910884986,df799d2411fc621001ac64dd22d20513:951840347,6fb7dd6009fc62108f4ea9b7a8f7a93b:278084553,9b37dd60e6fc6210a9868f9c948e5c31:1606919042,027261c92c939210874c9ae47d16cc75:431243012,2fb1e1896f93921044c332f836960e75:272801042,8a21294960939210e5b73de15bc0df0b:984751528,9cb0e109aa939210d27c92713ae034aa:272801042,ef90a9098b9392100bc7a47532fd23d7:-969700108,24fa918140939210cf889702ac104af4:272801042,87dad98d71539210c986ca4f02db60f7:-1989816242,beca91417093921094a064b76687b427:-1852646228,6f8a958199df5210ab3cfb13528ab22b:-1553723950,404a194d5153921024d155553c30f7b0:1838189168,d30ad58927539210b64f6b68ddb8b3c9:-2059781430,65f99d0d625392109785c41593836626:1199255212,55a9598d8f539210581c908bda20debf:-2059781430,c598590526df5210c348e8d6d62dccc9:1834486306,1c88998d5a53921067e7a79679a74222:715481070,d228d589da539210500e36ca3d225ec4:372433082,9f37994d2753921038758634ce0e5a90:-2015520827,ac2755492cdf521097de592a4f6a4f19:162320869,a3f615099c53921015de4e2f8a4e0ad3:-1293783904,9cf69d0d5453921074e87bd31c9e2b2f:-1685963540,63a61dc92c539210186fa81887434fbf:-1818304431,2d7b53bc9e1b52106b18ac72e6e09b9a:-1875992536,a8331334c71b52101d7c268ee547a1ca:1366349439,bab2c5f81a5f12101aae5b42cba970fd:1679572516,e69249b8525f1210525fe45ddc6ef727:95955508,3b5201b80e5f12104d5e480067c7fcd9:883855957,ac424db8b05f12108ca2aa75e4d81029:-416495723,a43245b8cd5f121066b74586347b809a:-329940419,a1d18d78fc5f12103050c0772dfb9250:-416495723,2cb141b83a5f1210c1200b40736afcbf:-886753412,d0710d38575f1210ed290b2c7c3b4e0b:1692054777,e6800538e65f1210abc406307be05e83:-1266243889,96300138965f121049030fd16ae2cb6e:1178586468,1900c9f4d35f1210626dc9292b70b1dc:-167111116,81bff4b4085f12101ed1c5421488949c:-1565227752,975f74fc4b1f12104e86d67457c8df66:1624924640,cccef4b4295f12101404ca75e2388a65:-1893703541,60a8b478931f121061c9e983227ed00a:-1436558383</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">86a7c60683696210005fb955eeaad31f</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-05-18 01:24:43</sys_created_on>
+        <sys_db_object display_value="" name="x_509925_fc_page">x_509925_fc_page</sys_db_object>
+        <sys_id>05ec0a3bd8a04a7a8ba050dbcf3fe904</sys_id>
+        <sys_metadata>a0a8b478831f1210671591d6feaad307</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="FC" source="x_509925_fc">1cb4c16797b40210e12c3eb0f053afd2</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="FC">1cb4c16797b40210e12c3eb0f053afd2</sys_scope>
+        <sys_scope_delete display_value="">89d20cc9bc054554a43bc5e52f9b38c1</sys_scope_delete>
+        <sys_update_name>x_509925_fc_page_a0a8b478831f1210671591d6feaad307</sys_update_name>
+        <sys_update_version display_value="x_509925_fc_page_a0a8b478831f1210671591d6feaad307">8c9461a08330a210005fb955eeaad395</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-05-18 01:24:43</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

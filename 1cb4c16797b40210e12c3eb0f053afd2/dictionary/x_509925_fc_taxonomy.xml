@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="9e93680e97dfcad0e12c3eb0f053af76" extends="sys_metadata" label="Taxonomy" max_length="40" name="x_509925_fc_taxonomy" type="collection">
+        <element attributes="edge_encryption_enabled=true" default="((current, params) =&gt; {&#13;&#10;    return false;&#13;&#10;})(current, params);" label="Condition" max_length="8000" name="condition" type="script"/>
+        <element attributes="edge_encryption_enabled=true" default="0" label="Order" max_length="40" name="order" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Folder" value="folder"/>
+                <element inactive_on_update="false" label="Template" value="template"/>
+                <element inactive_on_update="false" label="Snippet" value="snippet"/>
+                <element inactive_on_update="false" label="Menu Item" value="menu_item"/>
+                <element inactive_on_update="false" label="Page" value="page"/>
+                <element inactive_on_update="false" label="Service" value="service"/>
+                <element inactive_on_update="false" label="Persona" value="persona"/>
+            </choice>
+        </element>
+        <element label="Group" max_length="32" name="group" reference="sys_user_group" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Url Type" max_length="40" name="url_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Advance" value="advance"/>
+                <element inactive_on_update="false" label="External URL" value="external_url"/>
+                <element inactive_on_update="false" label="Page" value="page"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Parent" max_length="32" name="parent" reference="x_509925_fc_taxonomy" type="reference"/>
+        <element label="icon" max_length="1000" name="icon" type="string_full_utf8"/>
+        <element label="Url" max_length="1000" name="url" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true" label="Base" max_length="40" name="base" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" default="((current, params) =&gt; {&#13;&#10;    let attributes = new FCTaxonomyRepository(true).getAttributes(current, params);&#13;&#10;    return attributes;&#13;&#10;})(current, params);" label="Advance" max_length="8000" name="advance" type="script"/>
+        <element label="Name" max_length="100" name="name" type="string"/>
+        <index name="index">
+            <element name="group"/>
+        </index>
+        <index name="index2">
+            <element name="parent"/>
+        </index>
+    </element>
+</database>

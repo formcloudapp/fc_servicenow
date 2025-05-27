@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="7f818c6897cf0290e12c3eb0f053afc7" label="Draft" max_length="40" name="x_509925_fc_draft" type="collection">
+        <element label="JSON" max_length="8000" name="json" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Questionnaire" max_length="32" name="questionnaire" reference="x_509925_fc_questionnaire" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element attributes="base_start=true,edge_encryption_enabled=true" label="Table" max_length="80" name="table" type="table_name"/>
+        <element attributes="edge_encryption_enabled=true" dependent="table" dependent_on_field="table" label="Document ID" max_length="32" name="document" type="document_id" use_dependent_field="true"/>
+        <index name="index">
+            <element name="document"/>
+        </index>
+        <index name="index2">
+            <element name="questionnaire"/>
+        </index>
+        <index name="index3">
+            <element name="user"/>
+        </index>
+    </element>
+</database>

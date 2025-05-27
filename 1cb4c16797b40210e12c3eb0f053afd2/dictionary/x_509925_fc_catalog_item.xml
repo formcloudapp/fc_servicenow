@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="update_synch=true" db_object_id="178b750083581210926492b6feaad304" extends="sc_cat_item" label="Catalog Item" max_length="40" name="x_509925_fc_catalog_item" type="collection">
+        <element attributes="base_start=true,edge_encryption_enabled=true,ref_across_scopes=true" label="Table Name" max_length="80" name="table_name" type="table_name"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Questionnaire" mandatory="true" max_length="32" name="questionnaire" reference="x_509925_fc_questionnaire" reference_cascade_rule="cascade" type="reference"/>
+        <index name="index">
+            <element name="questionnaire"/>
+        </index>
+    </element>
+</database>

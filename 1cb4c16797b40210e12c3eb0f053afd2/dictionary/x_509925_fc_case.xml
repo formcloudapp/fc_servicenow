@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="6e9ec09083552610005fb955eeaad3f8" extends="task" label="Case" max_length="40" name="x_509925_fc_case" type="collection">
+        <element label="FC Service" mandatory="true" max_length="32" name="service" reference="x_509925_fc_catalog_item" type="reference"/>
+        <element label="Awaiting On Group" max_length="4000" name="awaiting_on_group" reference="sys_user_group" type="glide_list"/>
+        <element label="Awaiting On" max_length="32" name="awaiting_on" reference="sys_user" type="glide_list"/>
+    </element>
+</database>
